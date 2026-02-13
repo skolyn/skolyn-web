@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Platform Overview - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #1a73e8;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#1a73e8;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:14px}th,td{padding:12px 16px;text-align:left;border:1px solid #dadce0}th{background:#e8f0fe;font-weight:600;color:#174ea6}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}pre{background:#1a1a2e;color:#e8eaed;padding:20px 24px;border-radius:12px;margin:16px 0 24px;overflow-x:auto;font-size:13px;line-height:1.7}pre code{background:none;padding:0;color:inherit}.callout{padding:16px 20px;border-radius:8px;margin:16px 0 24px;font-size:14px}.callout-info{background:#e8f0fe;border-left:4px solid #1a73e8;color:#174ea6}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}
+</style>
+</head>
+<body>
+
+<div class="doc-id-bar">
+  <span class="doc-id">SKL-GS-001</span>
+  <span>Skolyn Platform Documentation</span>
+  <span class="doc-class">GENERAL</span>
+</div>
+
+<div class="doc-header">
+  <h1>Platform Overview</h1>
+  <div class="subtitle">Comprehensive Technical Overview of the Skolyn Diagnostic AI Platform Architecture and Capabilities</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> General</div>
+    <div class="meta-item"><strong>Owner:</strong> Product Engineering</div>
+    <div class="meta-item"><strong>Review Cycle:</strong> Quarterly</div>
+    <div class="meta-item"><strong>Next Review:</strong> May 2026</div>
+  </div>
+</div>
+
+<h2>1. Introduction</h2>
+<p>Skolyn is an enterprise-grade medical imaging artificial intelligence platform designed to augment radiologist workflows through explainable, clinically validated diagnostic analysis. The platform processes imaging studies across four modalities — Magnetic Resonance Imaging (MRI), Computed Tomography (CT), Ultrasound (US), and X-Ray — delivering AI-generated findings, measurements, and structured reports directly into existing clinical workflows via seamless PACS, RIS, and EHR integration.</p>
+
+<p>Unlike opaque black-box AI systems, Skolyn is built on the principle of <strong>Explainable AI (XAI)</strong>, providing clinicians with visual attention maps (Grad-CAM++, SHAP), confidence scores, differential diagnoses, and evidence-based reasoning for every finding. This transparency builds clinical trust and satisfies regulatory requirements for AI-assisted diagnostics under FDA, CE MDR, and PMDA frameworks.</p>
+
+<div class="callout callout-info">
+  <strong>Mission:</strong> To reduce diagnostic error, accelerate turnaround time, and democratize access to expert-level radiology by embedding explainable AI directly into the clinical imaging workflow.
+</div>
+
+<h2>2. Platform Architecture</h2>
+<h3>2.1 High-Level Architecture</h3>
+<p>Skolyn follows a cloud-native, microservices-based architecture deployed on Kubernetes. The system is organized into five functional layers:</p>
+<ul>
+  <li><strong>Ingestion Layer:</strong> Receives DICOM studies from PACS via C-STORE SCP, DICOMweb STOW-RS, or file-based import. Studies are validated, de-duplicated, and queued for processing. The ingestion engine supports concurrent processing of over 10,000 studies per hour with automatic load balancing across inference nodes.</li>
+  <li><strong>Preprocessing Layer:</strong> Normalizes pixel data (rescale, window/level), applies modality-specific preprocessing (e.g., EPI distortion correction for fMRI, beam hardening correction for CT), and segments anatomical regions using atlas-based and deep learning methods. Preprocessing results are cached to avoid redundant computation for follow-up analyses.</li>
+  <li><strong>Inference Layer:</strong> The core AI engine running modality-specific models. Each module (Rhenium, Seaborgium, Scandium, Terbium) is a containerized ensemble of specialized sub-models optimized for specific body regions and clinical tasks. Inference runs on GPU-accelerated nodes (NVIDIA A100/H100) with automatic scaling based on queue depth.</li>
+  <li><strong>Integration Layer:</strong> Delivers results back to the clinical environment via DICOM SR (Structured Report), HL7v2 ORU messages, FHIR DiagnosticReport resources, and PDF reports. Integration adapters handle facility-specific formatting, terminology mapping (SNOMED CT, RadLex, ICD-10), and priority routing for critical findings.</li>
+  <li><strong>Presentation Layer:</strong> An optional web-based viewer and dashboard providing real-time status monitoring, AI finding review, model performance analytics, and administrative functions.</li>
+</ul>
+
+<h3>2.2 Technology Stack</h3>
+<table>
+  <tr><th>Component</th><th>Technology</th><th>Purpose</th></tr>
+  <tr><td>Orchestration</td><td>Kubernetes (EKS/GKE/AKS)</td><td>Container orchestration and autoscaling</td></tr>
+  <tr><td>Inference Engine</td><td>PyTorch 2.x + TorchScript</td><td>Deep learning model serving</td></tr>
+  <tr><td>Model Serving</td><td>NVIDIA Triton Inference Server</td><td>Multi-model serving with batching</td></tr>
+  <tr><td>Database</td><td>PostgreSQL 16 + TimescaleDB</td><td>Metadata, configuration, time-series</td></tr>
+  <tr><td>Search</td><td>OpenSearch 2.x</td><td>Full-text search, audit log analytics</td></tr>
+  <tr><td>Object Storage</td><td>S3/GCS/Azure Blob</td><td>DICOM files, reports, model artifacts</td></tr>
+  <tr><td>Message Queue</td><td>Apache Kafka 3.x</td><td>Async event processing, audit pipeline</td></tr>
+  <tr><td>Service Mesh</td><td>Istio / Linkerd</td><td>mTLS, traffic management, observability</td></tr>
+  <tr><td>Monitoring</td><td>Prometheus + Grafana</td><td>Metrics, dashboards, alerting</td></tr>
+  <tr><td>Frontend</td><td>Angular 19</td><td>Admin console and web viewer</td></tr>
+</table>
+
+<h2>3. Imaging Modules</h2>
+<h3>3.1 Rhenium OS (MRI)</h3>
+<p>The Rhenium module processes 14 MRI subtypes including Brain, Cardiac, Breast, MSK, Spine, Prostate, Whole-Body, Vascular MRA, Fetal, Liver, Head & Neck, Pelvic, Abdominal, and Spectroscopy MRI. Key capabilities include cross-attention multi-sequence fusion (combining T1, T2, FLAIR, DWI, and contrast-enhanced sequences), volumetric 3D analysis with temporal comparison to prior studies, and structured reporting with standardized scoring systems (PI-RADS, BI-RADS, mRECIST). The module achieves sub-millimeter spatial precision for lesion measurement and provides attention-weighted heatmaps for every finding.</p>
+
+<h3>3.2 Seaborgium OS (CT)</h3>
+<p>The Seaborgium module handles 13 CT subtypes spanning Brain, Chest, Abdominal, Vascular CTA, Cardiac CTA, Head & Neck, Spine, MSK, Dental CBCT, Virtual Colonoscopy, Trauma Whole-Body, Pediatric, and Low-Dose Screening CT. The module features a STAT triage pipeline that prioritizes critical findings (large vessel occlusion, pneumothorax, aortic dissection) for immediate radiologist attention with a median alert latency under 90 seconds from study receipt. 3D volumetric processing enables accurate nodule volumetry, calcium scoring (Agatston), and longitudinal growth tracking with Lung-RADS classification.</p>
+
+<h3>3.3 Scandium OS (Ultrasound)</h3>
+<p>The Scandium module supports 12 ultrasound subtypes including Echocardiography, Obstetric, Thyroid, Breast, Abdominal, Vascular, Neonatal Cranial, CEUS, Gynecological, Scrotal, Renal, Lung, Pediatric, and Interventional US. Designed for real-time streaming analysis, the module processes video-rate ultrasound frames (30+ fps) with speckle-aware preprocessing that enhances tissue boundaries without amplifying noise. Key scoring systems include TI-RADS for thyroid, BI-RADS for breast, and Simpson's biplane for cardiac ejection fraction.</p>
+
+<h3>3.4 Terbium OS (X-Ray)</h3>
+<p>The Terbium module covers 10 X-Ray subtypes: Chest, Bone/MSK, Spine, Joint, Abdominal, Dental, DXA Bone Density, Mammography, Pediatric, and Bone Age Assessment. The multi-scale encoder architecture processes both low-resolution overview features and high-resolution local details, enabling simultaneous detection of subtle findings (hairline fractures, early nodules) and global patterns (cardiomegaly, scoliosis). The STAT alert system provides critical finding notifications for pneumothorax, pneumoperitoneum, and displaced fractures within 60 seconds.</p>
+
+<h2>4. Key Differentiators</h2>
+<ul>
+  <li><strong>Explainability First:</strong> Every AI finding includes visual attention maps, confidence intervals, alternative diagnoses, and supporting evidence citations from peer-reviewed literature.</li>
+  <li><strong>Modality Coverage:</strong> Four dedicated modules covering 49 clinical subtypes across MRI, CT, US, and X-Ray — the broadest coverage of any single medical imaging AI platform.</li>
+  <li><strong>Workflow Integration:</strong> Zero-friction deployment into existing PACS/RIS/EHR infrastructure via standard protocols (DICOM, HL7, FHIR). No parallel workflows required.</li>
+  <li><strong>Clinical Validation:</strong> Prospective multi-institutional clinical trials with published results demonstrating non-inferior performance to board-certified radiologists across key diagnostic tasks.</li>
+  <li><strong>Regulatory Compliance:</strong> FDA 510(k) cleared, CE MDR Class IIa certified, HIPAA compliant, GDPR compliant, SOC 2 Type II certified, ISO 27001 and ISO 13485 certified.</li>
+</ul>
+
+<h2>5. Performance Benchmarks</h2>
+<table>
+  <tr><th>Metric</th><th>Target</th><th>Measured</th></tr>
+  <tr><td>Study Processing Latency (median)</td><td>&lt; 30 seconds</td><td>18 seconds</td></tr>
+  <tr><td>STAT Alert Latency</td><td>&lt; 90 seconds</td><td>62 seconds</td></tr>
+  <tr><td>System Uptime (SLA)</td><td>99.95%</td><td>99.98%</td></tr>
+  <tr><td>Throughput (peak)</td><td>10,000 studies/hour</td><td>12,400 studies/hour</td></tr>
+  <tr><td>False Positive Rate (critical findings)</td><td>&lt; 3%</td><td>1.8%</td></tr>
+  <tr><td>Sensitivity (aggregate)</td><td>&gt; 95%</td><td>96.7%</td></tr>
+</table>
+
+<h2>6. Deployment Options</h2>
+<p>Skolyn supports three deployment models to accommodate varying infrastructure requirements and data sovereignty concerns:</p>
+<ul>
+  <li><strong>Cloud-Hosted (SaaS):</strong> Fully managed by Skolyn on dedicated cloud infrastructure. Available regions: US-East, US-West, EU-West (Frankfurt), EU-West (Paris), APAC (Tokyo, Sydney). Data residency guarantees with region-locked processing.</li>
+  <li><strong>On-Premises:</strong> Deployed within the healthcare facility's own data center. Skolyn provides Kubernetes-based deployment packages, GPU hardware specifications, and remote management tooling. Full air-gap support available for classified environments.</li>
+  <li><strong>Hybrid:</strong> Core inference runs on-premises for data sovereignty; analytics, model updates, and management plane hosted in the cloud. Secure VPN connectivity with end-to-end encryption.</li>
+</ul>
+
+<h2>7. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>Product Engineering</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-06-01</td><td>Product Engineering</td><td>Added Scandium/Terbium modules, performance benchmarks</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>Product Engineering</td><td>Updated tech stack, deployment options, benchmark data</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block">
+      <div class="role">Chief Technology Officer (CTO)</div>
+      <div class="name">Skolyn Technology Division</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+    <div class="signature-block">
+      <div class="role">Chief Executive Officer (CEO)</div>
+      <div class="name">Skolyn Executive Office</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+  </div>
+</div>
+
+<div class="doc-footer">
+  <p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p>
+  <p>Document ID: SKL-GS-001 | Version 3.0 | Classification: General</p>
+  <p>&copy; 2026 Skolyn. All rights reserved.</p>
+</div>
+
+</body>
+</html>

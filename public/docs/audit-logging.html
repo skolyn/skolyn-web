@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audit Logging - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #1a73e8;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#1a73e8;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:14px}th,td{padding:12px 16px;text-align:left;border:1px solid #dadce0}th{background:#e8f0fe;font-weight:600;color:#174ea6}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}pre{background:#1a1a2e;color:#e8eaed;padding:20px 24px;border-radius:12px;margin:16px 0 24px;overflow-x:auto;font-size:13px;line-height:1.7}pre code{background:none;padding:0;color:inherit}.callout{padding:16px 20px;border-radius:8px;margin:16px 0 24px;font-size:14px}.callout-info{background:#e8f0fe;border-left:4px solid #1a73e8;color:#174ea6}.callout-warning{background:#fef7e0;border-left:4px solid #ea8600;color:#b06000}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}
+</style>
+</head>
+<body>
+
+<div class="doc-id-bar">
+  <span class="doc-id">SKL-SEC-004</span>
+  <span>Skolyn Platform Documentation</span>
+  <span class="doc-class">CONFIDENTIAL</span>
+</div>
+
+<div class="doc-header">
+  <h1>Audit Logging</h1>
+  <div class="subtitle">Comprehensive Audit Trail System for Regulatory Compliance and Security Monitoring</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Confidential</div>
+    <div class="meta-item"><strong>Owner:</strong> Security Engineering</div>
+    <div class="meta-item"><strong>Review Cycle:</strong> Quarterly</div>
+    <div class="meta-item"><strong>Next Review:</strong> May 2026</div>
+  </div>
+</div>
+
+<h2>1. Executive Summary</h2>
+<p>Skolyn maintains a comprehensive, immutable audit logging system designed to satisfy the stringent requirements of HIPAA (§164.312(b)), GDPR (Art. 30), SOC 2, and ISO 27001 certifications. Every interaction with Protected Health Information (PHI), administrative action, system event, and security occurrence is captured with cryptographic integrity guarantees. Audit logs provide the forensic evidence necessary for incident response, compliance audits, clinical workflow analysis, and regulatory reporting. This document details the architectural design, event taxonomy, storage strategy, query capabilities, and retention policies governing Skolyn's audit logging infrastructure.</p>
+
+<h2>2. Architecture Overview</h2>
+<h3>2.1 Logging Pipeline</h3>
+<p>Skolyn employs a high-throughput, low-latency logging pipeline with guaranteed delivery semantics. The pipeline is designed for zero data loss — even under infrastructure failure scenarios:</p>
+<ul>
+  <li><strong>Event Generation:</strong> Each microservice emits structured audit events via the Skolyn Audit SDK. Events are generated synchronously with the operation they represent, meaning a study cannot be accessed without the corresponding audit event being committed first (write-ahead logging pattern).</li>
+  <li><strong>Event Transport:</strong> Events are published to an Apache Kafka cluster (3-broker minimum, replication factor 3) using the transactional producer API. Messages are acknowledged only after replication to all in-sync replicas (acks=all). This provides at-most-once delivery with no data loss.</li>
+  <li><strong>Event Processing:</strong> A dedicated Kafka Streams application enriches events with metadata (geo-IP resolution, device fingerprinting, session correlation) and routes them to both real-time analytics and long-term storage sinks.</li>
+  <li><strong>Event Storage:</strong> Processed events are stored in two systems: OpenSearch (for full-text search and dashboards, 90-day hot retention) and Amazon S3/GCS (for immutable long-term archival, 7-year cold retention with WORM compliance).</li>
+</ul>
+
+<h3>2.2 Immutability Guarantees</h3>
+<p>Audit log integrity is ensured through multiple mechanisms:</p>
+<ul>
+  <li><strong>Write-Once Storage:</strong> Long-term archives are stored using S3 Object Lock or GCS Retention Policies in compliance mode. Once written, objects cannot be deleted or modified for the specified retention period, even by administrators.</li>
+  <li><strong>Cryptographic Chaining:</strong> Each audit event includes a SHA-256 hash of the previous event in its chain, creating a tamper-evident linked chain (similar to blockchain). Any modification or deletion of intermediate records breaks the chain and triggers an integrity alert.</li>
+  <li><strong>Digital Signatures:</strong> Individual events are signed using HMAC-SHA256 with a key stored in the platform HSM. Signature verification can detect any post-hoc modification of event content.</li>
+</ul>
+
+<h2>3. Event Taxonomy</h2>
+<h3>3.1 Event Categories</h3>
+<table>
+  <tr><th>Category</th><th>Event Types</th><th>Severity</th><th>Retention</th></tr>
+  <tr><td>PHI Access</td><td>StudyViewed, ReportAccessed, ImageExported, PatientSearched</td><td>Standard</td><td>7 years</td></tr>
+  <tr><td>PHI Modification</td><td>ReportEdited, StudyAnnotated, PatientDemographicsChanged</td><td>Elevated</td><td>7 years</td></tr>
+  <tr><td>PHI Deletion</td><td>StudyDeleted, PatientPurged, DataExportedForErasure</td><td>Critical</td><td>10 years</td></tr>
+  <tr><td>Authentication</td><td>LoginSuccess, LoginFailure, MFAChallenged, SessionExpired, TokenRefreshed</td><td>Standard</td><td>3 years</td></tr>
+  <tr><td>Authorization</td><td>AccessGranted, AccessDenied, RoleChanged, PermissionModified</td><td>Elevated</td><td>7 years</td></tr>
+  <tr><td>Administrative</td><td>ConfigChanged, UserCreated, UserDeactivated, PolicyUpdated</td><td>Elevated</td><td>7 years</td></tr>
+  <tr><td>System</td><td>ServiceStarted, ServiceStopped, DeploymentCompleted, BackupCreated</td><td>Standard</td><td>1 year</td></tr>
+  <tr><td>Security</td><td>IntrusionDetected, VulnerabilityScanCompleted, CertificateRotated</td><td>Critical</td><td>7 years</td></tr>
+</table>
+
+<h3>3.2 Event Schema</h3>
+<p>Each audit event conforms to the following structured JSON schema, ensuring consistency and queryability across all event sources:</p>
+<pre><code>{
+  "eventId": "uuid-v4",
+  "timestamp": "2026-02-10T14:30:00.000Z",
+  "eventType": "PHI_ACCESS.StudyViewed",
+  "severity": "STANDARD",
+  "actor": {
+    "userId": "usr_abc123",
+    "displayName": "Dr. Sarah Chen",
+    "role": "RADIOLOGIST",
+    "sessionId": "sess_xyz789",
+    "ipAddress": "10.0.50.42",
+    "userAgent": "SkolynDesktop/3.2.1",
+    "geoLocation": { "country": "US", "region": "CA" }
+  },
+  "resource": {
+    "type": "DICOM_STUDY",
+    "id": "1.2.840.113619.2.12345",
+    "patientId": "HASH:sha256:a3f8b2...",
+    "accessionNumber": "ACC-2026-001234",
+    "modality": "MR",
+    "bodyPart": "BRAIN"
+  },
+  "action": "VIEW",
+  "outcome": "SUCCESS",
+  "context": {
+    "worklistPriority": "STAT",
+    "clinicalIndication": "Rule out stroke",
+    "priorStudiesAccessed": 2
+  },
+  "integrity": {
+    "previousHash": "sha256:e5b9c1...",
+    "eventHash": "sha256:7d2a4f...",
+    "hmacSignature": "hmac-sha256:9f3e7a..."
+  }
+}</code></pre>
+
+<h2>4. Query & Reporting</h2>
+<h3>4.1 Audit Console</h3>
+<p>Skolyn provides a dedicated Audit Console accessible to designated Compliance Officers and Administrators. The console supports full-text search across all audit events with filters for time range, event type, user, patient, and study identifiers. Pre-built dashboards provide real-time visibility into access patterns, login anomalies, and data modification trends.</p>
+
+<h3>4.2 Compliance Reports</h3>
+<p>Automated compliance reports are generated on configurable schedules. Standard reports include:</p>
+<ul>
+  <li><strong>PHI Access Report:</strong> Complete listing of all patient data access events within a specified period, indexed by patient and by user. Required for HIPAA accounting of disclosures.</li>
+  <li><strong>Failed Authentication Report:</strong> Summary of failed login attempts, account lockouts, and brute-force attack indicators.</li>
+  <li><strong>Administrative Change Report:</strong> All configuration, permission, and policy changes with before/after state comparison.</li>
+  <li><strong>Data Lifecycle Report:</strong> Tracking of data creation, modification, export, and deletion events for GDPR Article 30 compliance.</li>
+</ul>
+
+<h3>4.3 API Access</h3>
+<p>Audit events can be queried programmatically via the Skolyn Audit REST API (<code>/api/v3/audit</code>). The API supports pagination, filtering, and streaming (Server-Sent Events) for real-time integration with external SIEM platforms (Splunk, Elastic Security, Microsoft Sentinel). API access requires the <code>audit:read</code> OAuth scope and can be further restricted by IP allowlist.</p>
+
+<h2>5. Alerting & Anomaly Detection</h2>
+<p>Real-time alerting is configured for security-relevant events and anomalous patterns:</p>
+<ul>
+  <li><strong>Threshold Alerts:</strong> Triggered when specific event counts exceed defined thresholds (e.g., more than 50 failed logins from a single IP within 10 minutes).</li>
+  <li><strong>Behavioral Anomalies:</strong> Machine learning models detect unusual access patterns such as a user accessing an abnormally high number of patient records, access from a new geographic location, or access outside typical working hours.</li>
+  <li><strong>Integrity Violations:</strong> Any break in the cryptographic event chain triggers an immediate P1 security alert with automated evidence preservation.</li>
+</ul>
+
+<h2>6. Retention & Lifecycle Management</h2>
+<table>
+  <tr><th>Tier</th><th>Storage</th><th>Retention</th><th>Access Latency</th></tr>
+  <tr><td>Hot</td><td>OpenSearch</td><td>90 days</td><td>&lt; 100ms</td></tr>
+  <tr><td>Warm</td><td>S3 Standard-IA</td><td>1 year</td><td>&lt; 5 seconds</td></tr>
+  <tr><td>Cold</td><td>S3 Glacier Deep Archive</td><td>7 years</td><td>&lt; 12 hours</td></tr>
+  <tr><td>Legal Hold</td><td>S3 Object Lock (WORM)</td><td>Indefinite</td><td>&lt; 5 seconds</td></tr>
+</table>
+<p>Data lifecycle transitions are automated. Events move from hot to warm storage after 90 days, and from warm to cold after 1 year. Legal holds preserve specific events and chains indefinitely regardless of lifecycle policies, supporting litigation and regulatory investigation requirements.</p>
+
+<h2>7. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>Security Engineering</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-05-01</td><td>Security Engineering</td><td>Added cryptographic chaining, anomaly detection</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>Security Engineering</td><td>Updated schema, added API access, lifecycle tiers</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block">
+      <div class="role">Chief Technology Officer (CTO)</div>
+      <div class="name">Skolyn Technology Division</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+    <div class="signature-block">
+      <div class="role">Chief Executive Officer (CEO)</div>
+      <div class="name">Skolyn Executive Office</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+  </div>
+</div>
+
+<div class="doc-footer">
+  <p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p>
+  <p>Document ID: SKL-SEC-004 | Version 3.0 | Classification: Confidential</p>
+  <p>&copy; 2026 Skolyn. All rights reserved.</p>
+</div>
+
+</body>
+</html>

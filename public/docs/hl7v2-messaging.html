@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HL7v2 Messaging - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #1e8e3e;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#1e8e3e;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:13px}th,td{padding:10px 14px;text-align:left;border:1px solid #dadce0}th{background:#e6f4ea;font-weight:600;color:#137333}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}pre{background:#1a1a2e;color:#e8eaed;padding:20px 24px;border-radius:12px;margin:16px 0 24px;overflow-x:auto;font-size:13px;line-height:1.7}pre code{background:none;padding:0;color:inherit}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}
+</style>
+</head>
+<body>
+
+<div class="doc-id-bar">
+  <span class="doc-id">SKL-INT-002</span>
+  <span>Skolyn Platform Documentation</span>
+  <span class="doc-class">RESTRICTED</span>
+</div>
+
+<div class="doc-header">
+  <h1>HL7v2 Messaging</h1>
+  <div class="subtitle">Healthcare Level Seven Version 2 Integration Guide for Order Workflow and Result Delivery</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Restricted</div>
+    <div class="meta-item"><strong>Owner:</strong> Integration Engineering</div>
+    <div class="meta-item"><strong>Review Cycle:</strong> Quarterly</div>
+    <div class="meta-item"><strong>Next Review:</strong> May 2026</div>
+  </div>
+</div>
+
+<h2>1. Overview</h2>
+<p>Health Level Seven version 2 (HL7v2) messaging is the most widely deployed healthcare interoperability standard, used by virtually every hospital information system, radiology information system (RIS), and electronic health record (EHR) worldwide. Skolyn's HL7v2 integration enables bidirectional message exchange for order management (ORM/OML), result delivery (ORU), patient administration (ADT), and scheduling (SIU). The integration uses the Minimal Lower Layer Protocol (MLLP) transport with mandatory TLS encryption for PHI protection. This document covers the supported message types, segment-level field mappings, acknowledgment handling, error recovery, and configuration procedures for connecting Skolyn to your institution's HL7 interface engine.</p>
+
+<h2>2. Supported Message Types</h2>
+<table>
+  <tr><th>Message Type</th><th>Trigger Event</th><th>Direction</th><th>Purpose</th></tr>
+  <tr><td>ORM^O01</td><td>Order Message</td><td>Inbound</td><td>Receive radiology orders from RIS/CPOE to initiate study processing</td></tr>
+  <tr><td>OML^O21</td><td>Lab Order Message</td><td>Inbound</td><td>Receive laboratory-initiated imaging orders</td></tr>
+  <tr><td>ORU^R01</td><td>Unsolicited Result</td><td>Outbound</td><td>Deliver AI findings and structured results to RIS/EHR</td></tr>
+  <tr><td>ADT^A01</td><td>Admit/Visit Notification</td><td>Inbound</td><td>Receive patient registration for context linking</td></tr>
+  <tr><td>ADT^A08</td><td>Update Patient Info</td><td>Inbound</td><td>Synchronize patient demographics changes</td></tr>
+  <tr><td>ADT^A04</td><td>Register a Patient</td><td>Inbound</td><td>New patient registration from master index</td></tr>
+  <tr><td>SIU^S12</td><td>Notification of New Appointment</td><td>Inbound</td><td>Receive scheduling data for worklist management</td></tr>
+  <tr><td>ACK^A01</td><td>Acknowledgment</td><td>Both</td><td>Confirm successful message receipt and processing</td></tr>
+</table>
+
+<h2>3. Message Structure</h2>
+<h3>3.1 ORU^R01 (AI Result Message)</h3>
+<p>The primary outbound message type is ORU^R01, which delivers AI-generated findings to the RIS or EHR. Each ORU message maps to a single study analysis and contains the following segments:</p>
+<pre><code>MSH|^~\&amp;|SKOLYN|SKOLYN_AI|RIS|HOSPITAL|20260210143000||ORU^R01^ORU_R01|MSG00001|P|2.5.1|||AL|NE||8859/1
+PID|||MRN12345^^^HOSPITAL^MR||DOE^JOHN||19800115|M
+PV1||O|RAD^^^^||||1234567^CHEN^SARAH^^^^MD
+ORC|RE|ORD-2026-001|||CM
+OBR|1|ORD-2026-001||IMG001^MRI Brain w/wo Contrast^L|||20260210120000|||||||||||||||F
+OBX|1|TX|IMG001.AI^AI Summary^L||Brain MRI analysis complete. 1 finding identified.||||||F
+OBX|2|TX|IMG001.F1^Finding 1^L||Right temporal lobe enhancing lesion, 12x8mm||||||F
+OBX|3|NM|IMG001.F1.SIZE^Lesion Size^L||12|mm|||||F
+OBX|4|NM|IMG001.F1.CONF^Confidence Score^L||0.94||||||F
+OBX|5|TX|IMG001.F1.DDX^Differential Diagnosis^L||1. Metastasis (78%) 2. Meningioma (15%) 3. Abscess (7%)||||||F
+OBX|6|TX|IMG001.F1.XAI^Explainability^L||Grad-CAM attention focused on perilesional edema and enhancement pattern||||||F
+OBX|7|CE|IMG001.F1.CODE^Finding Code^L||425771^Ring-enhancing lesion^SCT||||||F</code></pre>
+
+<h3>3.2 Segment Field Mapping</h3>
+<table>
+  <tr><th>Segment.Field</th><th>Description</th><th>Skolyn Mapping</th></tr>
+  <tr><td>MSH-3</td><td>Sending Application</td><td>Configurable: <code>hl7.sending_application</code></td></tr>
+  <tr><td>MSH-4</td><td>Sending Facility</td><td>Configurable: <code>hl7.sending_facility</code></td></tr>
+  <tr><td>MSH-9</td><td>Message Type</td><td>ORU^R01^ORU_R01</td></tr>
+  <tr><td>MSH-12</td><td>Version ID</td><td>Configurable: 2.3.1, 2.5, 2.5.1</td></tr>
+  <tr><td>PID-3</td><td>Patient Identifier List</td><td>MRN from DICOM study demographics</td></tr>
+  <tr><td>OBR-4</td><td>Universal Service ID</td><td>Mapped from institutional procedure codes</td></tr>
+  <tr><td>OBR-25</td><td>Result Status</td><td>F (Final) or P (Preliminary)</td></tr>
+  <tr><td>OBX-2</td><td>Value Type</td><td>TX (Text), NM (Numeric), CE (Coded Entry)</td></tr>
+  <tr><td>OBX-3</td><td>Observation Identifier</td><td>Custom Skolyn observation identifiers</td></tr>
+  <tr><td>OBX-11</td><td>Observation Result Status</td><td>F (Final)</td></tr>
+</table>
+
+<h2>4. MLLP Transport</h2>
+<p>HL7v2 messages are transported over MLLP (Minimal Lower Layer Protocol) connections with TLS encryption. The MLLP frame structure wraps each HL7 message with a start block character (0x0B), followed by the HL7 message content, an end block character (0x1C), and a carriage return (0x0D). Skolyn's HL7 Gateway listens on a configurable port (default 2575) and supports up to 32 concurrent MLLP connections. Connection pooling and keep-alive are used to minimize TCP handshake overhead for high-volume message flows.</p>
+
+<h3>4.1 Acknowledgment Handling</h3>
+<p>Skolyn implements Enhanced Mode acknowledgment per HL7v2 specification. Upon receiving a message, Skolyn first sends a Commit Acknowledgment (CA) confirming receipt and then processes the message asynchronously. After successful processing, an Application Acknowledgment (AA) is sent. If processing fails, an Application Error (AE) acknowledgment is returned with ERR segment details. The sending system is expected to retry messages that receive a negative acknowledgment (AR/AE) up to 3 times with exponential backoff before entering a dead-letter queue for manual investigation.</p>
+
+<h2>5. Character Encoding</h2>
+<p>Skolyn supports UTF-8 character encoding for HL7 messages (MSH-18 = "UNICODE UTF-8"), which is essential for international deployments handling patient names in non-Latin scripts. Legacy ISO 8859/1 encoding is also supported for backward compatibility with older interface engines. Encoding negotiation follows the HL7 specification — the MSH-18 field in the inbound message determines the encoding used for the corresponding ACK.</p>
+
+<h2>6. Configuration & Testing</h2>
+<h3>6.1 Interface Engine Configuration</h3>
+<p>Connect your interface engine (Mirth Connect, Rhapsody, Cloverleaf, InterSystems HealthConnect) to Skolyn's MLLP listener using the following parameters: hostname matching your Skolyn deployment, port 2575 (configurable), TLS 1.2 or 1.3 with the institution's CA certificate in the trust store. Configure the sending application and facility identifiers to match your RIS system.</p>
+
+<h3>6.2 Message Validation</h3>
+<pre><code># Send test HL7 message using HAPI Test Panel
+# Connection: MLLP TLS, Host: skolyn.hospital.com, Port: 2575
+# Message Type: ORU^R01
+# Expected Response: MSA-1 = AA (Application Accept)
+
+# CLI validation
+skolyn-cli hl7 test --host skolyn.hospital.com --port 2575 --tls</code></pre>
+
+<h2>7. Error Handling & Dead Letter Queue</h2>
+<p>Messages that fail processing after retry exhaustion are routed to the HL7 Dead Letter Queue (DLQ), accessible via the Management Console (Operations > HL7 DLQ). Each DLQ entry preserves the original message, error details, retry history, and timestamp. Administrators can reprocess, edit, or acknowledge DLQ entries. Automated alerts notify Integration Engineers when the DLQ depth exceeds configurable thresholds.</p>
+
+<h2>8. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>Integration Engineering</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-06-01</td><td>Integration Engineering</td><td>Added ADT, SIU, enhanced ACK, DLQ</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>Integration Engineering</td><td>Updated ORU mapping, MLLP TLS, encoding</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block">
+      <div class="role">Chief Technology Officer (CTO)</div>
+      <div class="name">Skolyn Technology Division</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+    <div class="signature-block">
+      <div class="role">Chief Executive Officer (CEO)</div>
+      <div class="name">Skolyn Executive Office</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+  </div>
+</div>
+
+<div class="doc-footer">
+  <p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p>
+  <p>Document ID: SKL-INT-002 | Version 3.0 | Classification: Restricted</p>
+  <p>&copy; 2026 Skolyn. All rights reserved.</p>
+</div>
+
+</body>
+</html>

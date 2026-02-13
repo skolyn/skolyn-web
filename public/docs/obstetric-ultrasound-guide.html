@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Obstetric Ultrasound Guide - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #ad1457;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#ad1457;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:13px}th,td{padding:10px 14px;text-align:left;border:1px solid #dadce0}th{background:#fce4ec;font-weight:600;color:#880e4f}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}</style>
+</head>
+<body>
+
+<div class="doc-id-bar"><span class="doc-id">SKL-US-002</span><span>Skolyn Platform Documentation</span><span class="doc-class">CONFIDENTIAL</span></div>
+
+<div class="doc-header">
+  <h1>Obstetric Ultrasound Guide</h1>
+  <div class="subtitle">AI-Assisted Obstetric Imaging: Biometry, Fetal Anatomy Survey, Growth Assessment, and Risk Screening</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Confidential</div>
+    <div class="meta-item"><strong>Owner:</strong> Ultrasound Engineering</div>
+  </div>
+</div>
+
+<h2>1. Overview</h2>
+<p>Obstetric ultrasound is the primary imaging modality for prenatal evaluation, performed at multiple timepoints throughout pregnancy. Skolyn's obstetric ultrasound AI within Scandium OS covers both first-trimester (6-14 weeks) and second/third-trimester (18-40 weeks) examinations, automating fetal biometric measurements, anatomical survey assessment, growth percentile calculation, amniotic fluid quantification, and placental evaluation. The module supports both routine screening protocols and targeted diagnostic evaluations for high-risk pregnancies. Obstetric ultrasound presents unique AI challenges: the fetal position changes constantly, image quality varies significantly with maternal habitus, and measurement accuracy directly impacts clinical decisions about gestational dating, growth restriction, and delivery timing. Skolyn's OS AI achieves measurement precision within 1.8mm of expert sonographer measurements across all standard biometric parameters.</p>
+
+<h2>2. First Trimester Assessment</h2>
+<h3>2.1 Gestational Age and Viability</h3>
+<p>First-trimester AI analysis includes measurement of crown-rump length (CRL) for accurate gestational age dating (the most precise ultrasound dating parameter, with accuracy of plus or minus 5 days), yolk sac identification and measurement, assessment of embryonic cardiac activity detection, and mean gestational sac diameter calculation when CRL is not yet measurable (&lt;6 weeks). The module identifies early pregnancy failures using established sonographic criteria: mean sac diameter &ge;25mm without embryo, embryo CRL &ge;7mm without cardiac activity, absent embryo with heartbeat &ge;2 weeks after a scan showing gestational sac without yolk sac, or &ge;11 days after a scan showing gestational sac with yolk sac.</p>
+
+<h3>2.2 Nuchal Translucency Screening</h3>
+<p>At 11-14 weeks, the module performs automated nuchal translucency (NT) measurement following the Fetal Medicine Foundation (FMF) certification standards. The algorithm identifies the correct mid-sagittal plane, positions calipers at the widest point of the nuchal translucency (inner caliper placement on the nuchal fold borders), and measures the anechoic space between the soft tissue and the spine. NT measurement is combined with maternal age and serum biochemistry (PAPP-A, free beta-hCG) for first-trimester combined screening risk calculation for trisomy 21, 18, and 13. The system also assesses nasal bone presence/absence and ductus venosus flow pattern as additional risk modifiers.</p>
+
+<h2>3. Second/Third Trimester Biometry</h2>
+<p>Standard fetal biometric measurements are automated across four parameters: biparietal diameter (BPD) measured at the level of the thalami and cavum septi pellucidi, head circumference (HC) measured at the same level using elliptical trace, abdominal circumference (AC) measured at the level of the stomach, umbilical vein, and portal sinus, and femur length (FL) measured diaphysis only excluding epiphyseal ossification centers. Each measurement is converted to gestational age using Hadlock equations and plotted on growth curves (Intergrowth-21st or WHO standards, configurable per institution). Estimated fetal weight (EFW) is calculated using the Hadlock four-parameter formula (BPD, HC, AC, FL) and plotted on percentile charts for growth assessment.</p>
+
+<h2>4. Fetal Growth Assessment</h2>
+<p>When prior studies are available, the module performs longitudinal growth trajectory analysis, plotting serial measurements on customized growth curves adjusted for maternal height, weight, parity, and ethnicity. Fetal growth restriction (FGR) screening identifies fetuses with EFW &lt;10th percentile (small for gestational age, SGA) or &lt;3rd percentile (severe SGA). The system integrates biometry with Doppler assessments — umbilical artery PI, middle cerebral artery PI, and cerebroplacental ratio (CPR) — to differentiate constitutionally small from growth-restricted fetuses. Abnormal Doppler findings trigger risk stratification for adverse perinatal outcome and recommended surveillance intervals.</p>
+
+<h2>5. Amniotic Fluid Assessment</h2>
+<p>Amniotic fluid volume is quantified using both amniotic fluid index (AFI, sum of deepest pockets in four quadrants) and single deepest pocket (SDP) measurements. Normal AFI ranges from 5-24 cm. Oligohydramnios (AFI &lt;5 cm or SDP &lt;2 cm) and polyhydramnios (AFI &gt;24 cm or SDP &gt;8 cm) are automatically flagged with clinical correlation recommendations. The system tracks amniotic fluid trends across serial studies for monitoring at-risk pregnancies.</p>
+
+<h2>6. Clinical Performance</h2>
+<table>
+  <tr><th>Task</th><th>Metric</th><th>Performance</th><th>Benchmark</th></tr>
+  <tr><td>CRL Measurement</td><td>MAE</td><td>1.2mm</td><td>FMF-certified expert</td></tr>
+  <tr><td>Biometry (BPD/HC/AC/FL)</td><td>MAE</td><td>1.8mm</td><td>10K clinical studies</td></tr>
+  <tr><td>NT Measurement</td><td>MAE</td><td>0.2mm</td><td>FMF-certified expert</td></tr>
+  <tr><td>EFW Accuracy</td><td>MAE</td><td>8.2%</td><td>Birth weight correlation</td></tr>
+  <tr><td>SGA Detection</td><td>Sensitivity</td><td>89.5%</td><td>Birth weight &lt;10th percentile</td></tr>
+</table>
+
+<h2>7. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>Ultrasound Engineering</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-06-01</td><td>Ultrasound Engineering</td><td>Added NT, growth trajectories</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>Ultrasound Engineering</td><td>Updated performance, Intergrowth-21st</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block"><div class="role">Chief Technology Officer (CTO)</div><div class="name">Skolyn Technology Division</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+    <div class="signature-block"><div class="role">Chief Executive Officer (CEO)</div><div class="name">Skolyn Executive Office</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+  </div>
+</div>
+
+<div class="doc-footer"><p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p><p>Document ID: SKL-US-002 | Version 3.0 | Classification: Confidential</p><p>&copy; 2026 Skolyn. All rights reserved.</p></div>
+
+</body>
+</html>

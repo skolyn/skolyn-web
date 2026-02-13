@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Backup & Restore - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #5c6bc0;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#5c6bc0;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:13px}th,td{padding:10px 14px;text-align:left;border:1px solid #dadce0}th{background:#e8eaf6;font-weight:600;color:#283593}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}</style>
+</head>
+<body>
+
+<div class="doc-id-bar"><span class="doc-id">SKL-OPS-005</span><span>Skolyn Platform Documentation</span><span class="doc-class">CONFIDENTIAL</span></div>
+
+<div class="doc-header">
+  <h1>Backup & Restore</h1>
+  <div class="subtitle">Comprehensive Data Protection: Automated Backup Schedules, Encryption, Retention Policies, and Point-in-Time Recovery</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Confidential</div>
+    <div class="meta-item"><strong>Owner:</strong> Platform Engineering</div>
+  </div>
+</div>
+
+<h2>1. Overview</h2>
+<p>Skolyn's backup and restore infrastructure provides comprehensive data protection for all platform components, ensuring the ability to recover from data corruption, accidental deletion, ransomware attacks, hardware failures, and software defects. As a medical imaging AI platform handling protected health information, Skolyn's backup strategy must satisfy HIPAA's data availability requirements, institutional data retention policies (typically 7-10 years for medical imaging data), and contractual SLA obligations. The backup architecture covers four data categories: database metadata (PostgreSQL), DICOM study storage (MinIO object storage), AI model artifacts (model weights, configurations, version metadata), and platform configuration (Kubernetes manifests, secrets, certificates). All backups are encrypted at rest using AES-256-GCM, integrity-verified using SHA-256 checksums, and tested monthly through automated restore validation.</p>
+
+<h2>2. Backup Categories and Schedules</h2>
+<table>
+  <tr><th>Data Category</th><th>Backup Type</th><th>Frequency</th><th>Retention</th><th>Storage Target</th></tr>
+  <tr><td>PostgreSQL Database</td><td>WAL Archiving (continuous)</td><td>Continuous</td><td>30 days of WAL</td><td>S3 / Azure Blob</td></tr>
+  <tr><td>PostgreSQL Database</td><td>Full logical backup (pg_dump)</td><td>Daily 02:00 UTC</td><td>90 days</td><td>S3 / Azure Blob</td></tr>
+  <tr><td>DICOM Study Storage</td><td>Incremental sync</td><td>Every 6 hours</td><td>Per institutional policy</td><td>Cross-region S3</td></tr>
+  <tr><td>AI Model Artifacts</td><td>Full snapshot</td><td>On model update</td><td>All versions (immutable)</td><td>S3 versioned bucket</td></tr>
+  <tr><td>Platform Configuration</td><td>Full snapshot</td><td>Daily + on change</td><td>365 days</td><td>S3 + Git repository</td></tr>
+  <tr><td>Audit Logs</td><td>Incremental archive</td><td>Daily</td><td>7 years (HIPAA)</td><td>Glacier / Cold Storage</td></tr>
+</table>
+
+<h2>3. Database Backup Strategy</h2>
+<h3>3.1 Continuous WAL Archiving</h3>
+<p>PostgreSQL Write-Ahead Log (WAL) archiving provides continuous point-in-time recovery (PITR) capability. Every committed transaction is written to WAL segments, which are asynchronously shipped to the backup storage target via pgBackRest. WAL archiving enables recovery to any point in time within the 30-day WAL retention window with transaction-level granularity. This is critical for recovering from logical corruption (e.g., incorrect data modification) where the restore point must be precisely before the corrupting transaction.</p>
+
+<h3>3.2 Full Logical Backups</h3>
+<p>Daily full logical backups (pg_dump with custom format and compression) provide database-level restore capability independent of PostgreSQL version. Logical backups support cross-version restoration (enabling database upgrades), selective table restoration, and schema-only or data-only restoration. Backup jobs run during the maintenance window (02:00-04:00 UTC) and are monitored for completion and integrity. A failed backup triggers an immediate P2 alert with automatic retry.</p>
+
+<h2>4. Object Storage Backup</h2>
+<p>DICOM study data stored in MinIO is protected through cross-region replication. The replication target is a separate storage cluster in a different geographic region, using server-side replication with bandwidth throttling (configurable, default 100 Mbps) to avoid impacting production network paths. Object versioning is enabled, retaining previous versions of overwritten objects for 30 days. For institutions requiring long-term DICOM archive (beyond the online storage retention period), scheduled archival jobs move studies older than the configured threshold (default 24 months) to cold storage (AWS Glacier Deep Archive or Azure Cool Blob Storage) with retrieval times of 12-48 hours.</p>
+
+<h2>5. Restore Procedures</h2>
+<h3>5.1 Point-in-Time Recovery</h3>
+<p>Database PITR restores are performed using pgBackRest, specifying the target recovery timestamp. The restore process: stops the PostgreSQL cluster, restores the most recent full backup prior to the target timestamp, replays WAL segments up to the specified recovery point, and promotes the restored instance. Estimated PITR completion time: 15-45 minutes depending on database size and WAL volume to replay. All restore operations generate comprehensive audit logs documenting the recovery point, operator identity, authorization chain, and data scope affected.</p>
+
+<h3>5.2 Full System Recovery</h3>
+<p>Full system recovery restores the complete Skolyn platform from backups on new infrastructure. The recovery sequence is: provision infrastructure (automated via Terraform/Pulumi), restore platform configuration from Git, deploy Kubernetes manifests, restore PostgreSQL from latest full backup + WAL replay, synchronize DICOM storage from replication target, load AI model artifacts from versioned storage, validate all endpoints via automated health checks, and re-establish DICOM associations with connected PACS systems. Full system recovery target: &lt;4 hours for Tier 1 services.</p>
+
+<h2>6. Backup Verification</h2>
+<p>Monthly automated restore tests verify backup integrity by restoring the most recent backup to an isolated test environment, running automated data integrity checks (row counts, checksum validation, referential integrity), executing a suite of functional tests against the restored platform, and generating a backup verification report documenting test results and any remediation required. Additionally, annual DR exercises include a complete system rebuild from backups on fresh infrastructure to validate the end-to-end recovery pipeline.</p>
+
+<h2>7. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>Platform Engineering</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-06-01</td><td>Platform Engineering</td><td>Added PITR, cold storage</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>Platform Engineering</td><td>Updated schedules, verification</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block"><div class="role">Chief Technology Officer (CTO)</div><div class="name">Skolyn Technology Division</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+    <div class="signature-block"><div class="role">Chief Executive Officer (CEO)</div><div class="name">Skolyn Executive Office</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+  </div>
+</div>
+
+<div class="doc-footer"><p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p><p>Document ID: SKL-OPS-005 | Version 3.0 | Classification: Confidential</p><p>&copy; 2026 Skolyn. All rights reserved.</p></div>
+
+</body>
+</html>

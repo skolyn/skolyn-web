@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Point-of-Care Ultrasound - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #00897b;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#00897b;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:13px}th,td{padding:10px 14px;text-align:left;border:1px solid #dadce0}th{background:#e0f2f1;font-weight:600;color:#00695c}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}</style>
+</head>
+<body>
+
+<div class="doc-id-bar"><span class="doc-id">SKL-US-003</span><span>Skolyn Platform Documentation</span><span class="doc-class">CONFIDENTIAL</span></div>
+
+<div class="doc-header">
+  <h1>Point-of-Care Ultrasound (POCUS)</h1>
+  <div class="subtitle">Real-Time AI Guidance for Emergency and Bedside Ultrasound: FAST, Lung, Cardiac, and Vascular Access</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Confidential</div>
+    <div class="meta-item"><strong>Owner:</strong> Ultrasound Engineering</div>
+  </div>
+</div>
+
+<h2>1. Overview</h2>
+<p>Point-of-Care Ultrasound (POCUS) is the fastest-growing application of diagnostic ultrasound, used by emergency physicians, intensivists, anesthesiologists, and hospitalists at the bedside for immediate clinical decision-making. Unlike traditional radiology ultrasound where studies are acquired by sonographers and interpreted by radiologists, POCUS is performed and interpreted by the treating clinician in real-time. This operator model creates unique challenges: POCUS operators have varying levels of ultrasound training, examination quality is highly variable, and there is no traditional quality assurance review. Skolyn's POCUS AI within Scandium OS addresses these challenges through real-time streaming analysis that provides immediate AI guidance overlays, image quality feedback, and automated finding detection — functioning as a virtual expert sonographer at the bedside. The module processes at 30 FPS with sub-33ms latency per frame, enabling true real-time guidance during active scanning.</p>
+
+<h2>2. FAST Examination</h2>
+<h3>2.1 Focused Assessment with Sonography for Trauma</h3>
+<p>The FAST exam is the most widely performed POCUS protocol, used to detect free intraperitoneal fluid in trauma patients. Skolyn's AI evaluates all four standard FAST windows: right upper quadrant (Morrison's pouch / hepatorenal recess), left upper quadrant (splenorenal recess), suprapubic (pelvis), and subxiphoid (pericardium). At each window, the AI identifies anechoic free fluid collections, estimates fluid volume based on stripe thickness and extent, and provides a binary FAST-positive or FAST-negative determination with confidence score. The system also detects hemothorax at the right and left costophrenic angles (extended FAST/eFAST), combining thoracic and abdominal assessment for comprehensive trauma evaluation. Detection sensitivity for free fluid exceeding 200mL is 96.2%, with specificity of 94.8%.</p>
+
+<h2>3. Lung Ultrasound</h2>
+<h3>3.1 Pneumothorax Detection</h3>
+<p>Lung ultrasound for pneumothorax assessment analyzes M-mode and B-mode cine clips for the presence or absence of lung sliding — the normal back-and-forth movement of the visceral pleura against the parietal pleura during respiration. The AI detects the "seashore sign" on M-mode (normal lung sliding present) versus the "stratosphere/barcode sign" (absent lung sliding, suggestive of pneumothorax). The system also identifies the "lung point" — the transition zone where lung sliding is present on one side and absent on the other — which is pathognomonic for pneumothorax and indicates its extent. Pneumothorax detection achieves 96.8% sensitivity and 94.2% specificity.</p>
+
+<h3>3.2 B-Line Assessment</h3>
+<p>B-lines are hyperechoic vertical artifacts arising from the pleural line and extending to the bottom of the screen, indicating interstitial fluid or edema. The AI counts B-lines per intercostal space across all lung zones (anterior, lateral, posterior; upper and lower), generating a B-line score that correlates with the degree of pulmonary edema. Normal lungs show 0-2 B-lines per zone; 3 or more B-lines is considered pathological. The system maps B-line distribution across the lung surface, distinguishing diffuse patterns (cardiogenic pulmonary edema) from focal patterns (pneumonia, ARDS). Confluence of B-lines ("white lung") is specifically flagged as indicating severe edema or consolidation.</p>
+
+<h2>4. Cardiac POCUS</h2>
+<p>Cardiac POCUS provides rapid bedside assessment of cardiac function, pericardial effusion, and RV dilation. The AI processes subxiphoid, parasternal long-axis, and apical 4-chamber views to estimate LVEF (categorized as normal &gt;55%, mildly reduced 40-55%, moderately reduced 30-40%, severely reduced &lt;30%), detect pericardial effusion with tamponade physiology assessment (RV diastolic collapse, RA systolic collapse, respiratory variation of mitral inflow), and evaluate RV:LV ratio for acute cor pulmonale screening. IVC assessment from the subxiphoid view measures IVC diameter and collapsibility index for volume status estimation — IVC &lt;2.1cm with &gt;50% collapse suggests low CVP (0-5 mmHg), while IVC &gt;2.1cm with &lt;50% collapse suggests elevated CVP (&gt;15 mmHg).</p>
+
+<h2>5. Image Quality Guidance</h2>
+<p>The POCUS quality guidance module provides real-time feedback to the operator during scanning. Feedback includes probe orientation confirmation, depth and gain optimization suggestions, anatomical landmark identification to confirm correct scanning window, and image quality scoring (1-5) with specific improvement recommendations. For each POCUS protocol, the system confirms whether all required views have been acquired with adequate quality before the exam is considered complete. This feature is particularly valuable in training environments and institutions implementing POCUS credentialing programs.</p>
+
+<h2>6. Clinical Performance</h2>
+<table>
+  <tr><th>Task</th><th>Metric</th><th>Performance</th><th>Benchmark</th></tr>
+  <tr><td>FAST (Free Fluid)</td><td>Sensitivity</td><td>96.2%</td><td>CT correlation</td></tr>
+  <tr><td>Pneumothorax</td><td>Sensitivity</td><td>96.8%</td><td>3K clinical clips</td></tr>
+  <tr><td>B-Line Count</td><td>ICC</td><td>0.91</td><td>Expert count</td></tr>
+  <tr><td>Cardiac EF Category</td><td>Agreement</td><td>88.5%</td><td>Formal echocardiography</td></tr>
+  <tr><td>IVC Collapsibility</td><td>MAE</td><td>8.2%</td><td>Expert measurement</td></tr>
+</table>
+
+<h2>7. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>Ultrasound Engineering</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-06-01</td><td>Ultrasound Engineering</td><td>Added lung US, quality guidance</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>Ultrasound Engineering</td><td>Updated performance, eFAST</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block"><div class="role">Chief Technology Officer (CTO)</div><div class="name">Skolyn Technology Division</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+    <div class="signature-block"><div class="role">Chief Executive Officer (CEO)</div><div class="name">Skolyn Executive Office</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+  </div>
+</div>
+
+<div class="doc-footer"><p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p><p>Document ID: SKL-US-003 | Version 3.0 | Classification: Confidential</p><p>&copy; 2026 Skolyn. All rights reserved.</p></div>
+
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RIS Integration - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #ea8600;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#ea8600;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:14px}th,td{padding:12px 16px;text-align:left;border:1px solid #dadce0}th{background:#fef7e0;font-weight:600;color:#b06000}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}pre{background:#1a1a2e;color:#e8eaed;padding:20px 24px;border-radius:12px;margin:16px 0 24px;overflow-x:auto;font-size:13px;line-height:1.7}pre code{background:none;padding:0;color:inherit}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}
+</style>
+</head>
+<body>
+
+<div class="doc-id-bar">
+  <span class="doc-id">SKL-INT-007</span>
+  <span>Skolyn Platform Documentation</span>
+  <span class="doc-class">RESTRICTED</span>
+</div>
+
+<div class="doc-header">
+  <h1>RIS Integration</h1>
+  <div class="subtitle">Radiology Information System Integration Guide for Order-to-Result Workflow Automation</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Restricted</div>
+    <div class="meta-item"><strong>Owner:</strong> Integration Engineering</div>
+    <div class="meta-item"><strong>Review Cycle:</strong> Quarterly</div>
+    <div class="meta-item"><strong>Next Review:</strong> May 2026</div>
+  </div>
+</div>
+
+<h2>1. Introduction</h2>
+<p>The Radiology Information System (RIS) is the operational backbone of radiology departments, managing the lifecycle of imaging orders from scheduling through acquisition, interpretation, and reporting. Skolyn's RIS integration embeds AI analysis seamlessly into this workflow, ensuring that AI findings are available to radiologists at the point of interpretation without adding extra steps, logins, or context switches. This document covers order receipt workflows, worklist management, AI-augmented reporting, result status synchronization, and vendor-specific configuration for leading RIS platforms including Cerner RadNet, Epic Radiant, AGFA HealthCare, and Sectra RIS.</p>
+
+<h2>2. Order-Driven Processing</h2>
+<h3>2.1 Order Receipt via HL7v2 ORM</h3>
+<p>Skolyn receives radiology orders from the RIS via HL7v2 ORM^O01 messages. The order message provides critical context that guides AI analysis: procedure code (mapping to the appropriate AI module and subtype), clinical indication (used for context-aware AI analysis and report generation), ordering provider (for result notification routing), and patient demographics (for demographic-adjusted analysis thresholds). Skolyn correlates the HL7 order with the incoming DICOM study using the Accession Number (OBR-18 field matched against DICOM tag 0008,0050) to ensure accurate study-to-order linking.</p>
+
+<h3>2.2 Order Matching Logic</h3>
+<table>
+  <tr><th>Match Priority</th><th>Matching Field</th><th>Source (Order)</th><th>Source (DICOM)</th></tr>
+  <tr><td>1 (Primary)</td><td>Accession Number</td><td>OBR-18</td><td>(0008,0050)</td></tr>
+  <tr><td>2 (Secondary)</td><td>Patient MRN + Study Date</td><td>PID-3 + OBR-7</td><td>(0010,0020) + (0008,0020)</td></tr>
+  <tr><td>3 (Tertiary)</td><td>Patient MRN + Modality + Body Part</td><td>PID-3 + OBR-4</td><td>(0010,0020) + (0008,0060) + (0018,0015)</td></tr>
+  <tr><td>4 (Fuzzy)</td><td>Patient Name + DOB + Procedure</td><td>PID-5 + PID-7 + OBR-4</td><td>(0010,0010) + (0010,0030) + Study Desc</td></tr>
+</table>
+
+<h2>3. Worklist Integration</h2>
+<h3>3.1 AI-Augmented Worklist</h3>
+<p>Skolyn enriches the radiologist's reading worklist with AI processing status and preliminary findings. When a study has been analyzed by Skolyn prior to the radiologist opening it, the worklist entry displays an AI status indicator (complete/pending/not-applicable), finding count, critical finding flag, and a confidence score summary. This allows radiologists to prioritize their reading queue based on AI triage — studies with critical AI findings can be promoted to the top of the worklist automatically.</p>
+
+<h3>3.2 DICOM Modality Worklist (MWL)</h3>
+<p>For sites where the RIS manages the DICOM Modality Worklist, Skolyn participates as a Worklist Management SCP, providing AI-specific worklist entries for quality assurance workflows. QA technologists and AI validation radiologists can query Skolyn's MWL to retrieve studies that require human review of AI findings, filtered by module, finding type, confidence level, or review status.</p>
+
+<h2>4. AI-Augmented Reporting</h2>
+<h3>4.1 Prefilled Report Templates</h3>
+<p>Skolyn generates prefilled radiology report templates based on AI findings, formatted according to the institution's reporting style guide. The templates include standardized finding descriptions, measurements, relevant prior comparison data, and differential diagnosis suggestions. Radiologists can accept, modify, or discard the AI-generated content within their existing dictation or structured reporting workflow. Template generation supports RadLex Playbook procedure descriptions and ACR Reporting Templates for structured reporting compliance.</p>
+
+<h3>4.2 Report Addendum</h3>
+<p>When Skolyn completes analysis after the radiologist has already begun or finalized their report, AI findings are delivered as a structured addendum suggestion via HL7v2 ORU message. The addendum includes a clear "AI-Generated" label, a disclaimer regarding the supplementary nature of AI findings, and a reference to the original report. The radiologist reviews and decides whether to incorporate the addendum into the final report.</p>
+
+<h2>5. Vendor-Specific Configuration</h2>
+<h3>5.1 Epic Radiant</h3>
+<table>
+  <tr><th>Feature</th><th>Configuration</th></tr>
+  <tr><td>Order Interface</td><td>Configure ORM outbound from Radiant to Skolyn via Bridges/Interconnect</td></tr>
+  <tr><td>Result Interface</td><td>Configure ORU inbound from Skolyn to populate Radiant Results section</td></tr>
+  <tr><td>Worklist</td><td>AI status column added via Radiant Report Worklist customization</td></tr>
+  <tr><td>SmartForm Integration</td><td>AI findings embedded in SmartForm templates via web service calls</td></tr>
+</table>
+
+<h3>5.2 Cerner RadNet</h3>
+<table>
+  <tr><th>Feature</th><th>Configuration</th></tr>
+  <tr><td>Order Interface</td><td>Configure ORM from RadNet via Open Engine to Skolyn MLLP</td></tr>
+  <tr><td>Result Interface</td><td>Configure ORU inbound via Open Link to RadNet Results</td></tr>
+  <tr><td>Worklist</td><td>Custom column for AI status via RadNet PowerChart Profiles</td></tr>
+  <tr><td>Dynamic Documentation</td><td>AI template insertion via DTA (Dynamic Text Authoring)</td></tr>
+</table>
+
+<h2>6. Result Status Synchronization</h2>
+<p>Skolyn maintains bidirectional status synchronization with the RIS throughout the study lifecycle:</p>
+<ul>
+  <li><strong>Order Placed:</strong> Skolyn receives ORM and prepares for incoming study (pre-fetches prior studies if configured).</li>
+  <li><strong>Study Acquired:</strong> DICOM study arrives; Skolyn begins AI analysis. Status: "AI Processing."</li>
+  <li><strong>AI Complete:</strong> Analysis finished; findings delivered. Status: "AI Results Available."</li>
+  <li><strong>Radiologist Review:</strong> Radiologist opens the study in PACS viewer. AI findings displayed alongside images.</li>
+  <li><strong>Report Finalized:</strong> Skolyn receives notification (ORU with status "F") and archives the case for quality metrics.</li>
+  <li><strong>Addendum Added:</strong> If late-arriving AI findings supplement a finalized report, the addendum workflow is triggered.</li>
+</ul>
+
+<h2>7. Quality Metrics Dashboard</h2>
+<p>Skolyn tracks AI-to-radiologist concordance metrics per RIS integration: agreement rate (AI finding confirmed by radiologist), miss rate (AI finding not present in final report), false positive rate, and turnaround time impact. These metrics are available via the Management Console (Analytics > RIS Integration) and exportable for departmental quality improvement programs.</p>
+
+<h2>8. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-07-01</td><td>Integration Engineering</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-06-01</td><td>Integration Engineering</td><td>Added worklist, reporting, Epic, Cerner</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>Integration Engineering</td><td>Updated order matching, addendum, metrics</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block">
+      <div class="role">Chief Technology Officer (CTO)</div>
+      <div class="name">Skolyn Technology Division</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+    <div class="signature-block">
+      <div class="role">Chief Executive Officer (CEO)</div>
+      <div class="name">Skolyn Executive Office</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+  </div>
+</div>
+
+<div class="doc-footer">
+  <p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p>
+  <p>Document ID: SKL-INT-007 | Version 3.0 | Classification: Restricted</p>
+  <p>&copy; 2026 Skolyn. All rights reserved.</p>
+</div>
+
+</body>
+</html>

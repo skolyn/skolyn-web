@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MSK MRI Analysis - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #1565c0;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#1565c0;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:13px}th,td{padding:10px 14px;text-align:left;border:1px solid #dadce0}th{background:#e3f2fd;font-weight:600;color:#0d47a1}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}</style>
+</head>
+<body>
+
+<div class="doc-id-bar"><span class="doc-id">SKL-MRI-004</span><span>Skolyn Platform Documentation</span><span class="doc-class">CONFIDENTIAL</span></div>
+
+<div class="doc-header">
+  <h1>Musculoskeletal MRI Analysis</h1>
+  <div class="subtitle">AI-Powered MSK MR Assessment: Knee, Shoulder, Spine, and Joint Analysis</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Confidential</div>
+    <div class="meta-item"><strong>Owner:</strong> MRI Engineering</div>
+  </div>
+</div>
+
+<h2>1. Overview</h2>
+<p>The Musculoskeletal (MSK) MRI analysis subtype covers the full range of orthopedic and sports medicine MRI examinations that constitute the highest-volume MRI workload in most radiology practices. MSK MRI represents approximately 35-40% of all MRI examinations, with knee, shoulder, and spine being the three most commonly imaged body regions. Skolyn's MSK MRI AI provides automated detection and classification of ligament tears, meniscal injuries, rotator cuff pathology, cartilage degeneration, bone marrow edema, disc herniation, and degenerative joint disease. The module processes standard clinical MSK MRI protocols (proton density fat-saturated, T1, T2 fat-saturated, STIR, and 3D cartilage sequences) with findings mapped to standardized orthopedic classification systems.</p>
+
+<h2>2. Knee MRI Analysis</h2>
+<h3>2.1 Meniscal Assessment</h3>
+<p>The knee analysis engine provides detailed meniscal evaluation with tear detection, classification, and localization. Tears are classified by type (horizontal, vertical/longitudinal, radial, complex, bucket-handle, root), grade (I — intrasubstance degeneration without surface extension, II — linear signal reaching one articular surface, III — signal extending to both surfaces or displaced fragment), and location (anterior horn, body, posterior horn for both medial and lateral menisci). Bucket-handle tears are specifically flagged due to their surgical urgency, with automated detection of the displaced fragment, double PCL sign, and absent bow-tie sign on sagittal images. The meniscal assessment achieves 94.1% sensitivity and 92.7% specificity, validated on 12,000 clinical knee MRI studies with arthroscopic correlation.</p>
+
+<h3>2.2 Ligament Evaluation</h3>
+<p>All four major knee ligaments (ACL, PCL, MCL, LCL) are evaluated for integrity. ACL assessment includes classification as intact, partial tear (with fiber involvement percentage and location — proximal, mid-substance, or distal), or complete tear, with secondary signs including anterior tibial translation, posterior femoral condyle bone bruise pattern, and Segond fracture detection. PCL evaluation includes classification by grade (I-III) and identification of associated posterolateral corner injuries. MCL assessment follows the O'Donoghue classification system, and the system detects the clinically important "unhappy triad" combination (ACL + MCL + medial meniscal tear) that alters surgical planning.</p>
+
+<h3>2.3 Cartilage Grading</h3>
+<p>Articular cartilage is evaluated across all femoral condyle, tibial plateau, patellar, and trochlear surfaces using the modified Outerbridge classification (Grade 0 — normal, Grade I — signal changes without surface defect, Grade II — partial-thickness defect &lt;50%, Grade III — partial-thickness defect &gt;50%, Grade IV — full-thickness defect with subchondral bone exposure). Cartilage analysis uses 3D spoiled gradient echo (SPGR) or DESS sequences when available, with quantitative thickness mapping and comparison to age-matched normative data.</p>
+
+<h2>3. Shoulder MRI Analysis</h2>
+<p>The shoulder analysis engine evaluates the rotator cuff (supraspinatus, infraspinatus, teres minor, subscapularis), labrum, biceps tendon, and acromioclavicular joint. Rotator cuff tear assessment includes classification by type (partial-thickness — articular-sided, bursal-sided, or interstitial; full-thickness; or massive), tear size measurement (AP length and retraction distance), muscle quality assessment (Goutallier fatty infiltration grading 0-4), and tendon retraction staging (Patte classification). For partial tears, thickness involvement percentage is reported. Labral assessment covers SLAP tear typing (I-X), Bankart lesion detection (osseous and soft tissue variants), and posterior labral tear identification. The module also measures the critical shoulder angle (CSA) and acromion morphology (Bigliani type I-III) for biomechanical risk assessment.</p>
+
+<h2>4. Spine MRI Analysis</h2>
+<p>Spine MRI analysis covers cervical, thoracic, and lumbar spine with level-by-level assessment. For each intervertebral disc, the system evaluates Pfirrmann degeneration grade (I-V), disc contour (normal, bulge, protrusion, extrusion, sequestration), and neural foraminal and central canal stenosis severity (mild, moderate, severe). Disc measurements include disc height, protrusion size, and canal diameter at each level. Vertebral body assessment includes Modic endplate changes (types I-III), compression fracture detection with height loss quantification, and identification of aggressive marrow replacement patterns suggestive of metastatic disease. Facet joint arthropathy is graded bilaterally at each level (grades 0-3), and ligamentum flavum hypertrophy is measured.</p>
+
+<h2>5. Clinical Performance</h2>
+<table>
+  <tr><th>Task</th><th>Metric</th><th>Performance</th><th>Benchmark</th></tr>
+  <tr><td>Meniscal Tear</td><td>Sensitivity</td><td>94.1%</td><td>12K studies, arthroscopic correlation</td></tr>
+  <tr><td>ACL Tear</td><td>Sensitivity</td><td>96.3%</td><td>8K studies, surgical correlation</td></tr>
+  <tr><td>Rotator Cuff Tear</td><td>Sensitivity</td><td>93.7%</td><td>6K studies, surgical correlation</td></tr>
+  <tr><td>Cartilage Grade</td><td>Accuracy</td><td>87.2%</td><td>Expert consensus</td></tr>
+  <tr><td>Disc Herniation</td><td>Sensitivity</td><td>93.5%</td><td>10K studies</td></tr>
+</table>
+
+<h2>6. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>MRI Engineering</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-06-01</td><td>MRI Engineering</td><td>Added cartilage grading, spine</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>MRI Engineering</td><td>Updated performance, classification</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block"><div class="role">Chief Technology Officer (CTO)</div><div class="name">Skolyn Technology Division</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+    <div class="signature-block"><div class="role">Chief Executive Officer (CEO)</div><div class="name">Skolyn Executive Office</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+  </div>
+</div>
+
+<div class="doc-footer"><p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p><p>Document ID: SKL-MRI-004 | Version 3.0 | Classification: Confidential</p><p>&copy; 2026 Skolyn. All rights reserved.</p></div>
+
+</body>
+</html>

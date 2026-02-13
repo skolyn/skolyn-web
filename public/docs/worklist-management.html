@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Worklist Management Guide - Skolyn Documentation</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:860px;margin:0 auto;padding:48px 32px;color:#1a1a2e;line-height:1.75}.doc-header{border-bottom:3px solid #1a73e8;padding-bottom:24px;margin-bottom:40px}.doc-header h1{font-size:28px;margin-bottom:8px}.doc-header .meta{font-size:14px;color:#5f6368}h2{font-size:22px;color:#1a73e8;margin:36px 0 16px;border-bottom:1px solid #e8eaed;padding-bottom:8px}h3{font-size:18px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 16px 28px}li{margin-bottom:6px}table{width:100%;border-collapse:collapse;margin:16px 0 24px}th,td{padding:10px 14px;text-align:left;border:1px solid #dadce0;font-size:14px}th{background:#f1f3f4;font-weight:600}code{background:#f1f3f4;padding:2px 6px;border-radius:4px;font-size:13px}pre{background:#1a1a2e;color:#e8eaed;padding:16px 20px;border-radius:8px;margin:16px 0;overflow-x:auto;font-size:13px;line-height:1.6}pre code{background:none;padding:0;color:inherit}.footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}@media print{body{max-width:100%;padding:24px}}</style>
+</head>
+<body>
+<div class="doc-header"><h1>Worklist Management Guide</h1><div class="meta">Skolyn Documentation - Version 2.0 - Last updated: February 2026</div></div>
+
+<h2>1. Overview</h2>
+<p>Skolyn's Worklist Management system orchestrates study processing, prioritization, and status tracking across all imaging modules. The worklist provides a centralized view of all studies flowing through the platform, from initial reception through AI analysis to result delivery. It enables intelligent prioritization based on clinical urgency, AI confidence levels, and institutional routing rules.</p>
+<p>The worklist integrates with DICOM Modality Worklist (MWL), HL7v2 ordering, and FHIR ServiceRequest to provide a unified scheduling and tracking interface. Administrators can monitor processing capacity, identify bottlenecks, and configure routing rules through the Management Console.</p>
+
+<h2>2. DICOM Modality Worklist</h2>
+<h3>2.1 MWL SCP Configuration</h3>
+<p>Skolyn operates as a Modality Worklist SCP (Service Class Provider) to provide scheduled study information to imaging modalities and PACS systems.</p>
+<pre><code># skolyn.yaml - MWL configuration
+worklist:
+  mwl:
+    enabled: true
+    port: 11113
+    aeTitle: SKOLYN_MWL
+    matchingKeys:
+      - PatientID
+      - AccessionNumber
+      - ScheduledProcedureStepStartDate
+      - Modality
+      - ScheduledStationAETitle
+    returnKeys:
+      - PatientName
+      - PatientID
+      - PatientBirthDate
+      - PatientSex
+      - AccessionNumber
+      - RequestedProcedureDescription
+      - ScheduledProcedureStepDescription
+      - Modality
+      - ScheduledStationAETitle
+      - ScheduledProcedureStepStartDate
+      - ScheduledProcedureStepStartTime</code></pre>
+
+<h3>2.2 MWL Query Example</h3>
+<pre><code># DICOM C-FIND query for today's CT studies
+# Request
+(0008,0005) SpecificCharacterSet = ISO_IR 100
+(0008,0050) AccessionNumber = *
+(0010,0010) PatientName = *
+(0010,0020) PatientID = *
+(0040,0100) ScheduledProcedureStepSequence
+  (0008,0060) Modality = CT
+  (0040,0001) ScheduledStationAETitle = *
+  (0040,0002) ScheduledProcedureStepStartDate = 20260210
+  (0040,0003) ScheduledProcedureStepStartTime = *</code></pre>
+
+<h2>3. Study Queue Management</h2>
+<h3>3.1 Priority Levels</h3>
+<table>
+  <tr><th>Priority</th><th>Code</th><th>SLA</th><th>Description</th></tr>
+  <tr><td>STAT</td><td>1</td><td>&lt;5 min</td><td>Emergency and critical studies requiring immediate AI analysis</td></tr>
+  <tr><td>Urgent</td><td>2</td><td>&lt;15 min</td><td>Time-sensitive studies with clinical urgency</td></tr>
+  <tr><td>Routine</td><td>3</td><td>&lt;60 min</td><td>Standard studies processed in arrival order</td></tr>
+  <tr><td>Low</td><td>4</td><td>&lt;4 hours</td><td>Research, retrospective, and batch processing studies</td></tr>
+</table>
+
+<h3>3.2 Auto-Prioritization Rules</h3>
+<p>Skolyn automatically adjusts study priority based on clinical context and AI triage results:</p>
+<pre><code># skolyn.yaml - Auto-prioritization rules
+worklist:
+  autoPriority:
+    rules:
+      - name: "ED Studies STAT"
+        condition: "study.patientLocation MATCHES 'ED|ER|EMERGENCY'"
+        priority: STAT
+        
+      - name: "ICU Studies Urgent"
+        condition: "study.patientLocation MATCHES 'ICU|CCU|NICU'"
+        priority: Urgent
+        
+      - name: "Stroke Protocol STAT"
+        condition: "study.protocolName MATCHES 'STROKE|CTA HEAD'"
+        priority: STAT
+        
+      - name: "Screening Mammography Low"
+        condition: "study.modality == 'MG' AND study.indication MATCHES 'SCREENING'"
+        priority: Low
+        
+      - name: "AI Triage Upgrade"
+        condition: "study.triageResult.criticalFinding == true"
+        priority: STAT
+        description: "Upgrade to STAT when AI triage detects critical finding"</code></pre>
+
+<h2>4. Routing Rules</h2>
+<h3>4.1 Module Routing</h3>
+<p>Routing rules determine which AI module(s) process each incoming study. Rules are evaluated in order; the first matching rule determines the routing.</p>
+<pre><code># skolyn.yaml - Module routing rules
+worklist:
+  routing:
+    rules:
+      - name: "MRI to Rhenium"
+        condition: "study.modality == 'MR'"
+        module: rhenium
+        
+      - name: "CT to Seaborgium"
+        condition: "study.modality == 'CT'"
+        module: seaborgium
+        
+      - name: "Ultrasound to Scandium"
+        condition: "study.modality == 'US'"
+        module: scandium
+        
+      - name: "X-Ray to Terbium"
+        condition: "study.modality IN ['CR', 'DX', 'MG']"
+        module: terbium
+        
+      - name: "Multi-modality Study"
+        condition: "study.modalitiesInStudy.size() > 1"
+        module: auto  # Analyze with all relevant modules</code></pre>
+
+<h2>5. Study Lifecycle</h2>
+<table>
+  <tr><th>State</th><th>Description</th><th>Next States</th></tr>
+  <tr><td>RECEIVED</td><td>Study instances received, awaiting completion</td><td>QUEUED, INCOMPLETE</td></tr>
+  <tr><td>QUEUED</td><td>Study complete, queued for analysis</td><td>PROCESSING, CANCELLED</td></tr>
+  <tr><td>PROCESSING</td><td>AI analysis in progress</td><td>COMPLETED, FAILED</td></tr>
+  <tr><td>COMPLETED</td><td>Analysis complete, results available</td><td>DELIVERED, DELIVERY_FAILED</td></tr>
+  <tr><td>DELIVERED</td><td>Results delivered to all destinations</td><td>ARCHIVED</td></tr>
+  <tr><td>FAILED</td><td>Analysis failed, requires attention</td><td>QUEUED (retry), CANCELLED</td></tr>
+  <tr><td>CANCELLED</td><td>Study analysis cancelled by admin</td><td>ARCHIVED</td></tr>
+  <tr><td>ARCHIVED</td><td>Study moved to long-term storage</td><td>Terminal state</td></tr>
+</table>
+
+<h2>6. Queue Monitoring</h2>
+<pre><code># REST API - Queue statistics
+GET /api/v2/worklist/stats
+Authorization: Bearer {token}
+
+{
+  "totalStudies": 1247,
+  "byState": {
+    "RECEIVED": 3,
+    "QUEUED": 12,
+    "PROCESSING": 4,
+    "COMPLETED": 1180,
+    "DELIVERED": 1165,
+    "FAILED": 2
+  },
+  "byModule": {
+    "rhenium": {"queued": 3, "processing": 1, "avgTime": "105s"},
+    "seaborgium": {"queued": 5, "processing": 2, "avgTime": "87s"},
+    "scandium": {"queued": 2, "processing": 0, "avgTime": "12s"},
+    "terbium": {"queued": 2, "processing": 1, "avgTime": "23s"}
+  },
+  "slaCompliance": {
+    "STAT": "98.5%",
+    "Urgent": "99.2%",
+    "Routine": "99.8%"
+  }
+}</code></pre>
+
+<h2>7. Multi-Tenant Worklist</h2>
+<p>In multi-tenant deployments (cloud SaaS), each institution has an isolated worklist with dedicated queue capacity and independent routing rules. Fair-share scheduling ensures that no single institution can monopolize processing resources. Administrators can configure per-institution quotas and burst capacity.</p>
+<table>
+  <tr><th>Setting</th><th>Description</th><th>Default</th></tr>
+  <tr><td>Guaranteed Throughput</td><td>Minimum studies/hour per institution</td><td>50</td></tr>
+  <tr><td>Burst Capacity</td><td>Maximum studies/hour during peak</td><td>200</td></tr>
+  <tr><td>Queue Depth Limit</td><td>Maximum pending studies per institution</td><td>500</td></tr>
+</table>
+
+<h2>8. Retry and Error Handling</h2>
+<pre><code># skolyn.yaml - Retry configuration
+worklist:
+  retry:
+    maxRetries: 3
+    initialDelay: 60
+    maxDelay: 900
+    backoffMultiplier: 3
+    retryableErrors:
+      - GPU_OUT_OF_MEMORY
+      - TIMEOUT
+      - TEMPORARY_FAILURE
+    nonRetryableErrors:
+      - INVALID_DICOM
+      - UNSUPPORTED_MODALITY
+      - LICENSE_EXCEEDED</code></pre>
+
+<div class="footer"><p>&copy; 2026 Skolyn. All rights reserved.</p><p>Skolyn - Baku, Azerbaijan (HQ) - Stockholm, Sweden (Online) - www.skolyn.se</p></div>
+</body>
+</html>

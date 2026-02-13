@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Disaster Recovery - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #5c6bc0;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#5c6bc0;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:13px}th,td{padding:10px 14px;text-align:left;border:1px solid #dadce0}th{background:#e8eaf6;font-weight:600;color:#283593}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}</style>
+</head>
+<body>
+
+<div class="doc-id-bar"><span class="doc-id">SKL-OPS-004</span><span>Skolyn Platform Documentation</span><span class="doc-class">CONFIDENTIAL</span></div>
+
+<div class="doc-header">
+  <h1>Disaster Recovery</h1>
+  <div class="subtitle">Business Continuity Planning: RPO/RTO Targets, DR Site Architecture, Runbook Procedures, and Testing Cadence</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Confidential</div>
+    <div class="meta-item"><strong>Owner:</strong> Platform Engineering</div>
+  </div>
+</div>
+
+<h2>1. Overview</h2>
+<p>Disaster recovery (DR) planning ensures Skolyn can resume operations within defined time objectives following catastrophic events that render the primary deployment site inoperable. Unlike high availability (which addresses component-level failures within a single site), disaster recovery addresses site-level failures caused by natural disasters, facility incidents (fire, flooding, power grid failure), ransomware attacks, or data center decommissioning. As a medical imaging AI platform that processes clinical data and supports time-sensitive diagnostic workflows, Skolyn's DR plan must meet stringent healthcare continuity requirements, including HIPAA business associate agreement obligations for maintaining the availability of electronic protected health information. This document defines recovery objectives, DR architecture, automated failover procedures, data replication strategies, and the quarterly DR testing program that validates recovery capabilities.</p>
+
+<h2>2. Recovery Objectives</h2>
+<table>
+  <tr><th>Metric</th><th>Tier 1 (Critical)</th><th>Tier 2 (Standard)</th><th>Tier 3 (Archive)</th></tr>
+  <tr><td>Recovery Time Objective (RTO)</td><td>&lt;1 hour</td><td>&lt;4 hours</td><td>&lt;24 hours</td></tr>
+  <tr><td>Recovery Point Objective (RPO)</td><td>&lt;5 minutes</td><td>&lt;1 hour</td><td>&lt;24 hours</td></tr>
+  <tr><td>Scope</td><td>Active inference, DICOM routing, results delivery</td><td>Historical results, analytics, audit logs</td><td>Training data, model archives, documentation</td></tr>
+</table>
+<p>Tier 1 components are replicated synchronously to the DR site with sub-5-minute RPO using database streaming replication and real-time object storage mirroring. Tier 2 components use asynchronous replication with hourly snapshots. Tier 3 components are backed up daily to the DR site with daily RPO acceptable for non-time-sensitive archival data.</p>
+
+<h2>3. DR Site Architecture</h2>
+<p>The DR site is a geographically separated deployment (minimum 100 miles from the primary site) that maintains a warm standby of the complete Skolyn platform. The DR site runs the identical software stack with the same model versions, pre-configured DICOM AE titles, and integration endpoints. The DR infrastructure is sized at 100% of primary site capacity for full workload assumption. Key DR site components include: replicated PostgreSQL cluster (streaming replication with 30-second lag), MinIO object storage with bucket-level replication (continuous sync), GPU inference servers pre-loaded with model weights (cold standby — models loaded but not actively serving), and preconfigured network connectivity to customer PACS/RIS/EHR systems via VPN tunnels maintained in standby mode.</p>
+
+<h2>4. Failover Procedures</h2>
+<h3>4.1 Automated Failover</h3>
+<p>DNS-based failover uses Route 53 health checks (or equivalent) monitoring the primary site's health endpoint every 10 seconds. After 3 consecutive failed checks (30 seconds of detected outage), DNS failover automatically redirects the Skolyn service FQDN to the DR site's IP addresses with a TTL of 60 seconds, achieving effective failover within 90-120 seconds. Simultaneously, automated runbooks (implemented as Ansible playbooks triggered by PagerDuty webhooks) promote the DR PostgreSQL replica to primary, activate the MinIO replication endpoint as the primary storage, start GPU inference workers, and activate standby VPN tunnels to customer networks.</p>
+
+<h3>4.2 Manual Failover</h3>
+<p>Manual failover is invoked when the monitoring system detects partial degradation that does not trigger automated failover thresholds but warrants preemptive site migration. The DR manager initiates manual failover via a authenticated CLI command that executes the same runbook as automated failover after human confirmation. Manual failover has a target completion time of 15 minutes from decision to full DR site operational readiness.</p>
+
+<h2>5. Data Replication</h2>
+<p>Data replication employs a multi-layer strategy. Database replication uses PostgreSQL streaming replication with synchronous_commit set to remote_apply, ensuring every committed transaction is confirmed applied at the DR replica before the commit acknowledgment is returned to the application. This provides near-zero RPO for metadata and configuration data. Object storage replication uses MinIO's bucket replication feature with asynchronous mode, achieving average replication lag of 45 seconds under normal load. For studies actively in the inference pipeline at the time of failure, the DICOM receive log (stored in both primary and DR databases) enables automatic re-retrieval of unprocessed studies from the source PACS after DR activation.</p>
+
+<h2>6. DR Testing Program</h2>
+<p>Quarterly DR tests validate the complete failover process, including automated DNS failover, database promotion, GPU inference activation, and end-to-end study processing at the DR site. Each test uses synthetic DICOM studies and simulated PACS connections to avoid impacting production workflows. Test results are documented with measured RTO (target: &lt;1 hour), measured RPO (target: &lt;5 minutes), number of test studies processed, end-to-end latency at DR site, and identified issues with remediation plans. Annual tests additionally include failback procedures (returning operations from DR to primary after primary site restoration).</p>
+
+<h2>7. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>Platform Engineering</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-06-01</td><td>Platform Engineering</td><td>Added automated failover, testing</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>Platform Engineering</td><td>Updated RTO/RPO, MinIO replication</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block"><div class="role">Chief Technology Officer (CTO)</div><div class="name">Skolyn Technology Division</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+    <div class="signature-block"><div class="role">Chief Executive Officer (CEO)</div><div class="name">Skolyn Executive Office</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+  </div>
+</div>
+
+<div class="doc-footer"><p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p><p>Document ID: SKL-OPS-004 | Version 3.0 | Classification: Confidential</p><p>&copy; 2026 Skolyn. All rights reserved.</p></div>
+
+</body>
+</html>

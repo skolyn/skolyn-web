@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Encryption - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #0d47a1;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#0d47a1;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:14px}th,td{padding:12px 16px;text-align:left;border:1px solid #dadce0}th{background:#e3f2fd;font-weight:600;color:#0d47a1}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}pre{background:#1a1a2e;color:#e8eaed;padding:20px 24px;border-radius:12px;margin:16px 0 24px;overflow-x:auto;font-size:13px;line-height:1.7}pre code{background:none;padding:0;color:inherit}.callout{padding:16px 20px;border-radius:8px;margin:16px 0 24px;font-size:14px}.callout-info{background:#e8f0fe;border-left:4px solid #1a73e8;color:#174ea6}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}
+</style>
+</head>
+<body>
+
+<div class="doc-id-bar">
+  <span class="doc-id">SKL-SEC-006</span>
+  <span>Skolyn Platform Documentation</span>
+  <span class="doc-class">CONFIDENTIAL</span>
+</div>
+
+<div class="doc-header">
+  <h1>Data Encryption</h1>
+  <div class="subtitle">Cryptographic Data Protection at Rest, in Transit, and in Use for the Skolyn Platform</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Confidential</div>
+    <div class="meta-item"><strong>Owner:</strong> Security Engineering</div>
+    <div class="meta-item"><strong>Review Cycle:</strong> Quarterly</div>
+    <div class="meta-item"><strong>Next Review:</strong> May 2026</div>
+  </div>
+</div>
+
+<h2>1. Executive Summary</h2>
+<p>Data encryption is the cornerstone of Skolyn's data protection strategy. As a medical imaging AI platform processing Protected Health Information (PHI) and special category health data, Skolyn enforces encryption at every stage of the data lifecycle — at rest in storage, in transit across networks, and during active processing in memory. This document describes the cryptographic algorithms, key management architecture, certificate management, and protocol configurations that protect patient data from unauthorized access, tampering, and disclosure. All encryption implementations comply with NIST SP 800-175B, FIPS 140-2 Level 3, and the requirements of HIPAA §164.312(a)(2)(iv) and §164.312(e)(1).</p>
+
+<h2>2. Cryptographic Standards</h2>
+<h3>2.1 Approved Algorithms</h3>
+<table>
+  <tr><th>Purpose</th><th>Algorithm</th><th>Key Size</th><th>Standard</th></tr>
+  <tr><td>Symmetric Encryption</td><td>AES-256-GCM</td><td>256-bit</td><td>NIST SP 800-38D</td></tr>
+  <tr><td>Asymmetric Encryption</td><td>RSA-OAEP</td><td>4096-bit</td><td>NIST SP 800-56B</td></tr>
+  <tr><td>Digital Signatures</td><td>ECDSA (P-384)</td><td>384-bit</td><td>FIPS 186-5</td></tr>
+  <tr><td>Key Derivation</td><td>HKDF-SHA384</td><td>384-bit</td><td>NIST SP 800-56C</td></tr>
+  <tr><td>Password Hashing</td><td>Argon2id</td><td>256-bit output</td><td>RFC 9106</td></tr>
+  <tr><td>Message Authentication</td><td>HMAC-SHA256</td><td>256-bit</td><td>NIST SP 800-107</td></tr>
+  <tr><td>TLS Key Exchange</td><td>X25519 / P-384 ECDHE</td><td>256/384-bit</td><td>RFC 8446</td></tr>
+</table>
+
+<div class="callout callout-info">
+  <strong>Note:</strong> All cryptographic implementations use validated library implementations (OpenSSL FIPS module, BoringCrypto, AWS-LC). No custom cryptographic code is permitted in the codebase.
+</div>
+
+<h2>3. Encryption at Rest</h2>
+<h3>3.1 Envelope Encryption</h3>
+<p>Skolyn employs a multi-layer envelope encryption architecture for all persistent data. Each data object (DICOM file, report, audit record) is encrypted with a unique Data Encryption Key (DEK) generated from a cryptographically secure random number generator (CSPRNG). The DEK is then encrypted (wrapped) by a Key Encryption Key (KEK) that resides exclusively within a Hardware Security Module (HSM). The HSM is FIPS 140-2 Level 3 certified, meaning the KEK never exists in plaintext outside the tamper-resistant hardware boundary.</p>
+
+<h3>3.2 Storage Layer Encryption</h3>
+<table>
+  <tr><th>Storage System</th><th>Encryption Method</th><th>Key Management</th><th>Key Rotation</th></tr>
+  <tr><td>DICOM Object Storage (S3/GCS)</td><td>AES-256-GCM (SSE-KMS + client-side)</td><td>HSM-backed KEK</td><td>90 days auto</td></tr>
+  <tr><td>PostgreSQL Database</td><td>AES-256-GCM (TDE + column-level)</td><td>HSM-backed KEK</td><td>90 days auto</td></tr>
+  <tr><td>OpenSearch Indices</td><td>AES-256-GCM (node-level)</td><td>HSM-backed KEK</td><td>90 days auto</td></tr>
+  <tr><td>Redis Cache</td><td>AES-256-GCM (in-memory encryption)</td><td>Ephemeral DEK</td><td>Per-restart</td></tr>
+  <tr><td>Backup Archives</td><td>AES-256-GCM (client-side before upload)</td><td>Offline KEK (split custody)</td><td>Annual</td></tr>
+</table>
+
+<h3>3.3 DICOM-Specific Encryption</h3>
+<p>Medical images receive additional protection beyond storage-layer encryption. Skolyn applies DICOM PS3.15 Annex E compliant encryption profiles that encrypt the pixel data, patient demographics, and clinical annotations separately. This enables scenarios where an authorized user can access de-identified images for research while the patient identifiers remain encrypted and inaccessible. The encryption profile uses AES-256-CBC with PKCS#7 padding for DICOM Transfer Syntax compatibility, and the per-study DEK is wrapped with the institutional KEK.</p>
+
+<h2>4. Encryption in Transit</h2>
+<h3>4.1 TLS Configuration</h3>
+<p>All external and internal network communications are encrypted using TLS 1.3 (RFC 8446). The platform enforces the following cipher suite preferences:</p>
+<pre><code># Preferred cipher suites (in order)
+TLS_AES_256_GCM_SHA384
+TLS_CHACHA20_POLY1305_SHA256
+TLS_AES_128_GCM_SHA256
+
+# Deprecated (permanently disabled)
+TLS 1.0, TLS 1.1, TLS 1.2 with CBC mode
+RC4, DES, 3DES, MD5, SHA-1
+Export ciphers, NULL ciphers, anonymous DH</code></pre>
+
+<h3>4.2 Mutual TLS (mTLS)</h3>
+<p>All internal service-to-service communication uses mutual TLS authentication through the service mesh. Each microservice is issued an X.509 certificate with a SPIFFE identity (e.g., <code>spiffe://skolyn.com/ns/production/sa/inference-engine</code>). Certificates have a maximum validity of 24 hours and are automatically rotated by the mesh control plane. The certificate authority (CA) is operated by Skolyn and anchored in the HSM. Certificate chain validation is enforced at every TLS handshake — expired, revoked, or improperly issued certificates are rejected.</p>
+
+<h3>4.3 Protocol-Specific Encryption</h3>
+<ul>
+  <li><strong>DICOM TLS:</strong> DICOM associations use TLS per PS3.15 Annex B. The Association Acceptor validates the Association Requestor's certificate against the configured trust store before accepting the connection.</li>
+  <li><strong>HL7v2 MLLP-TLS:</strong> HL7 messaging uses TLS-encrypted MLLP sockets. The healthcare facility's HL7 engine and Skolyn's interface engine authenticate via client certificates.</li>
+  <li><strong>FHIR API:</strong> RESTful FHIR endpoints enforce HTTPS-only with HSTS (max-age=31536000, includeSubDomains, preload).</li>
+  <li><strong>DICOMweb:</strong> WADO-RS, STOW-RS, and QIDO-RS endpoints use OAuth 2.0 bearer tokens over TLS 1.3.</li>
+</ul>
+
+<h2>5. Key Management</h2>
+<h3>5.1 Key Hierarchy</h3>
+<p>Skolyn's key management architecture follows a three-tier hierarchy designed to minimize the blast radius of any single key compromise:</p>
+<ul>
+  <li><strong>Root Key (Master Key):</strong> Generated within the HSM during initial provisioning. Never exported. Used exclusively to generate and protect KEKs. Split across multiple HSM partitions with M-of-N quorum requirements for recovery.</li>
+  <li><strong>Key Encryption Keys (KEK):</strong> Generated per-tenant (institution) by the HSM. Stored encrypted in the HSM key store. Used to wrap/unwrap DEKs. Rotated every 90 days with backward compatibility for decrypting historical data.</li>
+  <li><strong>Data Encryption Keys (DEK):</strong> Generated per-object using CSPRNG. Wrapped by the tenant's KEK and stored alongside the encrypted object's metadata. Ephemeral in memory — zeroized immediately after encryption/decryption completes.</li>
+</ul>
+
+<h3>5.2 Key Rotation</h3>
+<p>Automated key rotation is enforced according to the following schedule:</p>
+<table>
+  <tr><th>Key Type</th><th>Rotation Period</th><th>Backward Compatibility</th><th>Process</th></tr>
+  <tr><td>Root Key</td><td>Annual (manual ceremony)</td><td>Unlimited</td><td>HSM key ceremony with dual custody</td></tr>
+  <tr><td>KEK</td><td>90 days (automated)</td><td>Historical DEK access via version tracking</td><td>Automated by KMS</td></tr>
+  <tr><td>DEK</td><td>Per-object (no rotation needed)</td><td>N/A</td><td>New DEK per write</td></tr>
+  <tr><td>TLS Certificates</td><td>24 hours (mTLS) / 90 days (edge)</td><td>N/A</td><td>Automated by service mesh / ACME</td></tr>
+  <tr><td>API Keys</td><td>365 days (admin reminder at 300 days)</td><td>N/A</td><td>User-initiated or auto-revoke</td></tr>
+</table>
+
+<h3>5.3 Key Destruction</h3>
+<p>When data is deleted (e.g., GDPR Right to Erasure), Skolyn performs <strong>crypto-shredding</strong> — the DEK associated with the deleted data is permanently destroyed from the HSM key store. Without the DEK, the encrypted data is computationally irretrievable even if the ciphertext remains in backup archives. A Certificate of Cryptographic Destruction is generated and provided to the Data Controller for compliance records.</p>
+
+<h2>6. Encryption Monitoring & Compliance</h2>
+<ul>
+  <li><strong>Encryption Coverage Reports:</strong> Automated weekly scans verify that 100% of data stores have encryption enabled. Any unencrypted storage is flagged as a P1 security incident.</li>
+  <li><strong>Certificate Monitoring:</strong> All certificates are tracked in an inventory with automated alerts at 30, 14, and 7 days before expiration. Expired certificates trigger automated renewal or (if renewal fails) service degradation alerts.</li>
+  <li><strong>HSM Health Monitoring:</strong> HSM operational status is continuously monitored with alerts for hardware failures, capacity thresholds, and anomalous usage patterns.</li>
+  <li><strong>Compliance Validation:</strong> Quarterly cryptographic assessments verify algorithm compliance with current NIST recommendations and industry standards.</li>
+</ul>
+
+<h2>7. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>Security Engineering</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-05-01</td><td>Security Engineering</td><td>Added DICOM encryption, key hierarchy, crypto-shredding</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>Security Engineering</td><td>Updated TLS config, mTLS, monitoring</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block">
+      <div class="role">Chief Technology Officer (CTO)</div>
+      <div class="name">Skolyn Technology Division</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+    <div class="signature-block">
+      <div class="role">Chief Executive Officer (CEO)</div>
+      <div class="name">Skolyn Executive Office</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+  </div>
+</div>
+
+<div class="doc-footer">
+  <p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p>
+  <p>Document ID: SKL-SEC-006 | Version 3.0 | Classification: Confidential</p>
+  <p>&copy; 2026 Skolyn. All rights reserved.</p>
+</div>
+
+</body>
+</html>

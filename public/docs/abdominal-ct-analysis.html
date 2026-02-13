@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abdominal CT Analysis - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #2e7d32;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#2e7d32;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:13px}th,td{padding:10px 14px;text-align:left;border:1px solid #dadce0}th{background:#e8f5e9;font-weight:600;color:#1b5e20}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}</style>
+</head>
+<body>
+
+<div class="doc-id-bar"><span class="doc-id">SKL-CT-003</span><span>Skolyn Platform Documentation</span><span class="doc-class">CONFIDENTIAL</span></div>
+
+<div class="doc-header">
+  <h1>Abdominal CT Analysis</h1>
+  <div class="subtitle">AI-Powered Abdominopelvic CT Assessment: Liver LI-RADS, Renal Mass, Appendicitis, and Multi-Organ Evaluation</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Confidential</div>
+    <div class="meta-item"><strong>Owner:</strong> CT Engineering</div>
+  </div>
+</div>
+
+<h2>1. Overview</h2>
+<p>The Abdominal CT analysis subtype within Seaborgium OS provides comprehensive multi-organ assessment of contrast-enhanced and non-contrast abdominal and pelvic CT examinations. Abdominopelvic CT is the workhorse examination for emergency abdominal pain, cancer staging, post-surgical surveillance, and pre-operative planning. Skolyn's abdominal CT AI analyzes the entire volumetric dataset across all available contrast phases (non-contrast, arterial, portal venous, delayed) in under 20 seconds, evaluating solid organs (liver, spleen, kidneys, pancreas, adrenals), hollow viscera (bowel, gallbladder, urinary bladder), vasculature (aorta, IVC, mesenteric vessels), and retroperitoneal structures. The module supports LI-RADS classification for liver observations in at-risk patients, Bosniak classification for renal cystic lesions, appendicitis scoring, and automated organ volumetry with normative reference data.</p>
+
+<h2>2. Liver Analysis</h2>
+<h3>2.1 LI-RADS Classification</h3>
+<p>For patients with cirrhosis or other hepatocellular carcinoma (HCC) risk factors, the module applies the Liver Imaging Reporting and Data System (LI-RADS v2018) to all detected liver observations. Each observation is characterized by arterial phase hyperenhancement (APHE), nonperipheral "washout," enhancing "capsule," and threshold growth (when prior studies are available). Based on these major features and ancillary features (including corona enhancement, mosaic architecture, nodule-in-nodule, fat in mass, blood products, restricted diffusion), observations are assigned LI-RADS categories: LR-1 (definitely benign), LR-2 (probably benign), LR-3 (intermediate probability of malignancy), LR-4 (probably HCC), LR-5 (definitely HCC), LR-M (malignant, probably not HCC), and LR-TIV (tumor in vein). The classification is accompanied by a detailed feature table for radiologist verification.</p>
+
+<h3>2.2 Hepatic Steatosis Quantification</h3>
+<p>Non-contrast CT-based hepatic steatosis quantification measures liver attenuation (mean HU in standardized ROIs across all liver segments), hepatic-to-splenic attenuation ratio, and hepatic attenuation index. Steatosis is graded as none (liver-spleen ratio &gt;1.1), mild (&gt;0.8), moderate (&gt;0.5), or severe (&le;0.5). When dual-energy CT data is available, material decomposition provides more accurate fat fraction estimation. Liver volume is automatically segmented and reported in milliliters, with normative comparison indexed to body surface area.</p>
+
+<h2>3. Renal Mass Assessment</h2>
+<p>Renal masses detected on contrast-enhanced CT are evaluated with Bosniak classification (v2019) for cystic lesions: Class I (simple cyst, benign), Class II (minimally complicated, benign), Class IIF (moderately complicated, requires follow-up), Class III (indeterminate, requires surgery or active surveillance), and Class IV (clearly malignant). For solid renal masses, enhancement characteristics (homogeneous vs heterogeneous, degree of enhancement), size, and morphology are reported. The system also detects and measures renal stones with automated size, location (calyx, renal pelvis, UPJ, ureter, UVJ, bladder), and density (HU) measurement. Hydronephrosis is graded (mild, moderate, severe) with automated renal pelvis diameter measurement.</p>
+
+<h2>4. Appendicitis Assessment</h2>
+<p>The appendicitis scoring module uses a dedicated detection network to identify the vermiform appendix and assess for signs of acute appendicitis. Evaluated features include appendiceal diameter (threshold &gt;6mm), wall thickening, periappendiceal fat stranding, presence of appendicolith, periappendiceal fluid collection, and focal cecal apical thickening. The system assigns an appendicitis probability score (0-100%) and flags cases meeting imaging criteria for acute appendicitis. For equivocal cases, the system generates structured recommendations for clinical correlation or short-interval follow-up imaging. The module also detects complications including perforation (wall discontinuity, extraluminal air), abscess formation, and early peritonitis.</p>
+
+<h2>5. Bowel and Vascular Assessment</h2>
+<p>Bowel evaluation includes detection of bowel obstruction (small bowel diameter &gt;3cm, colon &gt;6cm), transition point identification, closed-loop obstruction recognition, and bowel wall thickening measurement. Vascular assessment covers abdominal aortic aneurysm measurement (maximum diameter perpendicular to long axis, per SVS guidelines), aortic dissection detection with classification (Stanford A/B, DeBakey I-III), and mesenteric vessel patency evaluation. The module also performs automated lymph node detection in standard abdominal stations with short-axis diameter measurement and characterization.</p>
+
+<h2>6. Clinical Performance</h2>
+<table>
+  <tr><th>Task</th><th>Metric</th><th>Performance</th><th>Benchmark</th></tr>
+  <tr><td>Liver Lesion Detection</td><td>Sensitivity</td><td>93.2%</td><td>10K clinical studies</td></tr>
+  <tr><td>LI-RADS Classification</td><td>Agreement</td><td>88.7%</td><td>Expert hepatologist consensus</td></tr>
+  <tr><td>Renal Stone Detection</td><td>Sensitivity</td><td>96.5%</td><td>8K clinical studies</td></tr>
+  <tr><td>Appendicitis</td><td>Sensitivity</td><td>95.1%</td><td>5K clinical studies (surgical correlation)</td></tr>
+  <tr><td>Bowel Obstruction</td><td>Sensitivity</td><td>94.3%</td><td>4K clinical studies</td></tr>
+</table>
+
+<h2>7. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>CT Engineering</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-06-01</td><td>CT Engineering</td><td>Added LI-RADS, Bosniak, appendicitis</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>CT Engineering</td><td>Updated performance, vascular</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block"><div class="role">Chief Technology Officer (CTO)</div><div class="name">Skolyn Technology Division</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+    <div class="signature-block"><div class="role">Chief Executive Officer (CEO)</div><div class="name">Skolyn Executive Office</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+  </div>
+</div>
+
+<div class="doc-footer"><p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p><p>Document ID: SKL-CT-003 | Version 3.0 | Classification: Confidential</p><p>&copy; 2026 Skolyn. All rights reserved.</p></div>
+
+</body>
+</html>

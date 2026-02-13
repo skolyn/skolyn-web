@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terbium OS - X-Ray Module - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #ff6f00;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#ff6f00;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:13px}th,td{padding:10px 14px;text-align:left;border:1px solid #dadce0}th{background:#fff3e0;font-weight:600;color:#e65100}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}pre{background:#1a1a2e;color:#e8eaed;padding:20px 24px;border-radius:12px;margin:16px 0 24px;overflow-x:auto;font-size:13px;line-height:1.7}pre code{background:none;padding:0;color:inherit}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}
+</style>
+</head>
+<body>
+
+<div class="doc-id-bar">
+  <span class="doc-id">SKL-MOD-004</span>
+  <span>Skolyn Platform Documentation</span>
+  <span class="doc-class">CONFIDENTIAL</span>
+</div>
+
+<div class="doc-header">
+  <h1>Terbium OS - X-Ray Module</h1>
+  <div class="subtitle">Radiographic Analysis Module: 10 Subtypes, Multi-Scale Encoder, and Projection-Aware Intelligence</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Confidential</div>
+    <div class="meta-item"><strong>Owner:</strong> X-Ray Engineering</div>
+    <div class="meta-item"><strong>Review Cycle:</strong> Quarterly</div>
+    <div class="meta-item"><strong>Next Review:</strong> May 2026</div>
+  </div>
+</div>
+
+<h2>1. Module Overview</h2>
+<p>Terbium OS is Skolyn's X-ray and digital radiography analysis module, engineered for the highest-volume imaging modality in healthcare. Named after Terbium (Tb, atomic number 65), an element prized for its luminescence in imaging phosphors, the module reflects its critical role in projection radiography analysis. X-ray is the most commonly performed medical imaging examination worldwide, accounting for approximately 60% of all imaging studies, making efficient and accurate AI analysis at scale essential. Terbium OS supports 10 anatomical subtypes covering chest, musculoskeletal, mammographic, dental panoramic, bone age, abdominal, cervical spine, thoracic/lumbar spine, pelvic, and pediatric applications. The module processes single-projection and multi-view studies with sub-5-second turnaround time per image.</p>
+
+<h2>2. Supported Subtypes</h2>
+<table>
+  <tr><th>#</th><th>Subtype</th><th>Key Capabilities</th><th>Processing Time</th></tr>
+  <tr><td>1</td><td>Chest X-Ray (PA/AP)</td><td>14 pathology detection (pneumonia, effusion, cardiomegaly, pneumothorax, nodule, mass, consolidation, atelectasis, edema, fracture, emphysema, fibrosis, pleural thickening, device detection)</td><td>3s</td></tr>
+  <tr><td>2</td><td>Chest X-Ray (Lateral)</td><td>Retrocardiac opacity, posterior costophrenic angle effusion, vertebral body assessment</td><td>3s</td></tr>
+  <tr><td>3</td><td>Musculoskeletal (Extremity)</td><td>Fracture detection and classification (AO/OTA), dislocation, joint effusion, soft tissue swelling, hardware assessment</td><td>2s</td></tr>
+  <tr><td>4</td><td>Mammography (Digital)</td><td>BI-RADS classification, mass/calcification detection, architectural distortion, asymmetry, breast density</td><td>4s per view</td></tr>
+  <tr><td>5</td><td>Bone Age Assessment</td><td>Automated Greulich-Pyle bone age, standard deviation from mean, growth percentile prediction</td><td>2s</td></tr>
+  <tr><td>6</td><td>Abdominal X-Ray</td><td>Bowel obstruction, free air, renal stone, foreign body, fecal loading, ileus</td><td>3s</td></tr>
+  <tr><td>7</td><td>Cervical Spine</td><td>Fracture detection, alignment assessment, prevertebral soft tissue swelling, degenerative changes</td><td>2s</td></tr>
+  <tr><td>8</td><td>Thoracic/Lumbar Spine</td><td>Compression fracture grading (Genant), scoliosis measurement (Cobb angle), spondylolisthesis</td><td>3s</td></tr>
+  <tr><td>9</td><td>Pelvis/Hip</td><td>Hip fracture detection, joint space assessment, Tonnis grading, prosthesis evaluation</td><td>3s</td></tr>
+  <tr><td>10</td><td>Pediatric</td><td>Age-adjusted normal variants, growth plate assessment, NAT screening, pediatric elbow/wrist</td><td>3s</td></tr>
+</table>
+
+<h2>3. Architecture</h2>
+<h3>3.1 Multi-Scale Encoder</h3>
+<p>The defining architectural feature of Terbium OS is the Multi-Scale Encoder (MSE), designed to handle the unique challenge of projection radiography: clinically significant findings span multiple spatial scales within a single 2D image. A pneumothorax may occupy 40% of the hemithorax, while a subtle hairline fracture is only a few pixels wide. The MSE processes each radiograph through four parallel resolution branches (full resolution, 1/2, 1/4, 1/8) with shared backbone weights (EfficientNet-V2-L), feature pyramid network (FPN) connections for cross-scale information exchange, and a final multi-scale attention aggregation layer that learns to weight scale-specific features based on finding type. The MSE achieves state-of-the-art performance on CheXpert, MIMIC-CXR, and VinDr-CXR benchmarks while maintaining sub-3-second inference time on a single A30 GPU.</p>
+
+<h3>3.2 Projection-Aware Analysis</h3>
+<p>X-ray images are 2D projections of 3D anatomy, which creates unique challenges: overlapping structures, magnification effects, and projection-dependent appearance of pathologies. Terbium OS incorporates projection-aware modules that adjust analysis parameters based on the view position (PA vs AP, lateral, oblique, cross-table lateral). For multi-view studies (e.g., PA + lateral chest, or multiple mammographic views), the Multi-View Fusion module jointly analyzes all projections, resolving ambiguities that are present in single-view analysis. For example, a retrocardiac opacity visible on the lateral view provides confirmatory evidence for a subtle finding on the PA view.</p>
+
+<h2>4. Clinical Performance</h2>
+<table>
+  <tr><th>Subtype</th><th>Sensitivity</th><th>Specificity</th><th>AUC</th><th>Validation Dataset</th></tr>
+  <tr><td>Chest X-Ray (14 labels)</td><td>92.8% (avg)</td><td>91.4% (avg)</td><td>0.941</td><td>CheXpert + MIMIC + 50K clinical</td></tr>
+  <tr><td>Fracture (Extremity)</td><td>95.3%</td><td>93.7%</td><td>0.968</td><td>MURA + 20K clinical</td></tr>
+  <tr><td>Mammography BI-RADS</td><td>94.6%</td><td>87.2%</td><td>0.932</td><td>VinDr-Mammo + 15K clinical</td></tr>
+  <tr><td>Bone Age</td><td>MAE 4.2 months</td><td>-</td><td>R2=0.98</td><td>RSNA Bone Age + 5K clinical</td></tr>
+  <tr><td>Hip Fracture</td><td>96.1%</td><td>94.8%</td><td>0.976</td><td>8K clinical studies</td></tr>
+  <tr><td>Spine Fracture</td><td>93.9%</td><td>92.3%</td><td>0.955</td><td>6K clinical studies</td></tr>
+</table>
+
+<h2>5. Chest X-Ray Deep-Dive</h2>
+<p>CXR is the most impactful subtype in Terbium OS, processing millions of studies annually across Skolyn deployments. The CXR engine detects and localizes 14 distinct pathologies simultaneously, generating bounding box annotations with confidence scores for each finding. The engine also performs automated measurements including cardiothoracic ratio (CTR) for cardiomegaly quantification, tracheal midline deviation for tension pneumothorax assessment, and tube/line tip position verification (ETT, NG tube, central venous catheter, chest tube). For follow-up studies, temporal comparison automatically aligns the current and prior CXR using affine registration and highlights interval changes in a difference map overlay.</p>
+
+<h2>6. Mammography Screening</h2>
+<p>Terbium OS's mammography subtype supports both screening (2D digital mammography) and diagnostic workflows. For screening mammography, the module processes all four standard views (RCC, LCC, RMLO, LMLO) jointly, providing per-view and per-breast BI-RADS classifications with overall assessment. The module performs automated breast density classification (ACR A-D) using a dedicated DenseNet model, mass detection with morphological characterization (shape, margin, density), calcification detection with distribution pattern analysis (clustered, regional, segmental, diffuse), and architectural distortion identification. All findings include CAD marks on the mammographic image for radiologist review.</p>
+
+<h2>7. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>X-Ray Engineering</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-06-01</td><td>X-Ray Engineering</td><td>Added MSE, mammography, pediatric</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>X-Ray Engineering</td><td>Updated performance, CXR deep-dive</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block">
+      <div class="role">Chief Technology Officer (CTO)</div>
+      <div class="name">Skolyn Technology Division</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+    <div class="signature-block">
+      <div class="role">Chief Executive Officer (CEO)</div>
+      <div class="name">Skolyn Executive Office</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+  </div>
+</div>
+
+<div class="doc-footer">
+  <p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p>
+  <p>Document ID: SKL-MOD-004 | Version 3.0 | Classification: Confidential</p>
+  <p>&copy; 2026 Skolyn. All rights reserved.</p>
+</div>
+
+</body>
+</html>

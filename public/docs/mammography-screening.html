@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mammography Screening - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #e91e63;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#e91e63;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:13px}th,td{padding:10px 14px;text-align:left;border:1px solid #dadce0}th{background:#fce4ec;font-weight:600;color:#c2185b}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}</style>
+</head>
+<body>
+
+<div class="doc-id-bar"><span class="doc-id">SKL-XR-002</span><span>Skolyn Platform Documentation</span><span class="doc-class">CONFIDENTIAL</span></div>
+
+<div class="doc-header">
+  <h1>Mammography Screening</h1>
+  <div class="subtitle">AI-Assisted Digital Mammography: BI-RADS Classification, Density Assessment, and Cancer Detection</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Confidential</div>
+    <div class="meta-item"><strong>Owner:</strong> X-Ray Engineering</div>
+  </div>
+</div>
+
+<h2>1. Overview</h2>
+<p>Mammography screening is the most effective population-level tool for early breast cancer detection, with randomized controlled trials demonstrating 20-30% mortality reduction in screened populations. However, mammographic interpretation is one of the most challenging tasks in radiology — readers must identify subtle lesions in a complex anatomical background, with false negative rates of 10-30% and recall rates averaging 10-12% (well above the desirable &lt;7% target). Skolyn's mammography screening AI within Terbium OS serves as an intelligent second reader, detecting cancers that may be overlooked in standard clinical reads while simultaneously reducing unnecessary recalls. The module processes all four standard screening views (RCC, LCC, RMLO, LMLO) jointly, performing mass detection, calcification analysis, architectural distortion identification, asymmetry assessment, breast density classification, and overall BI-RADS scoring with per-view and per-breast assessments.</p>
+
+<h2>2. Lesion Detection</h2>
+<h3>2.1 Mass Detection</h3>
+<p>The mass detection engine uses a multi-scale object detection network (EfficientDet-D5) operating on full-resolution mammographic images (typical resolution 3000x4000 pixels at 70-micron pixel size). Detected masses are characterized by shape (oval, round, irregular), margin (circumscribed, obscured, microlobulated, indistinct, spiculated), and density (high, equal, low, fat-containing). Each characterization follows the BI-RADS mammography lexicon. Mass size is measured in millimeters on both CC and MLO views, with the largest dimension reported. Masses identified on one view are cross-correlated with the orthogonal view using triangulation for 3D lesion localization within the breast.</p>
+
+<h3>2.2 Calcification Analysis</h3>
+<p>Calcification detection identifies individual microcalcifications and clusters using a dedicated high-resolution analysis on the full-field digital mammogram. Calcifications are classified by morphology (typically benign: skin, vascular, coarse, rod-like, round, rim; suspicious: amorphous, coarse heterogeneous, fine pleomorphic, fine linear/branching) and distribution (diffuse, regional, grouped/clustered, linear, segmental). The combination of morphology and distribution determines the overall suspicion level. Segmental distribution of fine pleomorphic or fine linear calcifications is highly suspicious for DCIS and is flagged as a BI-RADS 5 finding.</p>
+
+<h2>3. Breast Density Classification</h2>
+<p>Automated breast density classification follows the ACR four-tier system: A (almost entirely fatty), B (scattered fibroglandular densities), C (heterogeneously dense), D (extremely dense). Dense breasts (categories C and D) reduce mammographic sensitivity because cancers may be obscured by overlying fibroglandular tissue, and dense breast tissue is itself an independent risk factor for breast cancer. The density classifier uses a ResNet-50 model trained on 200,000 mammograms with expert consensus density labels, achieving 92% agreement with expert classification and kappa of 0.81. In jurisdictions with breast density notification laws, the system automatically generates appropriate patient notification language based on the density classification.</p>
+
+<h2>4. BI-RADS Assessment</h2>
+<table>
+  <tr><th>Category</th><th>Assessment</th><th>Recommendation</th><th>Cancer Probability</th></tr>
+  <tr><td>BI-RADS 0</td><td>Incomplete</td><td>Additional imaging needed</td><td>-</td></tr>
+  <tr><td>BI-RADS 1</td><td>Negative</td><td>Routine screening</td><td>0%</td></tr>
+  <tr><td>BI-RADS 2</td><td>Benign</td><td>Routine screening</td><td>0%</td></tr>
+  <tr><td>BI-RADS 3</td><td>Probably Benign</td><td>Short-interval follow-up</td><td>&lt;2%</td></tr>
+  <tr><td>BI-RADS 4A</td><td>Low Suspicion</td><td>Tissue diagnosis</td><td>2-10%</td></tr>
+  <tr><td>BI-RADS 4B</td><td>Moderate Suspicion</td><td>Tissue diagnosis</td><td>10-50%</td></tr>
+  <tr><td>BI-RADS 4C</td><td>High Suspicion</td><td>Tissue diagnosis</td><td>50-95%</td></tr>
+  <tr><td>BI-RADS 5</td><td>Highly Suggestive</td><td>Tissue diagnosis</td><td>&gt;95%</td></tr>
+  <tr><td>BI-RADS 6</td><td>Known Malignancy</td><td>Surgical excision</td><td>100%</td></tr>
+</table>
+
+<h2>5. Screening Workflow Integration</h2>
+<p>The mammography AI integrates into screening workflows as an intelligent concurrent reader. In double-reading programs (standard in Europe), the AI serves as the second reader, with discordant cases flagged for arbitration review. In single-reading programs (standard in the US), the AI flags suspicious findings for prioritized radiologist review. The system maintains audit metrics including cancer detection rate (CDR), recall rate, positive predictive value (PPV), and interval cancer rate, with continuous monitoring and performance dashboards. The AI has demonstrated cancer detection improvement of 12% (additional cancers detected) with simultaneous recall rate reduction of 15% when used as a concurrent reader in prospective screening trials.</p>
+
+<h2>6. Clinical Performance</h2>
+<table>
+  <tr><th>Task</th><th>Metric</th><th>Performance</th><th>Benchmark</th></tr>
+  <tr><td>Cancer Detection</td><td>Sensitivity</td><td>94.6%</td><td>VinDr-Mammo + 15K clinical</td></tr>
+  <tr><td>BI-RADS Assessment</td><td>Agreement</td><td>87.2%</td><td>Expert consensus</td></tr>
+  <tr><td>Density Classification</td><td>Accuracy</td><td>92.1%</td><td>Expert consensus</td></tr>
+  <tr><td>Mass Detection</td><td>Sensitivity</td><td>91.3%</td><td>Biopsy-confirmed cancers</td></tr>
+  <tr><td>Calcification Detection</td><td>Sensitivity</td><td>93.7%</td><td>Expert annotation</td></tr>
+</table>
+
+<h2>7. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>X-Ray Engineering</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-06-01</td><td>X-Ray Engineering</td><td>Added density, screening workflow</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>X-Ray Engineering</td><td>Updated performance, BI-RADS</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block"><div class="role">Chief Technology Officer (CTO)</div><div class="name">Skolyn Technology Division</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+    <div class="signature-block"><div class="role">Chief Executive Officer (CEO)</div><div class="name">Skolyn Executive Office</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+  </div>
+</div>
+
+<div class="doc-footer"><p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p><p>Document ID: SKL-XR-002 | Version 3.0 | Classification: Confidential</p><p>&copy; 2026 Skolyn. All rights reserved.</p></div>
+
+</body>
+</html>

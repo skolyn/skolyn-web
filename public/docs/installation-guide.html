@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Installation Guide - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #ea8600;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#ea8600;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:14px}th,td{padding:12px 16px;text-align:left;border:1px solid #dadce0}th{background:#fef7e0;font-weight:600;color:#b06000}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}pre{background:#1a1a2e;color:#e8eaed;padding:20px 24px;border-radius:12px;margin:16px 0 24px;overflow-x:auto;font-size:13px;line-height:1.7}pre code{background:none;padding:0;color:inherit}.callout{padding:16px 20px;border-radius:8px;margin:16px 0 24px;font-size:14px}.callout-warning{background:#fef7e0;border-left:4px solid #ea8600;color:#b06000}.callout-info{background:#e8f0fe;border-left:4px solid #1a73e8;color:#174ea6}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}
+</style>
+</head>
+<body>
+
+<div class="doc-id-bar">
+  <span class="doc-id">SKL-GS-003</span>
+  <span>Skolyn Platform Documentation</span>
+  <span class="doc-class">RESTRICTED</span>
+</div>
+
+<div class="doc-header">
+  <h1>Installation Guide</h1>
+  <div class="subtitle">On-Premises and Hybrid Deployment Installation Procedures for the Skolyn Platform</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Restricted</div>
+    <div class="meta-item"><strong>Owner:</strong> Platform Engineering</div>
+    <div class="meta-item"><strong>Review Cycle:</strong> Quarterly</div>
+    <div class="meta-item"><strong>Next Review:</strong> May 2026</div>
+  </div>
+</div>
+
+<h2>1. Executive Summary</h2>
+<p>This installation guide provides comprehensive step-by-step instructions for deploying the Skolyn Diagnostic AI Platform in on-premises and hybrid environments. The guide covers hardware prerequisites, operating system preparation, Kubernetes cluster setup, GPU driver installation, Skolyn Helm chart deployment, database migration, module activation, and post-installation verification. For cloud-hosted (SaaS) deployments, no installation is required — refer to the Quick Start Guide (SKL-GS-002) for initial configuration. All on-premises deployments require a valid Skolyn Enterprise license key and must be performed by authorized Skolyn Deployment Engineers or certified partner personnel.</p>
+
+<div class="callout callout-warning">
+  <strong>Important:</strong> On-premises installation requires coordination with the Skolyn Deployment Engineering team. Contact your Skolyn Account Manager to schedule an installation engagement before proceeding.
+</div>
+
+<h2>2. Hardware Prerequisites</h2>
+<h3>2.1 Minimum Hardware Specifications</h3>
+<table>
+  <tr><th>Component</th><th>Minimum</th><th>Recommended</th><th>High-Volume</th></tr>
+  <tr><td>CPU</td><td>2x Intel Xeon Silver 4314 (32 cores total)</td><td>2x Xeon Gold 6338 (64 cores)</td><td>2x Xeon Platinum 8380 (80 cores)</td></tr>
+  <tr><td>RAM</td><td>128 GB DDR4 ECC</td><td>256 GB DDR4 ECC</td><td>512 GB DDR5 ECC</td></tr>
+  <tr><td>GPU</td><td>2x NVIDIA A30 (24 GB)</td><td>4x NVIDIA A100 (40 GB)</td><td>8x NVIDIA H100 (80 GB)</td></tr>
+  <tr><td>Storage (OS)</td><td>500 GB NVMe SSD</td><td>1 TB NVMe SSD</td><td>2 TB NVMe SSD (RAID 1)</td></tr>
+  <tr><td>Storage (Data)</td><td>4 TB SAS SSD</td><td>10 TB NVMe SSD</td><td>50 TB NVMe SSD (RAID 10)</td></tr>
+  <tr><td>Network</td><td>10 Gbps Ethernet</td><td>25 Gbps Ethernet</td><td>100 Gbps InfiniBand</td></tr>
+</table>
+
+<h3>2.2 Capacity Planning</h3>
+<p>The hardware specifications above are sized based on study processing volume. The minimum configuration supports up to 500 studies per hour, the recommended configuration supports up to 2,500 studies per hour, and the high-volume configuration supports up to 12,000 studies per hour. GPU memory is the primary bottleneck for MRI multi-sequence analysis — each concurrent MRI study requires approximately 6 GB of GPU memory during inference. Capacity planning worksheets are available from your Skolyn Account Manager.</p>
+
+<h2>3. Software Prerequisites</h2>
+<h3>3.1 Operating System</h3>
+<ul>
+  <li><strong>Supported OS:</strong> Ubuntu Server 22.04 LTS, RHEL 8.8+, RHEL 9.x, SUSE Linux Enterprise Server 15 SP5+</li>
+  <li><strong>Kernel:</strong> Version 5.15+ (required for GPU passthrough and container runtime)</li>
+  <li><strong>Container Runtime:</strong> containerd 1.7+ (Docker Engine is supported but not recommended for production)</li>
+  <li><strong>Kubernetes:</strong> v1.28+ (supported distributions: kubeadm, RKE2, EKS-Anywhere, OpenShift 4.14+)</li>
+</ul>
+
+<h3>3.2 Required Software Packages</h3>
+<pre><code># Ubuntu 22.04
+sudo apt update && sudo apt install -y \
+  curl wget git jq unzip \
+  build-essential linux-headers-$(uname -r) \
+  nfs-common open-iscsi \
+  nvidia-driver-545 nvidia-container-toolkit
+
+# Verify GPU driver
+nvidia-smi
+
+# Install Helm 3.14+
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+# Install kubectl 1.28+
+curl -LO "https://dl.k8s.io/release/v1.28.0/bin/linux/amd64/kubectl"
+chmod +x kubectl && sudo mv kubectl /usr/local/bin/</code></pre>
+
+<h2>4. Kubernetes Cluster Setup</h2>
+<h3>4.1 Cluster Architecture</h3>
+<p>The Skolyn deployment requires a minimum 3-node Kubernetes cluster: one control plane node and two worker nodes (at least one with GPUs). For production deployments, we recommend 3 control plane nodes (for HA) and a minimum of 3 worker nodes with GPUs.</p>
+
+<h3>4.2 GPU Operator Installation</h3>
+<pre><code># Install NVIDIA GPU Operator
+helm repo add nvidia https://helm.ngc.nvidia.com/nvidia
+helm install gpu-operator nvidia/gpu-operator \
+  --namespace gpu-operator --create-namespace \
+  --set driver.enabled=false \
+  --set toolkit.enabled=true \
+  --set devicePlugin.enabled=true \
+  --set mig.strategy=mixed
+
+# Verify GPU nodes
+kubectl get nodes -o json | jq '.items[].status.allocatable["nvidia.com/gpu"]'</code></pre>
+
+<h3>4.3 Storage Configuration</h3>
+<p>Skolyn requires two storage classes: a high-performance class for database and inference cache (minimum 3,000 IOPS), and a capacity-optimized class for DICOM object storage and backup archives. Supported CSI drivers include Longhorn, Rook-Ceph, OpenEBS, and vendor-specific CSI drivers (Dell, NetApp, Pure Storage).</p>
+
+<h2>5. Skolyn Platform Installation</h2>
+<h3>5.1 Helm Repository Setup</h3>
+<pre><code># Add Skolyn Helm repository
+helm repo add skolyn https://charts.skolyn.com --username license --password &lt;LICENSE_KEY&gt;
+helm repo update
+
+# Verify chart availability
+helm search repo skolyn/skolyn-platform --versions</code></pre>
+
+<h3>5.2 Configuration Values</h3>
+<p>Create a <code>values.yaml</code> file with your deployment-specific settings. The configuration covers database credentials, storage class references, GPU resource requests, TLS certificate paths, DICOM AE Titles, and module activation flags. A sample values file is included in the Helm chart documentation:</p>
+<pre><code># skolyn-values.yaml
+global:
+  licenseKey: "SKL-ENT-XXXX-XXXX-XXXX"
+  domain: "skolyn.your-hospital.com"
+  tls:
+    enabled: true
+    certManager: true  # Use cert-manager for automatic TLS
+
+database:
+  type: postgresql
+  host: "postgresql.skolyn.svc"
+  port: 5432
+  name: skolyn_prod
+  credentials:
+    existingSecret: skolyn-db-credentials
+
+storage:
+  dicom:
+    storageClass: "longhorn-capacity"
+    size: "5Ti"
+  cache:
+    storageClass: "longhorn-performance"
+    size: "500Gi"
+
+inference:
+  gpu:
+    request: 2
+    type: "nvidia.com/gpu"
+  replicas: 2
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 8
+    targetGPUUtilization: 70
+
+modules:
+  rhenium: { enabled: true }
+  seaborgium: { enabled: true }
+  scandium: { enabled: true }
+  terbium: { enabled: true }</code></pre>
+
+<h3>5.3 Deploy</h3>
+<pre><code># Create namespace
+kubectl create namespace skolyn
+
+# Install Skolyn
+helm install skolyn skolyn/skolyn-platform \
+  --namespace skolyn \
+  --values skolyn-values.yaml \
+  --timeout 15m \
+  --wait
+
+# Verify all pods are running
+kubectl get pods -n skolyn -w</code></pre>
+
+<h2>6. Post-Installation Verification</h2>
+<h3>6.1 Health Check</h3>
+<pre><code># Run Skolyn health check
+kubectl exec -n skolyn deploy/skolyn-api -- skolyn-cli health --detailed
+
+# Expected output:
+# API Server:       ✓ Healthy (v3.2.1)
+# Database:         ✓ Connected (PostgreSQL 16.1)
+# Object Storage:   ✓ Accessible (5.0 TiB available)
+# Inference Engine: ✓ Ready (2 GPU workers, 4x A100)
+# DICOM Gateway:    ✓ Listening (AE: SKOLYN_AI, Port: 11112)
+# Message Queue:    ✓ Connected (Kafka 3.6)
+# Search Engine:    ✓ Connected (OpenSearch 2.11)</code></pre>
+
+<h3>6.2 DICOM Connectivity Test</h3>
+<pre><code># Send C-ECHO to verify DICOM listener
+storescu -aec SKOLYN_AI -aet TEST_SCU skolyn.your-hospital.com 11112 +tls</code></pre>
+
+<h2>7. Upgrade Procedures</h2>
+<p>Platform upgrades are performed via Helm chart version bumps. Skolyn supports rolling upgrades with zero downtime for minor versions and scheduled maintenance windows for major versions. Always review the release notes and run the pre-upgrade compatibility check before upgrading:</p>
+<pre><code># Check compatibility
+helm diff upgrade skolyn skolyn/skolyn-platform --namespace skolyn --values skolyn-values.yaml
+
+# Perform upgrade
+helm upgrade skolyn skolyn/skolyn-platform --namespace skolyn --values skolyn-values.yaml --wait</code></pre>
+
+<h2>8. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>Platform Engineering</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-06-01</td><td>Platform Engineering</td><td>Added GPU Operator, Helm improvements</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>Platform Engineering</td><td>Updated hardware specs, H100 support, OpenShift 4.14</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block">
+      <div class="role">Chief Technology Officer (CTO)</div>
+      <div class="name">Skolyn Technology Division</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+    <div class="signature-block">
+      <div class="role">Chief Executive Officer (CEO)</div>
+      <div class="name">Skolyn Executive Office</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+  </div>
+</div>
+
+<div class="doc-footer">
+  <p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p>
+  <p>Document ID: SKL-GS-003 | Version 3.0 | Classification: Restricted</p>
+  <p>&copy; 2026 Skolyn. All rights reserved.</p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Breast MRI Analysis - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #e91e63;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#e91e63;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:13px}th,td{padding:10px 14px;text-align:left;border:1px solid #dadce0}th{background:#fce4ec;font-weight:600;color:#c2185b}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}</style>
+</head>
+<body>
+
+<div class="doc-id-bar"><span class="doc-id">SKL-MRI-003</span><span>Skolyn Platform Documentation</span><span class="doc-class">CONFIDENTIAL</span></div>
+
+<div class="doc-header">
+  <h1>Breast MRI Analysis</h1>
+  <div class="subtitle">AI-Powered Breast MR Assessment: BI-RADS Classification, Kinetic Analysis, and Background Parenchymal Enhancement</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Confidential</div>
+    <div class="meta-item"><strong>Owner:</strong> MRI Engineering</div>
+  </div>
+</div>
+
+<h2>1. Overview</h2>
+<p>The Breast MRI analysis subtype within Rhenium OS provides comprehensive AI-driven assessment of contrast-enhanced breast MR examinations, the most sensitive imaging modality for breast cancer detection. Breast MRI is indicated for high-risk screening, pre-operative staging, treatment response monitoring, and evaluation of equivocal mammographic or ultrasound findings. Skolyn's breast MRI AI processes the complete dynamic contrast-enhanced (DCE) series — typically 5-7 temporal phases acquired over 7-10 minutes — along with diffusion-weighted imaging (DWI) and T2-weighted sequences. The module automates lesion detection, morphological characterization, kinetic curve analysis, BI-RADS classification, and background parenchymal enhancement (BPE) assessment, reducing interpretation time by approximately 40% while maintaining expert-level diagnostic accuracy.</p>
+
+<h2>2. Lesion Detection and Characterization</h2>
+<h3>2.1 Enhancement Detection</h3>
+<p>The lesion detection pipeline begins with automated subtraction of pre-contrast from post-contrast images to generate maximum intensity projection (MIP) subtraction images, which are then analyzed by a 3D detection network (3D RetinaNet). Detected enhancing regions are classified as mass or non-mass enhancement (NME) and further characterized by morphological descriptors following the ACR BI-RADS MRI lexicon. For masses, the system evaluates shape (oval, round, irregular), margin (circumscribed, irregular, spiculated), and internal enhancement characteristics (homogeneous, heterogeneous, rim, dark internal septations). For NME, the system characterizes distribution (focal, linear, segmental, regional, diffuse) and internal enhancement pattern (homogeneous, heterogeneous, clumped, clustered ring).</p>
+
+<h3>2.2 Kinetic Curve Analysis</h3>
+<p>Each detected lesion undergoes voxel-level kinetic curve analysis across the dynamic contrast time series. Enhancement kinetics are classified according to the BI-RADS lexicon: initial phase as slow, medium, or rapid; and delayed phase as persistent (type I, suggestive of benign), plateau (type II, indeterminate), or washout (type III, suggestive of malignancy). The module generates color-coded kinetic overlay maps where each voxel is colored based on its curve type (blue for persistent, yellow for plateau, red for washout), providing intuitive visual assessment of lesion heterogeneity. Quantitative parameters including time-to-peak, peak enhancement percentage, and washout rate are extracted and reported for each lesion.</p>
+
+<h2>3. BI-RADS Classification</h2>
+<p>Skolyn's breast MRI module outputs a BI-RADS assessment category (0 through 6) for each identified lesion and an overall exam assessment. The classification integrates morphology, kinetics, diffusion characteristics (ADC values), and clinical context. BI-RADS 0 (additional evaluation needed) is assigned when correlation with targeted ultrasound is recommended. BI-RADS 1-2 are assigned for negative or benign findings. BI-RADS 3 (probably benign, &lt;2% malignancy) is assigned for lesions meeting strict morphological and kinetic criteria. BI-RADS 4 (subdivided into 4A, 4B, 4C) and BI-RADS 5 are assigned for suspicious and highly suspicious findings with corresponding positive predictive values. Each classification includes detailed rationale text citing the specific imaging features that drove the assessment.</p>
+
+<h2>4. Background Parenchymal Enhancement</h2>
+<p>Background parenchymal enhancement (BPE) is the enhancement of normal breast fibroglandular tissue on contrast-enhanced breast MRI. BPE level has been shown to be an independent risk factor for breast cancer and can affect lesion conspicuity. The module automatically classifies BPE level as minimal, mild, moderate, or marked following ACR BI-RADS guidelines. BPE quantification uses a U-Net segmentation model to isolate fibroglandular tissue, followed by measurement of the percentage and intensity of enhancing parenchyma. The system also assesses BPE symmetry between breasts, as asymmetric BPE can indicate underlying pathology.</p>
+
+<h2>5. Treatment Response Monitoring</h2>
+<p>For patients undergoing neoadjuvant chemotherapy, the breast MRI module performs automated treatment response assessment following the RECIST and volumetric criteria. Serial studies are registered using deformable registration, and tumor volume is measured at each timepoint. Response classification follows the Miller-Payne grading system and RECIST 1.1 criteria. The module also tracks changes in kinetic characteristics, ADC values, and enhancement patterns that may predict pathological complete response (pCR) earlier than size changes alone. Predictive analytics estimate pCR probability based on multi-parametric imaging biomarker trajectories.</p>
+
+<h2>6. Clinical Performance</h2>
+<table>
+  <tr><th>Task</th><th>Metric</th><th>Performance</th><th>Benchmark</th></tr>
+  <tr><td>Lesion Detection</td><td>Sensitivity</td><td>95.8%</td><td>6K clinical breast MRI studies</td></tr>
+  <tr><td>BI-RADS Classification</td><td>Agreement (kappa)</td><td>0.82</td><td>Expert reader consensus</td></tr>
+  <tr><td>Mass vs NME</td><td>Accuracy</td><td>93.2%</td><td>Expert annotation</td></tr>
+  <tr><td>Kinetic Curve Type</td><td>Accuracy</td><td>96.1%</td><td>Manual ROI analysis</td></tr>
+  <tr><td>BPE Classification</td><td>Agreement (kappa)</td><td>0.78</td><td>Expert reader classification</td></tr>
+</table>
+
+<h2>7. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>MRI Engineering</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-06-01</td><td>MRI Engineering</td><td>Added treatment response, BPE</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>MRI Engineering</td><td>Updated performance, kinetic analysis</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block"><div class="role">Chief Technology Officer (CTO)</div><div class="name">Skolyn Technology Division</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+    <div class="signature-block"><div class="role">Chief Executive Officer (CEO)</div><div class="name">Skolyn Executive Office</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+  </div>
+</div>
+
+<div class="doc-footer"><p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p><p>Document ID: SKL-MRI-003 | Version 3.0 | Classification: Confidential</p><p>&copy; 2026 Skolyn. All rights reserved.</p></div>
+
+</body>
+</html>

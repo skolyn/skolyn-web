@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EHR Integration - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #1e8e3e;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#1e8e3e;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:14px}th,td{padding:12px 16px;text-align:left;border:1px solid #dadce0}th{background:#e6f4ea;font-weight:600;color:#137333}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}pre{background:#1a1a2e;color:#e8eaed;padding:20px 24px;border-radius:12px;margin:16px 0 24px;overflow-x:auto;font-size:13px;line-height:1.7}pre code{background:none;padding:0;color:inherit}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}
+</style>
+</head>
+<body>
+
+<div class="doc-id-bar">
+  <span class="doc-id">SKL-INT-006</span>
+  <span>Skolyn Platform Documentation</span>
+  <span class="doc-class">RESTRICTED</span>
+</div>
+
+<div class="doc-header">
+  <h1>EHR Integration</h1>
+  <div class="subtitle">Electronic Health Record System Integration Guide for Embedding Skolyn AI into Clinical Workflows</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Restricted</div>
+    <div class="meta-item"><strong>Owner:</strong> Integration Engineering</div>
+    <div class="meta-item"><strong>Review Cycle:</strong> Quarterly</div>
+    <div class="meta-item"><strong>Next Review:</strong> May 2026</div>
+  </div>
+</div>
+
+<h2>1. Overview</h2>
+<p>Integrating Skolyn with Electronic Health Record (EHR) systems bridges the gap between diagnostic AI findings and the clinician's primary workspace. This guide covers integration patterns for Epic, Cerner (Oracle Health), MEDITECH, Allscripts, and athenahealth, as well as generic FHIR-based integration for any EHR supporting the SMART on FHIR framework. Skolyn's EHR integration delivers AI findings directly into clinical notes, embeds interactive dashboards within the EHR via CDS Hooks, and surfaces critical finding alerts in the clinician's inbox. The goal is zero-context-switch access to AI diagnostic insights — radiologists and referring physicians should never need to leave their EHR to review Skolyn's analysis.</p>
+
+<h2>2. Integration Patterns</h2>
+<h3>2.1 CDS Hooks (Clinical Decision Support)</h3>
+<p>Skolyn implements the CDS Hooks specification (v1.1) to provide AI-driven clinical decision support triggered by EHR events. When a clinician opens a patient chart with recent imaging, Skolyn's CDS Hook fires and returns a card summarizing AI findings, including confidence scores, key image thumbnails, and direct links to the full AI report.</p>
+<pre><code># CDS Hooks Discovery Endpoint
+GET /cds-services
+
+{
+  "services": [{
+    "id": "skolyn-imaging-ai",
+    "hook": "patient-view",
+    "title": "Skolyn AI Imaging Analysis",
+    "description": "Surfaces AI analysis findings for recent imaging studies",
+    "prefetch": {
+      "patient": "Patient/{{context.patientId}}",
+      "imagingStudies": "ImagingStudy?patient={{context.patientId}}&_sort=-date&_count=5"
+    }
+  }]
+}</code></pre>
+
+<h3>2.2 SMART on FHIR App (Embedded Viewer)</h3>
+<p>Skolyn provides a SMART on FHIR embedded application that launches within the EHR's app framework. When launched, the app displays a comprehensive AI analysis dashboard showing all processed studies for the current patient, interactive attention map overlays, temporal trend analysis, and one-click report generation. The SMART app supports both EHR launch (context from the EHR session) and standalone launch (user selects the patient).</p>
+
+<h3>2.3 Result Push via HL7v2 ORU</h3>
+<p>For EHR systems that do not support CDS Hooks or SMART apps, Skolyn delivers results via HL7v2 ORU^R01 messages through the institution's interface engine. The ORU message populates the "Results" section of the patient chart, appearing as a structured diagnostic report alongside traditional radiology reports. This integration pattern is compatible with virtually every EHR system and requires only standard HL7 interface configuration.</p>
+
+<h2>3. Vendor-Specific Guides</h2>
+<h3>3.1 Epic Integration</h3>
+<table>
+  <tr><th>Integration Method</th><th>Epic Component</th><th>Configuration</th></tr>
+  <tr><td>SMART on FHIR App</td><td>App Orchard / Hyperdrive</td><td>Register Skolyn as an App Orchard application. Configure OAuth 2.0 client credentials via Epic's Admin Portal.</td></tr>
+  <tr><td>CDS Hooks</td><td>Best Practice Alerts (BPA)</td><td>Map Skolyn CDS Hook to a BPA rule that triggers on imaging order completion.</td></tr>
+  <tr><td>HL7v2 Results</td><td>Bridges / Clarity</td><td>Configure outbound ORU interface in Bridges to Skolyn's MLLP endpoint.</td></tr>
+  <tr><td>In-Basket Alerts</td><td>In-Basket</td><td>Critical AI findings generate In-Basket messages to the ordering provider.</td></tr>
+</table>
+
+<h3>3.2 Cerner (Oracle Health) Integration</h3>
+<table>
+  <tr><th>Integration Method</th><th>Cerner Component</th><th>Configuration</th></tr>
+  <tr><td>SMART on FHIR App</td><td>CODE Program / Ignite APIs</td><td>Register via Cerner Central. Configure Ignite FHIR R4 endpoint.</td></tr>
+  <tr><td>HL7v2 Results</td><td>Open Engine / Open Link</td><td>Configure ORU outbound channel to Skolyn MLLP.</td></tr>
+  <tr><td>PowerChart MPages</td><td>MPages Framework</td><td>Embed Skolyn Web Component in custom MPages for inline viewing.</td></tr>
+  <tr><td>Discern Alerts</td><td>DAC</td><td>Map critical AI findings to Discern Alert rules for provider notification.</td></tr>
+</table>
+
+<h3>3.3 MEDITECH Integration</h3>
+<p>MEDITECH Expanse supports SMART on FHIR app embedding and HL7v2 ORU result delivery. Configure the SMART app via MEDITECH's Web Application Management tool. HL7v2 interfaces are configured through MEDITECH's Interface Management and support both MLLP and TCP socket connections with TLS encryption.</p>
+
+<h2>4. Critical Finding Alerts</h2>
+<p>When Skolyn detects a critical finding (e.g., pneumothorax, pulmonary embolism, intracranial hemorrhage, aortic dissection), the platform triggers an alert workflow that delivers notifications through multiple channels simultaneously:</p>
+<ul>
+  <li><strong>EHR In-Basket/Message Center:</strong> Structured alert to the ordering provider with finding summary, confidence score, and link to full report.</li>
+  <li><strong>PACS Worklist Priority:</strong> Study promoted to STAT priority in the radiologist's reading worklist.</li>
+  <li><strong>SMS/Pager:</strong> Direct notification to the on-call radiologist with accession number and finding type.</li>
+  <li><strong>Push Notification:</strong> Mobile app push notification for clinicians with Skolyn Mobile installed.</li>
+</ul>
+<p>Alert acknowledgment is tracked end-to-end: Skolyn records the timestamp when each notification is sent, delivered, and acknowledged, creating an auditable chain of communication for regulatory compliance.</p>
+
+<h2>5. Data Flow Architecture</h2>
+<p>The EHR integration data flow proceeds as follows: A radiology order is placed in the EHR, generating an ORM^O01 message that is routed to Skolyn via the interface engine. When the modality completes the acquisition, the study is forwarded to Skolyn's DICOM Gateway. Skolyn processes the study using the appropriate AI module, generates findings, and delivers results through all configured channels (DICOM SR to PACS, ORU to EHR, FHIR DiagnosticReport to CDS Hooks). The clinician views results natively within the EHR without any additional login or context switch.</p>
+
+<h2>6. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-07-01</td><td>Integration Engineering</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-06-01</td><td>Integration Engineering</td><td>Added CDS Hooks, Epic, Cerner</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>Integration Engineering</td><td>Updated MEDITECH, alerts, data flow</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block">
+      <div class="role">Chief Technology Officer (CTO)</div>
+      <div class="name">Skolyn Technology Division</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+    <div class="signature-block">
+      <div class="role">Chief Executive Officer (CEO)</div>
+      <div class="name">Skolyn Executive Office</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+  </div>
+</div>
+
+<div class="doc-footer">
+  <p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p>
+  <p>Document ID: SKL-INT-006 | Version 3.0 | Classification: Restricted</p>
+  <p>&copy; 2026 Skolyn. All rights reserved.</p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chest CT Analysis - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #e91e63;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#e91e63;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:13px}th,td{padding:10px 14px;text-align:left;border:1px solid #dadce0}th{background:#fce4ec;font-weight:600;color:#c2185b}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}</style>
+</head>
+<body>
+
+<div class="doc-id-bar"><span class="doc-id">SKL-CT-001</span><span>Skolyn Platform Documentation</span><span class="doc-class">CONFIDENTIAL</span></div>
+
+<div class="doc-header">
+  <h1>Chest CT Analysis</h1>
+  <div class="subtitle">Comprehensive Thoracic CT Assessment: Pulmonary Nodule Management, PE Detection, and Lung Screening</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Confidential</div>
+    <div class="meta-item"><strong>Owner:</strong> CT Engineering</div>
+  </div>
+</div>
+
+<h2>1. Overview</h2>
+<p>The Chest CT analysis subtype within Seaborgium OS is Skolyn's highest-impact CT application, covering the full spectrum of thoracic pathology across non-contrast chest CT, contrast-enhanced CT (CT Pulmonary Angiography), and low-dose CT lung screening examinations. Chest CT is one of the most frequently performed cross-sectional imaging examinations, with millions of studies performed annually in the United States alone. Skolyn's chest CT AI processes the entire volumetric dataset (typically 200-500 slices at sub-millimeter thickness) in under 15 seconds, detecting and characterizing pulmonary nodules, pulmonary embolism, aortic pathology, pneumothorax, pleural effusion, emphysema, fibrosis, lymphadenopathy, and incidental cardiac and musculoskeletal findings. The module supports both routine diagnostic workflows and dedicated lung cancer screening programs with Lung-RADS-compliant reporting.</p>
+
+<h2>2. Pulmonary Nodule Detection and Management</h2>
+<h3>2.1 Detection Engine</h3>
+<p>The pulmonary nodule detection engine uses a 3D FPN (Feature Pyramid Network) with ResNet-152 backbone operating on the full-resolution CT volume. The engine achieves 95.4% sensitivity at a false positive rate of 1.2 per scan, validated on the LIDC-IDRI benchmark (888 CT scans with expert annotations) and an internal clinical validation set of 15,000 studies. Detected nodules are characterized by location (lobe, segment, subsegment, distance from pleura), morphology (solid, part-solid with ground-glass component, pure ground-glass), size (longest axial diameter and mean diameter in mm, volume in mm3), and attenuation statistics (mean HU, maximum HU). Each nodule is assigned a confidence score and a unique tracking identifier for longitudinal follow-up.</p>
+
+<h3>2.2 Lung-RADS Classification</h3>
+<p>For lung cancer screening examinations, the module assigns Lung-RADS v2022 categories (0, 1, 2, 3, 4A, 4B, 4X, S) based on nodule type, size, and growth characteristics. When prior low-dose CT studies are available, the system performs automated volumetric comparison using deformable registration, calculates volume doubling time (VDT) using exponential growth modeling, and upgrades Lung-RADS category based on growth assessment. New nodules detected on follow-up studies are flagged and categorized according to their initial size. The system generates structured screening reports with recommended follow-up intervals per Lung-RADS guidelines, patient eligibility confirmation for continued screening, and cumulative lung cancer risk estimation.</p>
+
+<h2>3. Pulmonary Embolism Detection</h2>
+<p>The PE detection module analyzes CT Pulmonary Angiography (CTPA) studies with a specialized vascular segmentation and clot detection pipeline. The pulmonary arterial tree is automatically segmented from the main pulmonary artery through the lobar, segmental, and subsegmental branches using a 3D U-Net variant. Potential emboli are detected as filling defects within the enhanced arterial lumen, classified by location (central, lobar, segmental, subsegmental), extent (occlusive vs. partial), and chronicity (acute — central filling defect with vessel expansion; chronic — eccentric, mural, calcified, or web/band). For acute PE cases, the module calculates RV/LV ratio for assessment of right heart strain, measures the Qanadli obstruction index for clot burden quantification, and detects reflux of contrast into the hepatic veins as an additional sign of right heart failure.</p>
+
+<h2>4. Parenchymal Analysis</h2>
+<p>Automated lung parenchymal analysis quantifies emphysema (percentage of lung volume below -950 HU), air trapping (on expiratory phase when available, percentage below -856 HU), interstitial lung disease patterns (ground-glass opacity, reticular pattern, honeycombing, traction bronchiectasis), and consolidation. For ILD assessment, the module maps the spatial distribution of abnormalities following the Fleischner Society classification to support UIP vs NSIP pattern differentiation. Emphysema mapping uses the LAA-950 index with phenotype classification (centrilobular, panlobular, paraseptal) and severity scoring per lobe.</p>
+
+<h2>5. Incidental Findings</h2>
+<p>The chest CT module detects and reports key incidental findings including coronary artery calcification (with estimated Agatston score equivalent), vertebral compression fractures (with Genant grade), adrenal nodules (with size and density characterization), hepatic and renal lesions visible on the included upper abdomen, and thoracic aortic aneurysm measurement. These incidental findings are reported with ACR Incidental Findings Committee recommendations for appropriate follow-up.</p>
+
+<h2>6. Clinical Performance</h2>
+<table>
+  <tr><th>Task</th><th>Metric</th><th>Performance</th><th>Benchmark</th></tr>
+  <tr><td>Nodule Detection</td><td>Sensitivity</td><td>95.4%</td><td>LIDC-IDRI + 15K clinical</td></tr>
+  <tr><td>PE Detection</td><td>Sensitivity</td><td>97.1%</td><td>RSNA PE + 20K clinical</td></tr>
+  <tr><td>Lung-RADS</td><td>Agreement</td><td>92.3%</td><td>Expert consensus</td></tr>
+  <tr><td>Emphysema (%)</td><td>ICC</td><td>0.97</td><td>Expert quantitative analysis</td></tr>
+</table>
+
+<h2>7. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>CT Engineering</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-06-01</td><td>CT Engineering</td><td>Added PE, Lung-RADS v2022</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>CT Engineering</td><td>Updated performance, incidentals</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block"><div class="role">Chief Technology Officer (CTO)</div><div class="name">Skolyn Technology Division</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+    <div class="signature-block"><div class="role">Chief Executive Officer (CEO)</div><div class="name">Skolyn Executive Office</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+  </div>
+</div>
+
+<div class="doc-footer"><p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p><p>Document ID: SKL-CT-001 | Version 3.0 | Classification: Confidential</p><p>&copy; 2026 Skolyn. All rights reserved.</p></div>
+
+</body>
+</html>

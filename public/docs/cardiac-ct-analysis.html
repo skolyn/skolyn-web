@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cardiac CT Analysis - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #c62828;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#c62828;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:13px}th,td{padding:10px 14px;text-align:left;border:1px solid #dadce0}th{background:#ffebee;font-weight:600;color:#b71c1c}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}</style>
+</head>
+<body>
+
+<div class="doc-id-bar"><span class="doc-id">SKL-CT-004</span><span>Skolyn Platform Documentation</span><span class="doc-class">CONFIDENTIAL</span></div>
+
+<div class="doc-header">
+  <h1>Cardiac CT Analysis</h1>
+  <div class="subtitle">Coronary CT Angiography, Calcium Scoring, and FFR-CT Estimation</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Confidential</div>
+    <div class="meta-item"><strong>Owner:</strong> CT Engineering</div>
+  </div>
+</div>
+
+<h2>1. Overview</h2>
+<p>The Cardiac CT analysis subtype provides comprehensive assessment of coronary CT angiography (CCTA), coronary artery calcium (CAC) scoring, and cardiac structural evaluation. Cardiac CT has emerged as a frontline non-invasive test for chest pain evaluation following the landmark PROMISE and SCOT-HEART trials, and is now recommended as a Class I indication by the American College of Cardiology and American Heart Association guidelines for stable chest pain. Skolyn's cardiac CT AI automates the historically time-consuming process of coronary artery analysis — traditional manual processing requires 30-60 minutes per study — delivering comprehensive results in under 30 seconds with automated coronary artery segmentation, stenosis grading, plaque characterization, and AI-driven FFR-CT (fractional flow reserve derived from CT) estimation for functional significance assessment.</p>
+
+<h2>2. Coronary Artery Calcium Scoring</h2>
+<p>The CAC scoring module processes non-contrast ECG-gated cardiac CT datasets to compute the Agatston score, the gold standard for coronary artery calcification quantification. The algorithm automatically identifies and segments calcified deposits (threshold &gt;130 HU across at least 3 contiguous pixels) within the coronary arteries, assigns them to the four standard coronary vessels (left main, LAD, LCx, RCA), and computes per-vessel and total Agatston scores. Results include risk stratification by percentile ranking adjusted for age, sex, and ethnicity (using the MESA — Multi-Ethnic Study of Atherosclerosis — normative database). CAC categories are reported as zero (very low risk), 1-100 (mild), 101-400 (moderate), and &gt;400 (severe), with associated 10-year ASCVD event rates for clinical decision support.</p>
+
+<h2>3. Coronary CTA Analysis</h2>
+<h3>3.1 Automated Segmentation</h3>
+<p>The coronary artery segmentation engine extracts the coronary arterial tree from contrast-enhanced cardiac CT using a graph-cut-based vessel tracking algorithm initialized by deep learning-based ostial detection. The engine segments all 18 AHA/ACC coronary segments (per the modified AHA 15-segment model plus proximal, mid, and distal RCA subsegments) and generates straightened multiplanar reformations (curved MPR), cross-sectional views, and 3D volume renderings for each vessel. Segmentation handles challenging anatomy including anomalous coronary origins, myocardial bridging, and post-CABG anatomy with identification and tracing of saphenous vein and internal mammary artery grafts.</p>
+
+<h3>3.2 Stenosis Grading</h3>
+<p>Each coronary segment is evaluated for luminal stenosis with grading following the CAD-RADS (Coronary Artery Disease — Reporting and Data System) classification. CAD-RADS 0 — no stenosis (0%). CAD-RADS 1 — minimal (1-24%). CAD-RADS 2 — mild (25-49%). CAD-RADS 3 — moderate (50-69%). CAD-RADS 4A — severe (70-99%). CAD-RADS 4B — left main &ge;50% or three-vessel &ge;70%. CAD-RADS 5 — total occlusion (100%). Modifiers include V (vulnerability features), G (graft), S (stent), and N (non-diagnostic segment). Stenosis measurement uses minimal lumen area (MLA) and minimal lumen diameter (MLD) compared to the reference vessel diameter, computed from cross-sectional analysis at the point of maximum narrowing.</p>
+
+<h2>4. Plaque Characterization</h2>
+<p>Beyond stenosis grading, the module performs detailed plaque analysis including attenuation-based composition classification (calcified &gt;350 HU, fibrous 75-350 HU, lipid-rich/necrotic &lt;30 HU), plaque volume quantification (total, calcified, non-calcified, low-attenuation), and identification of high-risk plaque features. High-risk features include the "napkin-ring sign" (rim of high attenuation surrounding a low-attenuation core), positive remodeling (remodeling index &gt;1.1), low attenuation plaque (&lt;30 HU), and spotty calcification. The pericoronary fat attenuation index (FAI) is computed for each major vessel as a biomarker of vascular inflammation, with values &gt; -70 HU indicating elevated inflammation risk per the CRISP-CT trial data.</p>
+
+<h2>5. FFR-CT Estimation</h2>
+<p>The AI-driven FFR-CT module provides non-invasive estimation of fractional flow reserve for each coronary territory. Unlike computational fluid dynamics (CFD)-based approaches that require significant processing time, Skolyn's FFR-CT estimation uses a deep learning model trained on paired CCTA/invasive FFR datasets (10,000+ vessels) to predict vessel-specific FFR values in under 10 seconds. An FFR-CT value &le;0.80 indicates hemodynamically significant stenosis warranting consideration of revascularization, consistent with the invasive FFR threshold established by the FAME and FAME-2 trials. This capability allows comprehensive anatomical and functional assessment from a single CCTA acquisition.</p>
+
+<h2>6. Clinical Performance</h2>
+<table>
+  <tr><th>Task</th><th>Metric</th><th>Performance</th><th>Benchmark</th></tr>
+  <tr><td>CAC Agatston Score</td><td>MAE</td><td>8.2 AU</td><td>Expert manual scoring</td></tr>
+  <tr><td>Coronary Stenosis</td><td>AUC (&ge;50%)</td><td>0.94</td><td>Invasive angiography</td></tr>
+  <tr><td>CAD-RADS Category</td><td>Agreement</td><td>91.2%</td><td>Expert consensus</td></tr>
+  <tr><td>FFR-CT</td><td>Per-vessel AUC</td><td>0.90</td><td>Invasive FFR</td></tr>
+  <tr><td>High-Risk Plaque</td><td>Sensitivity</td><td>87.5%</td><td>Expert annotation</td></tr>
+</table>
+
+<h2>7. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>CT Engineering</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-06-01</td><td>CT Engineering</td><td>Added FFR-CT, plaque characterization</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>CT Engineering</td><td>Updated performance, CAD-RADS</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block"><div class="role">Chief Technology Officer (CTO)</div><div class="name">Skolyn Technology Division</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+    <div class="signature-block"><div class="role">Chief Executive Officer (CEO)</div><div class="name">Skolyn Executive Office</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+  </div>
+</div>
+
+<div class="doc-footer"><p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p><p>Document ID: SKL-CT-004 | Version 3.0 | Classification: Confidential</p><p>&copy; 2026 Skolyn. All rights reserved.</p></div>
+
+</body>
+</html>

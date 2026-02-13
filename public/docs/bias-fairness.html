@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bias & Fairness - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #00897b;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#00897b;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:13px}th,td{padding:10px 14px;text-align:left;border:1px solid #dadce0}th{background:#e0f2f1;font-weight:600;color:#00695c}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}</style>
+</head>
+<body>
+
+<div class="doc-id-bar"><span class="doc-id">SKL-AI-004</span><span>Skolyn Platform Documentation</span><span class="doc-class">CONFIDENTIAL</span></div>
+
+<div class="doc-header">
+  <h1>Bias & Fairness</h1>
+  <div class="subtitle">Algorithmic Fairness Framework: Demographic Parity, Equalized Odds, Subgroup Analysis, and Mitigation Strategies</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Confidential</div>
+    <div class="meta-item"><strong>Owner:</strong> AI Ethics & Research</div>
+  </div>
+</div>
+
+<h2>1. Overview</h2>
+<p>Algorithmic bias in medical imaging AI is a patient safety and health equity issue. If an AI model performs differently across demographic groups — for example, lower cancer detection sensitivity in certain racial/ethnic populations due to underrepresentation in training data — the consequences are real: missed diagnoses, delayed treatment, and exacerbation of existing health disparities. Skolyn's Bias and Fairness Framework provides systematic methodology for detecting, measuring, and mitigating bias across all Terbium OS AI modules. The framework addresses bias at every stage of the AI lifecycle: data collection (ensuring diverse, representative training datasets), model development (applying fairness-aware training techniques), validation (disaggregated performance reporting across demographic subgroups), deployment (continuous monitoring for performance disparities), and governance (organizational policies and accountability for algorithmic fairness).</p>
+
+<h2>2. Fairness Metrics</h2>
+<table>
+  <tr><th>Metric</th><th>Definition</th><th>Threshold</th></tr>
+  <tr><td>Demographic Parity</td><td>Positive prediction rate is equal across groups</td><td>Ratio 0.8-1.25</td></tr>
+  <tr><td>Equalized Odds</td><td>TPR and FPR equal across groups</td><td>|DELTA TPR| &lt; 5%</td></tr>
+  <tr><td>Predictive Parity</td><td>PPV equal across groups</td><td>|DELTA PPV| &lt; 5%</td></tr>
+  <tr><td>Calibration</td><td>Confidence scores equally calibrated</td><td>ECE &lt; 0.05 per group</td></tr>
+  <tr><td>AUC Parity</td><td>AUC equal across groups</td><td>|DELTA AUC| &lt; 0.03</td></tr>
+</table>
+
+<h2>3. Subgroup Analysis</h2>
+<p>All clinical validation studies and continuous monitoring reports include disaggregated performance analysis across protected demographic attributes: age (pediatric, adult, geriatric), sex (male, female), race/ethnicity (where available and permitted by institutional policy), body habitus (BMI categories), and scanner manufacturer/model (which can serve as a proxy for institutional/geographic diversity). Performance metrics are computed for each subgroup independently, and statistical tests (chi-squared for proportions, bootstrap confidence intervals for AUCs) identify statistically significant performance differences between subgroups. Any subgroup performance gap exceeding the predefined thresholds triggers a mandatory bias investigation and remediation process.</p>
+
+<h2>4. Data Representativeness</h2>
+<p>Training data diversity is the primary strategy for preventing algorithmic bias. Skolyn's data curation pipeline enforces minimum representation thresholds for key demographic groups: no single demographic subgroup may constitute more than 60% of the training dataset for any model, and underrepresented groups must have minimum sample sizes sufficient for reliable performance estimation (typically &gt;200 positive cases per subgroup per pathology). When real-world data collection cannot achieve target diversity ratios (e.g., pediatric cases for adult-predominant pathologies), the data curation team documents the limitations and implements targeted data acquisition programs with diverse clinical partner sites globally.</p>
+
+<h2>5. Bias Mitigation Techniques</h2>
+<h3>5.1 Pre-processing</h3>
+<p>Data augmentation strategies specifically target underrepresented subgroups, generating synthetic training examples that increase representation without compromising data quality. Scanner-specific image style transfer normalizes acquisition differences that can create spurious correlations between scanner type and demographic characteristics.</p>
+
+<h3>5.2 In-processing</h3>
+<p>Fairness-constrained training uses adversarial debiasing, where a secondary adversarial network attempts to predict the protected attribute from model representations, and the primary model is trained to minimize this adversarial classifier's accuracy (making the model's internal representation independent of the protected attribute). Reweighting strategies assign higher training loss weights to underrepresented subgroup examples, ensuring the model optimizes equally for all groups.</p>
+
+<h3>5.3 Post-processing</h3>
+<p>Subgroup-specific threshold calibration adjusts the decision threshold for each demographic group to equalize false positive or false negative rates. This technique is applied only when other mitigation strategies are insufficient, as it introduces group-specific decision rules that must be transparently documented and clinically justified.</p>
+
+<h2>6. Fairness Governance</h2>
+<p>Skolyn's AI Ethics Board, comprising clinicians, data scientists, ethicists, and patient advocates, reviews all fairness analyses before model deployment. The board has veto authority over model releases that do not meet fairness thresholds. Annual algorithmic impact assessments evaluate the cumulative fairness profile of all deployed models, with findings reported to the executive team and included in regulatory submissions. Skolyn publishes an annual Algorithmic Fairness Report providing transparent, disaggregated performance data across all deployed models.</p>
+
+<h2>7. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>AI Ethics</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-06-01</td><td>AI Ethics</td><td>Added adversarial debiasing, governance</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>AI Ethics & Research</td><td>Updated metrics, mitigation</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block"><div class="role">Chief Technology Officer (CTO)</div><div class="name">Skolyn Technology Division</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+    <div class="signature-block"><div class="role">Chief Executive Officer (CEO)</div><div class="name">Skolyn Executive Office</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+  </div>
+</div>
+
+<div class="doc-footer"><p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p><p>Document ID: SKL-AI-004 | Version 3.0 | Classification: Confidential</p><p>&copy; 2026 Skolyn. All rights reserved.</p></div>
+
+</body>
+</html>

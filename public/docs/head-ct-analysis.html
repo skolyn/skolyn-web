@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Head CT Analysis - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #ff5722;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#ff5722;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:13px}th,td{padding:10px 14px;text-align:left;border:1px solid #dadce0}th{background:#fbe9e7;font-weight:600;color:#bf360c}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}</style>
+</head>
+<body>
+
+<div class="doc-id-bar"><span class="doc-id">SKL-CT-002</span><span>Skolyn Platform Documentation</span><span class="doc-class">CONFIDENTIAL</span></div>
+
+<div class="doc-header">
+  <h1>Head CT Analysis</h1>
+  <div class="subtitle">Neuroradiology CT Assessment: Intracranial Hemorrhage Classification, Stroke Triage, and Mass Effect Quantification</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Confidential</div>
+    <div class="meta-item"><strong>Owner:</strong> CT Engineering</div>
+  </div>
+</div>
+
+<h2>1. Overview</h2>
+<p>The Head CT analysis module is Seaborgium OS's most time-critical application, designed for the emergency radiology workflow where every minute of delay in diagnosis can result in permanent neurological deficit or death. Non-contrast head CT is the first-line imaging study for acute headache, altered mental status, trauma, and suspected stroke, accounting for millions of emergency department examinations annually. Skolyn's head CT AI processes each study in under 8 seconds — from DICOM receipt to completed analysis — and triggers STAT alerts for critical findings within 3 seconds via the STAT triage engine. The module detects and classifies five subtypes of intracranial hemorrhage, quantifies mass effect, measures midline shift, detects skull fractures, identifies early ischemic changes, and provides ASPECTS scoring for acute stroke triage.</p>
+
+<h2>2. Intracranial Hemorrhage Detection</h2>
+<h3>2.1 Classification by Subtype</h3>
+<p>The ICH detection engine classifies hemorrhage into five standard subtypes, each with distinct clinical significance, management pathways, and prognostic implications. Epidural hematoma (EDH) — lenticular-shaped, typically arterial (middle meningeal artery), surgical emergency requiring urgent craniotomy. Subdural hematoma (SDH) — crescent-shaped, venous bleeding between dura and arachnoid, classified by chronicity (acute &lt;3 days, subacute 3-21 days, chronic &gt;21 days) based on attenuation values. Subarachnoid hemorrhage (SAH) — blood in the subarachnoid space, classified by Fisher grade (I-IV) for vasospasm risk prediction, with distribution pattern analysis suggesting aneurysmal vs. perimesencephalic etiology. Intraparenchymal hemorrhage (IPH) — intra-axial bleeding, measured by ABC/2 volume estimation, with location-based differential diagnosis (basal ganglia = hypertensive, lobar = amyloid angiopathy, temporal = herpes encephalitis). Intraventricular hemorrhage (IVH) — blood within the ventricular system, quantified by Graeb score for hydrocephalus risk assessment.</p>
+
+<h3>2.2 Volume Quantification</h3>
+<p>Each detected hemorrhage is volumetrically segmented with automated ABC/2 estimation validated against the gold standard planimetric measurement. For intraparenchymal hemorrhage, the system identifies surrounding perilesional edema, detects the "spot sign" on CTA when available (indicating active extravasation and expansion risk), and calculates the BAT (Brain Attack Time) score for prognostication. Hematoma expansion prediction uses a machine learning model incorporating volume, shape, density heterogeneity (swirl sign), time from onset, and anticoagulation status to estimate expansion probability over the next 24 hours.</p>
+
+<h2>3. Mass Effect and Midline Shift</h2>
+<p>The mass effect quantification module measures midline shift (MLS) at the level of the septum pellucidum, foramen of Monro, and third ventricle using automated landmark detection. MLS is reported in millimeters with sub-voxel precision. Additional mass effect markers include effacement of cortical sulci (graded by severity), compression or obliteration of the ipsilateral lateral ventricle, uncal herniation (measured as uncal overhang beyond the tentorial edge), subfalcine herniation (cingulate gyrus displacement), and tonsillar herniation (cerebellar tonsil position relative to the foramen magnum). These measurements are critical for neurosurgical decision-making regarding operative vs. conservative management.</p>
+
+<h2>4. ASPECTS Scoring</h2>
+<p>For acute ischemic stroke assessment, the module computes the Alberta Stroke Program Early CT Score (ASPECTS) using automated segmentation of the 10 standard MCA territory regions (C, L, IC, I, M1-M6). Each region is evaluated for early ischemic changes (sulcal effacement, loss of grey-white differentiation, parenchymal hypoattenuation) and scored 0 (ischemic) or 1 (normal). The total ASPECTS (0-10) is reported along with the specific affected regions to guide thrombolysis and thrombectomy eligibility decisions. The module achieves 93.5% agreement with expert neuroradiologist ASPECTS scoring, with mean difference &lt;0.5 points.</p>
+
+<h2>5. Skull Fracture Detection</h2>
+<p>Automated skull fracture detection uses bone-window reconstructions to identify linear, depressed, and basilar skull fractures. The system also evaluates for pneumocephalus, facial fractures (orbital wall, zygomatic arch, LeFort classification), and cervical spine fractures on the included craniocervical junction images. Fracture lines are highlighted on reformatted images for confirmation.</p>
+
+<h2>6. Clinical Performance</h2>
+<table>
+  <tr><th>Task</th><th>Metric</th><th>Performance</th><th>Benchmark</th></tr>
+  <tr><td>ICH Detection (any)</td><td>Sensitivity</td><td>98.2%</td><td>RSNA ICH + 30K clinical</td></tr>
+  <tr><td>ICH Subtype Classification</td><td>Accuracy</td><td>94.7%</td><td>Expert annotation</td></tr>
+  <tr><td>Midline Shift</td><td>MAE</td><td>0.8mm</td><td>Expert manual measurement</td></tr>
+  <tr><td>ASPECTS</td><td>Agreement</td><td>93.5%</td><td>Expert neuroradiologist</td></tr>
+  <tr><td>Skull Fracture</td><td>Sensitivity</td><td>95.1%</td><td>8K trauma CT studies</td></tr>
+</table>
+
+<h2>7. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>CT Engineering</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-06-01</td><td>CT Engineering</td><td>Added ASPECTS, fracture detection</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>CT Engineering</td><td>Updated performance, mass effect</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block"><div class="role">Chief Technology Officer (CTO)</div><div class="name">Skolyn Technology Division</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+    <div class="signature-block"><div class="role">Chief Executive Officer (CEO)</div><div class="name">Skolyn Executive Office</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+  </div>
+</div>
+
+<div class="doc-footer"><p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p><p>Document ID: SKL-CT-002 | Version 3.0 | Classification: Confidential</p><p>&copy; 2026 Skolyn. All rights reserved.</p></div>
+
+</body>
+</html>

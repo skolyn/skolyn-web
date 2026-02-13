@@ -1,0 +1,243 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security Architecture - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}
+.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}
+.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:0.5px}
+.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}
+.doc-header{border-bottom:3px solid #d32f2f;padding-bottom:28px;margin-bottom:40px}
+.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px;color:#1d1d1f}
+.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}
+.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}
+.doc-header .meta-item{display:flex;align-items:center;gap:6px}
+.doc-header .meta-item strong{color:#1d1d1f}
+h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#d32f2f;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}
+h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}
+h4{font-size:15px;color:#3c4043;margin:20px 0 8px}
+p{margin-bottom:14px}
+ul,ol{margin:0 0 18px 24px}
+li{margin-bottom:8px}
+table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:14px}
+th,td{padding:12px 16px;text-align:left;border:1px solid #dadce0}
+th{background:#fce8e6;font-weight:600;color:#c5221f}
+td{color:#3c4043}
+tr:nth-child(even) td{background:#fafafa}
+code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px;font-family:'Google Sans Mono',monospace}
+pre{background:#1a1a2e;color:#e8eaed;padding:20px 24px;border-radius:12px;margin:16px 0 24px;overflow-x:auto;font-size:13px;line-height:1.7}
+pre code{background:none;padding:0;color:inherit}
+.callout{padding:16px 20px;border-radius:8px;margin:16px 0 24px;font-size:14px}
+.callout-info{background:#e8f0fe;border-left:4px solid #1a73e8;color:#174ea6}
+.callout-warning{background:#fef7e0;border-left:4px solid #ea8600;color:#b06000}
+.callout-critical{background:#fce8e6;border-left:4px solid #d32f2f;color:#a50e0e}
+.signature-section{margin-top:64px;page-break-inside:avoid}
+.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}
+.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}
+.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;color:#1d1d1f;margin-bottom:4px}
+.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}
+.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}
+.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}
+.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}
+.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}
+.doc-footer p{margin-bottom:4px}
+@media print{
+  body{max-width:100%;padding:20px;font-size:12px}
+  .signature-section{page-break-before:always}
+  h2{color:#d32f2f !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  th{background:#fce8e6 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<div class="doc-id-bar">
+  <span class="doc-id">SKL-SEC-001</span>
+  <span>Skolyn Platform Documentation</span>
+  <span class="doc-class">CONFIDENTIAL</span>
+</div>
+
+<div class="doc-header">
+  <h1>Security Architecture</h1>
+  <div class="subtitle">Comprehensive Defense-in-Depth Security Framework for the Skolyn Diagnostic AI Platform</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Confidential</div>
+    <div class="meta-item"><strong>Owner:</strong> Security Engineering</div>
+    <div class="meta-item"><strong>Review Cycle:</strong> Quarterly</div>
+    <div class="meta-item"><strong>Next Review:</strong> May 2026</div>
+  </div>
+</div>
+
+<h2>1. Executive Summary</h2>
+<p>Skolyn's security architecture is engineered on a <strong>Zero Trust, Defense-in-Depth</strong> model that enforces strict authentication, encryption, and access controls at every layer of the platform. As a medical imaging AI system processing Protected Health Information (PHI) and Personally Identifiable Information (PII), Skolyn adopts the highest standards mandated by HIPAA, GDPR, ISO 27001, and SOC 2 Type II frameworks. This document describes the complete security architecture, from network perimeter to application-layer protections, data encryption, identity and access management, incident response, and continuous monitoring.</p>
+
+<div class="callout callout-critical">
+  <strong>Critical:</strong> All personnel handling PHI must complete Skolyn Security Awareness Training (SAT) annually. Non-compliance will result in access revocation within 24 hours.
+</div>
+
+<h2>2. Security Design Principles</h2>
+<p>Skolyn's security posture is governed by the following foundational principles, each validated through regular penetration testing and audit cycles:</p>
+<ul>
+  <li><strong>Zero Trust Architecture (ZTA):</strong> No implicit trust is granted to any user, device, or network segment. Every request is authenticated, authorized, and encrypted regardless of origin. Network microsegmentation ensures east-west traffic is inspected.</li>
+  <li><strong>Least Privilege Access:</strong> Every identity — human or service — is granted the minimum permissions required to perform its function. Permissions are reviewed quarterly and revoked automatically upon role change.</li>
+  <li><strong>Defense in Depth:</strong> Multiple overlapping security controls ensure that a failure in one layer does not compromise the entire system. Controls span network, application, data, and physical layers.</li>
+  <li><strong>Secure by Default:</strong> All platform components ship with hardened configurations. Debug endpoints, verbose logging, and administrative interfaces are disabled in production by default.</li>
+  <li><strong>Assume Breach:</strong> The architecture is designed to detect, contain, and recover from compromises rapidly. Blast radius limitation, automated quarantine, and immutable audit trails enable effective incident response.</li>
+</ul>
+
+<h2>3. Network Security</h2>
+<h3>3.1 Network Segmentation</h3>
+<p>The Skolyn platform is deployed across isolated network zones, each protected by stateful firewalls and enforced through Kubernetes NetworkPolicies and cloud-native security groups:</p>
+<table>
+  <tr><th>Zone</th><th>Purpose</th><th>Allowed Ingress</th><th>Egress Policy</th></tr>
+  <tr><td>DMZ (Public)</td><td>API Gateway, Load Balancer</td><td>HTTPS (443) from Internet</td><td>Internal only → App Zone</td></tr>
+  <tr><td>Application Zone</td><td>Microservices, Inference Engines</td><td>DMZ only (via mTLS)</td><td>Data Zone, Egress Proxy</td></tr>
+  <tr><td>Data Zone</td><td>PostgreSQL, OpenSearch, Object Storage</td><td>Application Zone only</td><td>None (air-gapped)</td></tr>
+  <tr><td>Management Zone</td><td>CI/CD, Monitoring, Bastion</td><td>VPN only (WireGuard)</td><td>All zones (read-only)</td></tr>
+</table>
+
+<h3>3.2 Perimeter Security</h3>
+<ul>
+  <li><strong>Web Application Firewall (WAF):</strong> Cloud-native WAF with OWASP Core Rule Set (CRS) v4.x, deployed in front of all public endpoints. Custom rules block SQL injection, XSS, path traversal, and medical-specific attack vectors.</li>
+  <li><strong>DDoS Protection:</strong> Volumetric and application-layer DDoS mitigation with automatic traffic scrubbing. Capacity exceeds 10 Tbps of attack bandwidth absorption.</li>
+  <li><strong>TLS Termination:</strong> All external connections terminate TLS 1.3 at the edge. Cipher suites are restricted to AEAD algorithms (AES-256-GCM, ChaCha20-Poly1305). TLS 1.0/1.1 are permanently disabled.</li>
+</ul>
+
+<h3>3.3 Service Mesh</h3>
+<p>All internal communication between microservices is secured using a service mesh (Istio/Linkerd) with mandatory mutual TLS (mTLS). Service-to-service authentication is enforced through SPIFFE identity certificates with a maximum validity of 24 hours, automatically rotated by the mesh control plane. Authorization policies define fine-grained access rules between services, ensuring that the inference engine cannot directly access the audit log service, for example.</p>
+
+<h2>4. Identity & Access Management (IAM)</h2>
+<h3>4.1 Authentication</h3>
+<p>Skolyn supports enterprise-grade authentication mechanisms to integrate seamlessly with existing hospital identity infrastructure:</p>
+<ul>
+  <li><strong>SAML 2.0 SSO:</strong> Integration with Microsoft Entra ID (Azure AD), Okta, Ping Identity, and other SAML-compliant IdPs. Assertion validation includes signature verification, audience restriction, and NotOnOrAfter enforcement.</li>
+  <li><strong>OpenID Connect (OIDC):</strong> Support for OIDC flows (Authorization Code + PKCE) for web and mobile clients. ID tokens are validated against the IdP's JWKS endpoint.</li>
+  <li><strong>Multi-Factor Authentication (MFA):</strong> Mandatory for all administrative access. Supported factors include TOTP (RFC 6238), FIDO2/WebAuthn hardware keys, and push notifications via authenticator apps.</li>
+  <li><strong>Service Accounts:</strong> Machine-to-machine authentication uses short-lived JWT tokens issued by the platform's internal OAuth 2.0 authorization server. Token lifetime is capped at 15 minutes with automatic refresh.</li>
+</ul>
+
+<h3>4.2 Authorization Model</h3>
+<p>Access control follows a hybrid RBAC + ABAC model. Role-Based Access Control (RBAC) defines coarse-grained permissions tied to organizational roles (Radiologist, Administrator, Technician), while Attribute-Based Access Control (ABAC) enforces contextual policies such as time-of-day restrictions, IP geolocation, and device posture:</p>
+
+<pre><code>{
+  "policy": "PHI_Access_Policy_v3",
+  "effect": "Allow",
+  "principal": { "role": "Radiologist", "mfa_verified": true },
+  "action": ["ViewStudy", "CreateReport", "ExportDICOM"],
+  "resource": "arn:skolyn:imaging:*:study/*",
+  "condition": {
+    "IpAddress": { "source_ip": ["10.0.0.0/8", "172.16.0.0/12"] },
+    "DateGreaterThan": { "current_time": "06:00:00Z" },
+    "DateLessThan": { "current_time": "22:00:00Z" },
+    "Bool": { "device_compliant": true }
+  }
+}</code></pre>
+
+<h2>5. Data Protection</h2>
+<h3>5.1 Encryption at Rest</h3>
+<p>All persistent data is encrypted using AES-256-GCM with envelope encryption. Data Encryption Keys (DEKs) are generated per-object and encrypted by a Key Encryption Key (KEK) stored in a FIPS 140-2 Level 3 certified Hardware Security Module (HSM). Key rotation occurs every 90 days automatically. Decrypted DEKs are held in memory only during active processing and are zeroized upon completion.</p>
+
+<h3>5.2 Encryption in Transit</h3>
+<p>All data in transit is protected by TLS 1.3. Internal service-to-service communication uses mTLS with SPIFFE-issued X.509 certificates. DICOM connections use DICOM TLS (compliant with DICOM PS3.15 Annex B) for imaging data transfer. HL7v2 messages are transmitted over TLS-encrypted MLLP channels.</p>
+
+<h3>5.3 PHI De-identification</h3>
+<p>For research and model training pipelines, Skolyn applies Safe Harbor or Expert Determination de-identification methods per HIPAA §164.514. Automated stripping removes 18 HIPAA identifiers from DICOM headers and replaces them with pseudonymized tokens. Pixel-level PHI (burned-in annotations) is detected and redacted using a dedicated OCR-based scrubber before any data exits the clinical environment.</p>
+
+<h2>6. Application Security</h2>
+<h3>6.1 Secure Development Lifecycle (SDL)</h3>
+<p>All Skolyn code follows a rigorous Secure Development Lifecycle:</p>
+<ul>
+  <li><strong>Static Analysis (SAST):</strong> Automated scanning on every pull request using CodeQL and Semgrep. Zero critical/high findings policy enforced — PRs with unresolved findings cannot be merged.</li>
+  <li><strong>Dynamic Analysis (DAST):</strong> Weekly automated DAST scans against staging environments using OWASP ZAP. Full pen-test reports are generated monthly.</li>
+  <li><strong>Software Composition Analysis (SCA):</strong> All third-party dependencies are scanned for known CVEs. Dependabot and Snyk alerts trigger automated patching workflows within 48 hours for critical vulnerabilities.</li>
+  <li><strong>Container Security:</strong> Base images are rebuilt weekly from hardened, minimal distributions (distroless). Runtime scanning with Falco detects anomalous container behavior (unexpected process execution, file system modifications, network connections).</li>
+</ul>
+
+<h3>6.2 API Security</h3>
+<p>All API endpoints are protected by rate limiting (per-client, sliding window), request size limits (10 MB default, 512 MB for DICOM uploads), and input validation. API keys are hashed using Argon2id before storage. OAuth 2.0 scopes enforce fine-grained access to specific API resources. All API responses include security headers (HSTS, CSP, X-Content-Type-Options, X-Frame-Options).</p>
+
+<h2>7. Incident Response</h2>
+<h3>7.1 Incident Classification</h3>
+<table>
+  <tr><th>Severity</th><th>Description</th><th>Response Time</th><th>Escalation</th></tr>
+  <tr><td>P1 — Critical</td><td>Active data breach, PHI exposure</td><td>&lt; 15 minutes</td><td>CTO + Legal + DPO</td></tr>
+  <tr><td>P2 — High</td><td>Unauthorized access attempt, malware</td><td>&lt; 1 hour</td><td>Security Lead + Engineering</td></tr>
+  <tr><td>P3 — Medium</td><td>Policy violation, suspicious behavior</td><td>&lt; 4 hours</td><td>Security Team</td></tr>
+  <tr><td>P4 — Low</td><td>Informational, failed login attempts</td><td>&lt; 24 hours</td><td>Security Analyst</td></tr>
+</table>
+
+<h3>7.2 Response Procedures</h3>
+<p>Skolyn maintains a documented Incident Response Plan (IRP) aligned with NIST SP 800-61 Rev. 2. The plan includes four phases: Preparation, Detection & Analysis, Containment & Eradication, and Post-Incident Activity. Automated containment actions include: revoking compromised credentials within 60 seconds, isolating affected pods via NetworkPolicy updates, capturing forensic snapshots of compromised containers, and triggering breach notification workflows to Data Controllers within 24 hours (per GDPR Art. 33).</p>
+
+<h2>8. Continuous Security Monitoring</h2>
+<p>Skolyn operates a 24/7 Security Operations Center (SOC) with the following capabilities:</p>
+<ul>
+  <li><strong>SIEM Integration:</strong> All security events are forwarded to a centralized SIEM (Splunk/Elastic Security) for correlation, alerting, and forensic analysis. Log retention: 7 years for compliance.</li>
+  <li><strong>Threat Intelligence:</strong> Real-time threat feeds from MITRE ATT&CK, CISA advisories, and healthcare-specific ISAC alerts are ingested and correlated against platform telemetry.</li>
+  <li><strong>Vulnerability Management:</strong> Continuous vulnerability scanning with scheduled remediation SLAs (Critical: 24h, High: 7d, Medium: 30d, Low: 90d).</li>
+  <li><strong>Penetration Testing:</strong> Annual third-party penetration tests by CREST-certified firms. Bug bounty program for responsible disclosure.</li>
+</ul>
+
+<h2>9. Compliance Certifications</h2>
+<table>
+  <tr><th>Certification</th><th>Status</th><th>Scope</th><th>Last Audit</th></tr>
+  <tr><td>SOC 2 Type II</td><td>Certified</td><td>Security, Availability, Confidentiality</td><td>January 2026</td></tr>
+  <tr><td>ISO 27001:2022</td><td>Certified</td><td>Information Security Management System</td><td>December 2025</td></tr>
+  <tr><td>HIPAA</td><td>Compliant</td><td>Technical & Administrative Safeguards</td><td>Ongoing</td></tr>
+  <tr><td>GDPR</td><td>Compliant</td><td>Data Processing & Subject Rights</td><td>Ongoing</td></tr>
+  <tr><td>ISO 13485</td><td>Certified</td><td>Medical Device Quality Management</td><td>November 2025</td></tr>
+</table>
+
+<h2>10. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>Security Engineering</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-03-01</td><td>Security Engineering</td><td>Added Zero Trust, service mesh, container security</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>Security Engineering</td><td>Updated compliance certs, incident response, API security</td></tr>
+</table>
+
+<!-- Signature & Stamp Section -->
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn. By signing below, the signatories confirm that the security controls described herein are implemented, tested, and maintained in accordance with applicable regulatory requirements.</p>
+  <div class="signature-grid">
+    <div class="signature-block">
+      <div class="role">Chief Technology Officer (CTO)</div>
+      <div class="name">Skolyn Technology Division</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px">
+        <div><span class="signature-label">Printed Name:</span> ___________________________</div>
+      </div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+    <div class="signature-block">
+      <div class="role">Chief Executive Officer (CEO)</div>
+      <div class="name">Skolyn Executive Office</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px">
+        <div><span class="signature-label">Printed Name:</span> ___________________________</div>
+      </div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+  </div>
+</div>
+
+<div class="doc-footer">
+  <p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p>
+  <p>Document ID: SKL-SEC-001 | Version 3.0 | Classification: Confidential</p>
+  <p>&copy; 2026 Skolyn. All rights reserved. Unauthorized reproduction or distribution is strictly prohibited.</p>
+</div>
+
+</body>
+</html>
