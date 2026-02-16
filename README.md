@@ -1,59 +1,62 @@
-# SkolynWeb
+# Skolyn Web
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.3.
+Angular frontend for the Skolyn platform, prepared for AWS Amplify Console hosting and a Go backend API.
 
-## Development server
+## Project structure
 
-To start a local development server, run:
+- `src/`: Angular 21 frontend.
+- `backend/contact-api/`: Go Lambda backend for contact form submissions.
+- `amplify.yml`: Amplify Console build configuration.
 
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Local development
 
 ```bash
-ng generate component component-name
+npm ci
+npm run start
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Open `http://localhost:4200`.
+
+## Production build
 
 ```bash
-ng generate --help
+npm run build
 ```
 
-## Building
+## Deploy frontend with AWS Amplify Console
 
-To build the project run:
+1. Push this repository to GitHub.
+2. In **AWS Amplify Console**, choose **New app → Host web app** and connect the GitHub repo.
+3. Amplify detects `amplify.yml` automatically.
+4. Keep build image defaults and deploy.
+
+## Deploy backend (Go + AWS Lambda)
+
+From `backend/contact-api`:
 
 ```bash
-ng build
+sam build
+sam deploy --stack-name skolyn-contact-api --resolve-s3 --capabilities CAPABILITY_IAM
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+After deployment, copy the CloudFormation output `ContactApiBaseUrl`.
 
-## Running unit tests
+## Wire frontend to backend in Amplify Console
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+In Amplify Hosting **Rewrites and redirects**, add a rewrite rule:
 
-```bash
-ng test
-```
+- **Source address:** `/api/<*>`
+- **Target address:** `https://YOUR_CONTACT_API_BASE_URL/<*>`
+- **Type:** `200 (Rewrite)`
 
-## Running end-to-end tests
+The contact form posts to `/api/contact`, so this rule routes traffic to the Go API.
 
-For end-to-end (e2e) testing, run:
+## Icon reliability fixes
 
-```bash
-ng e2e
-```
+- Material symbol styling now uses explicit icon font-family fallbacks.
+- Remote Google Sans font dependency was removed from `index.html` to prevent blocked font inlining failures during CI/CD builds.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Commands
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- `npm run start` – Angular dev server.
+- `npm run build` – Production build.
