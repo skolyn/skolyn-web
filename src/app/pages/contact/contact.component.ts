@@ -210,7 +210,7 @@ import { Component } from '@angular/core';
 
     .form-textarea {
       height: auto; padding: 12px 16px; resize: vertical; min-height: 120px;
-      font-family: 'Google Sans Text', 'Google Sans', sans-serif;
+      font-family: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
     }
 
     select.form-input {

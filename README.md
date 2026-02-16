@@ -54,7 +54,7 @@ The contact form posts to `/api/contact`, so this rule routes traffic to the Go 
 ## Icon reliability fixes
 
 - Material symbol styling now uses explicit icon font-family fallbacks.
-- Google Sans is explicitly configured as the only typography family set (Google Sans / Google Sans Display / Google Sans Text) while production font inlining stays disabled for reliable CI/CD builds.
+- Remote Google Sans font dependency was removed from `index.html` to prevent blocked font inlining failures during CI/CD builds.
 
 ## Commands
 
