@@ -172,6 +172,11 @@ ul, ol {
 
 /* --- Material Symbols Configuration --- */
 .material-symbols-outlined {
+  font-family: 'Material Symbols Outlined', 'Material Icons', sans-serif;
+  line-height: 1;
+}
+
+.material-symbols-outlined {
   font-variation-settings:
     'FILL' 0,
     'wght' 400,

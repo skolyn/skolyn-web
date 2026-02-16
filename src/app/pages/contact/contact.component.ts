@@ -1,8 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-contact',
-  imports: [],
+  imports: [CommonModule],
   template: `
     <section class="page-hero">
       <div class="container">
@@ -30,24 +31,24 @@ import { Component } from '@angular/core';
               <div class="form-row">
                 <div class="form-group">
                   <label class="label-large" for="firstName">First Name</label>
-                  <input type="text" id="firstName" class="form-input" placeholder="Enter your first name" required>
+                  <input type="text" id="firstName" name="firstName" class="form-input" placeholder="Enter your first name" required>
                 </div>
                 <div class="form-group">
                   <label class="label-large" for="lastName">Last Name</label>
-                  <input type="text" id="lastName" class="form-input" placeholder="Enter your last name" required>
+                  <input type="text" id="lastName" name="lastName" class="form-input" placeholder="Enter your last name" required>
                 </div>
               </div>
               <div class="form-group">
                 <label class="label-large" for="email">Email Address</label>
-                <input type="email" id="email" class="form-input" placeholder="you&#64;institution.org" required>
+                <input type="email" id="email" name="email" class="form-input" placeholder="you&#64;institution.org" required>
               </div>
               <div class="form-group">
                 <label class="label-large" for="organization">Organization</label>
-                <input type="text" id="organization" class="form-input" placeholder="Hospital, clinic, or institution name">
+                <input type="text" id="organization" name="organization" class="form-input" placeholder="Hospital, clinic, or institution name">
               </div>
               <div class="form-group">
                 <label class="label-large" for="role">Your Role</label>
-                <select id="role" class="form-input">
+                <select id="role" name="role" class="form-input">
                   <option value="" disabled selected>Select your role</option>
                   <option value="radiologist">Radiologist</option>
                   <option value="physician">Physician</option>
@@ -59,7 +60,7 @@ import { Component } from '@angular/core';
               </div>
               <div class="form-group">
                 <label class="label-large" for="interest">Area of Interest</label>
-                <select id="interest" class="form-input">
+                <select id="interest" name="interest" class="form-input">
                   <option value="" disabled selected>Select module or topic</option>
                   <option value="rhenium">Rhenium OS (MRI)</option>
                   <option value="seaborgium">Seaborgium OS (CT)</option>
@@ -72,12 +73,13 @@ import { Component } from '@angular/core';
               </div>
               <div class="form-group">
                 <label class="label-large" for="message">Message</label>
-                <textarea id="message" class="form-input form-textarea" placeholder="Tell us about your needs..." rows="5" required></textarea>
+                <textarea id="message" name="message" class="form-input form-textarea" placeholder="Tell us about your needs..." rows="5" required></textarea>
               </div>
-              <button type="submit" class="md-button md-button-filled md-button-large submit-btn">
-                <span class="material-symbols-outlined sz-20">send</span>
-                Send Message
+              <button type="submit" class="md-button md-button-filled md-button-large submit-btn" [disabled]="isSubmitting">
+                <span class="material-symbols-outlined sz-20">{{ isSubmitting ? 'hourglass_top' : 'send' }}</span>
+                {{ isSubmitting ? 'Sending...' : 'Send Message' }}
               </button>
+              <p class="form-status body-medium" [class.error]="submitError" *ngIf="submitMessage">{{ submitMessage }}</p>
             </form>
           </div>
 
@@ -220,6 +222,10 @@ import { Component } from '@angular/core';
     }
 
     .submit-btn { width: 100%; margin-top: 8px; }
+    .submit-btn[disabled] { opacity: 0.7; cursor: wait; }
+
+    .form-status { margin-top: 8px; color: var(--md-sys-color-primary); }
+    .form-status.error { color: var(--md-sys-color-error); }
 
     .contact-info { display: flex; flex-direction: column; gap: 24px; }
 
@@ -267,8 +273,57 @@ import { Component } from '@angular/core';
   `],
 })
 export class ContactComponent {
-  onSubmit(event: Event) {
+  isSubmitting = false;
+  submitError = false;
+  submitMessage = '';
+
+  private readonly contactApiUrl = '/api/contact';
+
+  async onSubmit(event: Event) {
     event.preventDefault();
-    alert('Thank you for your message. Our team will reach out within 24 hours.');
+
+    if (this.isSubmitting) {
+      return;
+    }
+
+    const form = event.target as HTMLFormElement;
+    const data = new FormData(form);
+
+    const payload = {
+      firstName: String(data.get('firstName') ?? '').trim(),
+      lastName: String(data.get('lastName') ?? '').trim(),
+      email: String(data.get('email') ?? '').trim(),
+      organization: String(data.get('organization') ?? '').trim(),
+      role: String(data.get('role') ?? '').trim(),
+      interest: String(data.get('interest') ?? '').trim(),
+      message: String(data.get('message') ?? '').trim(),
+    };
+
+    this.isSubmitting = true;
+    this.submitError = false;
+    this.submitMessage = '';
+
+    try {
+      const response = await fetch(this.contactApiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Contact API failed with status ${response.status}`);
+      }
+
+      this.submitMessage = 'Thank you for your message. Our team will reach out within 24 hours.';
+      form.reset();
+    } catch (error) {
+      console.error('Failed to submit contact form.', error);
+      this.submitError = true;
+      this.submitMessage = 'We could not send your message right now. Please try again shortly.';
+    } finally {
+      this.isSubmitting = false;
+    }
   }
 }
