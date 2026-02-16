@@ -8,7 +8,7 @@ frontend:
       commands:
         - npm run build
   artifacts:
-    baseDirectory: dist/skolyn-web
+    baseDirectory: dist/skolyn-web/browser
     files:
       - '**/*'
   cache:
