@@ -8,8 +8,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
     <nav class="navbar" [class.scrolled]="isScrolled">
       <div class="navbar-inner container-wide">
         <a routerLink="/" class="navbar-brand">
-          <img src="skolyn-logo-wide.svg" alt="Skolyn" class="brand-logo-wide" />
-          <img src="skolyn-logo-icon.svg" alt="Skolyn" class="brand-logo-icon" />
+          <img src="assets/skolyn-logo-wide.svg" alt="Skolyn" class="brand-logo-wide" />
+          <img src="assets/skolyn-logo-icon.svg" alt="Skolyn" class="brand-logo-icon" />
         </a>
 
         <div class="navbar-links" [class.open]="menuOpen">
