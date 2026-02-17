@@ -121,7 +121,7 @@ import { RouterLink } from '@angular/router';
     .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr 1.1fr 1fr; gap: 32px; }
     .footer-brand { display: block; text-decoration: none; margin-bottom: 16px; }
     .footer-brand:hover { text-decoration: none; }
-    .footer-logo { height: 48px; width: auto; display: block; }
+    .footer-logo { height: 36px; width: auto; display: block; }
     .tagline { font: var(--md-sys-typescale-label-large); color: var(--md-sys-color-primary); margin-bottom: 8px; }
     .description { font: var(--md-sys-typescale-body-medium); color: var(--md-sys-color-on-surface-variant); max-width: 280px; margin-bottom: 20px; }
     .social-links { display: flex; gap: 8px; }
