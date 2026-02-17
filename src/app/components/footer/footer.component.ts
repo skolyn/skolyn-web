@@ -10,7 +10,7 @@ import { RouterLink } from '@angular/router';
         <div class="footer-grid">
           <div class="footer-col brand-col">
             <a routerLink="/" class="footer-brand">
-              <img src="skolyn-logo-wide.svg" alt="Skolyn" class="footer-logo" />
+              <img src="/assets/skolyn-logo-wide.svg" alt="Skolyn" class="footer-logo" />
             </a>
             <p class="tagline">Early. Accurate. Trusted.</p>
             <p class="description">Redefining Medical Imaging Through Explainable Artificial Intelligence</p>
@@ -91,7 +91,7 @@ import { RouterLink } from '@angular/router';
           <div class="incubated-by">
             <span class="body-small text-secondary">Incubated by</span>
             <a href="https://innoland.az" target="_blank" rel="noopener" class="innoland-footer-link">
-              <img src="innoland-logo.svg" alt="Innoland Incubation Center" class="innoland-footer-logo" />
+              <img src="/assets/innoland-logo.svg" alt="Innoland Incubation Center" class="innoland-footer-logo" />
             </a>
           </div>
           <p class="copyright">&copy; 2026 Skolyn. All rights reserved.</p>
@@ -121,7 +121,7 @@ import { RouterLink } from '@angular/router';
     .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr 1.1fr 1fr; gap: 32px; }
     .footer-brand { display: block; text-decoration: none; margin-bottom: 16px; }
     .footer-brand:hover { text-decoration: none; }
-    .footer-logo { height: 24px; width: auto; display: block; }
+    .footer-logo { height: 48px; width: auto; display: block; }
     .tagline { font: var(--md-sys-typescale-label-large); color: var(--md-sys-color-primary); margin-bottom: 8px; }
     .description { font: var(--md-sys-typescale-body-medium); color: var(--md-sys-color-on-surface-variant); max-width: 280px; margin-bottom: 20px; }
     .social-links { display: flex; gap: 8px; }
