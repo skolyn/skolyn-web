@@ -21,8 +21,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
               Modules
               <span class="material-symbols-outlined sz-20">expand_more</span>
             </a>
-            <div class="dropdown-menu">
-              <a routerLink="/modules/rhenium" (click)="closeMenu()">
+            <div class="dropdown" [class.open]="isDropdownOpen('platform')">
+            <a routerLink="/platform" routerLinkActive="active" class="dropdown-trigger" (click)="onDropdownTrigger($event, 'platform')">
                 <span class="dot rhenium"></span>
                 Rhenium OS / MRI
               </a>
@@ -41,8 +41,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
             </div>
           </div>
 
-          <div class="dropdown">
-            <a routerLink="/platform" routerLinkActive="active" class="dropdown-trigger">
+          div class="dropdown" [class.open]="isDropdownOpen('platform')">
+            <a routerLink="/platform" routerLinkActive="active" class="dropdown-trigger" (click)="onDropdownTrigger($event, 'platform')">
               Platform
               <span class="material-symbols-outlined sz-20">expand_more</span>
             </a>
@@ -82,8 +82,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
             </div>
           </div>
 
-          <div class="dropdown">
-            <a routerLink="/research" routerLinkActive="active" class="dropdown-trigger">
+          <div class="dropdown" [class.open]="isDropdownOpen('sierra')">
+            <a routerLink="/research" routerLinkActive="active" class="dropdown-trigger" (click)="onDropdownTrigger($event, 'sierra')">
               SIERRA
               <span class="material-symbols-outlined sz-20">expand_more</span>
             </a>
@@ -162,8 +162,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
             </div>
           </div>
 
-          <div class="dropdown">
-            <a class="dropdown-trigger" style="cursor: pointer;">
+          <div class="dropdown" [class.open]="isDropdownOpen('resources')">
+            <a class="dropdown-trigger" style="cursor: pointer;" (click)="onDropdownTrigger($event, 'resources')">
               Resources
               <span class="material-symbols-outlined sz-20">expand_more</span>
             </a>
@@ -183,8 +183,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
             </div>
           </div>
 
-          <div class="dropdown">
-            <a class="dropdown-trigger" style="cursor: pointer;">
+          <div class="dropdown" [class.open]="isDropdownOpen('company')">
+            <a class="dropdown-trigger" style="cursor: pointer;" (click)="onDropdownTrigger($event, 'company')">
               Company
               <span class="material-symbols-outlined sz-20">expand_more</span>
             </a>
