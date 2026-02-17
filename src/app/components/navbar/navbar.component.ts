@@ -283,11 +283,13 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
       .brand-logo-wide { display: none; }
       .brand-logo-icon { display: block; }
       .navbar-links {
-        position: fixed; top: var(--navbar-height); left: 0; right: 0; bottom: 0;
+        position: absolute; top: 100%; left: 0; right: 0;
+        height: calc(100dvh - var(--navbar-height));
         flex-direction: column; background: var(--md-sys-color-surface); padding: 16px; gap: 4px;
         align-items: stretch; transform: translateX(100%);
         transition: transform var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-emphasized);
         overflow-y: auto;
+        z-index: 1001;
       }
       .navbar-links.open { transform: translateX(0); }
       .navbar-links > a, .dropdown-trigger { padding: 14px 20px; border-radius: var(--md-sys-shape-corner-medium); font-size: 15px; }
