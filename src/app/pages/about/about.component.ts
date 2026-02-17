@@ -180,7 +180,7 @@ import { Component } from '@angular/core';
         <div class="innoland-banner">
           <div class="innoland-content">
             <a href="https://innoland.az" target="_blank" rel="noopener" class="innoland-logo-link">
-              <img src="/assets/innoland-logo.svg" alt="Innoland Incubation Center" class="innoland-logo" />
+              <img src="assets/innoland-logo.svg" alt="Innoland Incubation Center" class="innoland-logo" />
             </a>
             <div>
               <h3 class="headline-small">Innoland Incubation Center</h3>
