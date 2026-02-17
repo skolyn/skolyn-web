@@ -294,8 +294,14 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
       .navbar-links.open { transform: translateX(0); }
       .navbar-links > a, .dropdown-trigger { padding: 14px 20px; border-radius: var(--md-sys-shape-corner-medium); font-size: 15px; }
       .dropdown-menu {
-        position: static; transform: none; box-shadow: none; opacity: 1; visibility: visible;
+        position: static; transform: none; box-shadow: none; opacity: 0; visibility: hidden;
+        max-height: 0; overflow: hidden;
         padding: 0 0 0 16px; background: transparent;
+        transition: max-height var(--md-sys-motion-duration-short4) var(--md-sys-motion-easing-standard);
+      }
+      .dropdown.open .dropdown-menu {
+        opacity: 1; visibility: visible; max-height: 720px;
+        padding-top: 8px;
       }
       .dropdown:hover .dropdown-menu { transform: none; }
     }
@@ -304,6 +310,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 export class NavbarComponent {
   isScrolled = false;
   menuOpen = false;
+  activeDropdown: string | null = null;
 
   constructor() {
     if (typeof window !== 'undefined') {
@@ -311,6 +318,24 @@ export class NavbarComponent {
     }
   }
 
-  toggleMenu() { this.menuOpen = !this.menuOpen; }
-  closeMenu() { this.menuOpen = false; }
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+    if (!this.menuOpen) this.activeDropdown = null;
+  }
+
+  closeMenu() {
+    this.menuOpen = false;
+    this.activeDropdown = null;
+  }
+
+  isDropdownOpen(key: string) {
+    return this.activeDropdown === key;
+  }
+
+  onDropdownTrigger(event: Event, key: string) {
+    if (typeof window !== 'undefined' && window.innerWidth <= 1024) {
+      event.preventDefault();
+      this.activeDropdown = this.activeDropdown === key ? null : key;
+    }
+  }
 }
