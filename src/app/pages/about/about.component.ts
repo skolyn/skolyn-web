@@ -415,6 +415,7 @@ import { Component } from '@angular/core';
       .overview-grid { grid-template-columns: 1fr; gap: 40px; }
       .mv-grid { grid-template-columns: 1fr; }
       .values-grid { grid-template-columns: repeat(2, 1fr); }
+      .innoland-content { display: block; }
     }
 
     @media (max-width: 640px) {
