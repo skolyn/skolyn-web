@@ -16,13 +16,13 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
           <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="closeMenu()">Home</a>
           <a routerLink="/about" routerLinkActive="active" (click)="closeMenu()">About</a>
 
-          <div class="dropdown">
-            <a routerLink="/modules" routerLinkActive="active" class="dropdown-trigger">
+          <div class="dropdown" [class.open]="isDropdownOpen('modules')">
+            <a routerLink="/modules" routerLinkActive="active" class="dropdown-trigger" (click)="onDropdownTrigger($event, 'modules')">
               Modules
               <span class="material-symbols-outlined sz-20">expand_more</span>
             </a>
-            <div class="dropdown" [class.open]="isDropdownOpen('platform')">
-            <a routerLink="/platform" routerLinkActive="active" class="dropdown-trigger" (click)="onDropdownTrigger($event, 'platform')">
+            <div class="dropdown-menu">
+              <a routerLink="/platform" routerLinkActive="active" (click)="closeMenu()">
                 <span class="dot rhenium"></span>
                 Rhenium OS / MRI
               </a>
@@ -41,7 +41,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
             </div>
           </div>
 
-          div class="dropdown" [class.open]="isDropdownOpen('platform')">
+          <div class="dropdown" [class.open]="isDropdownOpen('platform')">
             <a routerLink="/platform" routerLinkActive="active" class="dropdown-trigger" (click)="onDropdownTrigger($event, 'platform')">
               Platform
               <span class="material-symbols-outlined sz-20">expand_more</span>
@@ -113,8 +113,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 
           <a routerLink="/roadmap" routerLinkActive="active" (click)="closeMenu()">Roadmap</a>
 
-          <div class="dropdown">
-            <a routerLink="/team" routerLinkActive="active" class="dropdown-trigger">
+          <div class="dropdown" [class.open]="isDropdownOpen('team')">
+            <a routerLink="/team" routerLinkActive="active" class="dropdown-trigger" (click)="onDropdownTrigger($event, 'team')">
               Team
               <span class="material-symbols-outlined sz-20">expand_more</span>
             </a>
@@ -234,7 +234,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
       display: flex; align-items: center; gap: 2px; padding: 8px 14px;
       border-radius: var(--md-sys-shape-corner-full); font: var(--md-sys-typescale-label-large);
       color: var(--md-sys-color-on-surface-variant); text-decoration: none;
-      transition: all var(--md-sys-motion-duration-short4) var(--md-sys-motion-easing-standard); white-space: nowrap;
+      transition: all var(--md-sys-motion-duration-short4) var(--md-sys-motion-easing-standard); white-space: nowrap; cursor: pointer;
     }
     .navbar-links > a:hover, .dropdown-trigger:hover {
       background: var(--md-sys-color-surface-container); color: var(--md-sys-color-on-surface); text-decoration: none;
