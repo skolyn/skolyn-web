@@ -207,7 +207,7 @@ export class DocsComponent {
   ];
 
   getDocUrl(file: string): string {
-    return `/assets/docs/${encodeURIComponent(file)}`;
+    return `/docs/${encodeURIComponent(file)}`;
   }
 
   downloadDoc(file: string, title: string): void {

@@ -53,8 +53,8 @@
               },
               {
                 "glob": "**/*",
-                "input": "public/docs",
-                "output": "/assets/docs"
+                "input": "public",
+                "output": "/"
               }
             ],
             "styles": [
