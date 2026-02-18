@@ -20,11 +20,11 @@
         <nav class="docs-sidebar">
           <h3 class="title-medium">Categories</h3>
           @for (cat of categories; track cat.title) {
-            <a class="sidebar-link" [class.active]="selectedCategory === cat.title" (click)="selectedCategory = cat.title">
+            <button type="button" class="sidebar-link" [class.active]="selectedCategory === cat.title" (click)="selectedCategory = cat.title">
               <span class="material-symbols-outlined sz-20">{{ cat.icon }}</span>
               {{ cat.title }}
               <span class="sidebar-count">{{ cat.docs.length }}</span>
-            </a>
+            </button>
           }
 
           <div class="sidebar-divider"></div>
@@ -41,7 +41,7 @@
               <p class="body-large text-secondary" style="margin-bottom: 32px;">{{ cat.desc }}</p>
               <div class="docs-grid">
                 @for (doc of cat.docs; track doc.title) {
-                  <div class="doc-card" (click)="openDoc(doc.file)">
+                  <a class="doc-card" [href]="getDocUrl(doc.file)" target="_blank" rel="noopener noreferrer">
                     <div class="doc-icon" [style.background]="doc.color">
                       <span class="material-symbols-outlined">{{ doc.icon }}</span>
                     </div>
@@ -51,16 +51,16 @@
                       <div class="doc-meta">
                         <span class="body-small doc-tag">{{ doc.tag }}</span>
                         <div class="doc-actions">
-                          <button class="doc-btn view-btn" (click)="openDoc(doc.file); $event.stopPropagation();" title="View Document">
+                          <a class="doc-btn view-btn" [href]="getDocUrl(doc.file)" target="_blank" rel="noopener noreferrer" title="View Document">
                             <span class="material-symbols-outlined sz-18">open_in_new</span> View
-                          </button>
-                          <button class="doc-btn download-btn" (click)="downloadDoc(doc.file, doc.title); $event.stopPropagation();" title="Save as PDF">
+                          </a>
+                          <button class="doc-btn download-btn" (click)="downloadDoc(doc.file, doc.title); $event.preventDefault(); $event.stopPropagation();" title="Save as PDF">
                             <span class="material-symbols-outlined sz-18">picture_as_pdf</span> PDF
                           </button>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </a>
                 }
               </div>
             }
@@ -76,7 +76,7 @@
     .docs-layout { display: grid; grid-template-columns: 280px 1fr; gap: 48px; align-items: start; }
     .docs-sidebar { position: sticky; top: 80px; background: var(--md-sys-color-surface-container-low); border-radius: var(--md-sys-shape-corner-large); padding: 24px; }
     .docs-sidebar h3 { margin-bottom: 16px; color: var(--md-sys-color-on-surface); }
-    .sidebar-link { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: var(--md-sys-shape-corner-small); font: var(--md-sys-typescale-body-medium); color: var(--md-sys-color-on-surface-variant); text-decoration: none; cursor: pointer; transition: all 0.2s; margin-bottom: 2px; }
+    .sidebar-link { width: 100%; border: 0; background: transparent; display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: var(--md-sys-shape-corner-small); font: var(--md-sys-typescale-body-medium); color: var(--md-sys-color-on-surface-variant); text-decoration: none; cursor: pointer; transition: all 0.2s; margin-bottom: 2px; text-align: left; }
     .sidebar-link:hover { background: var(--md-sys-color-surface-container); color: var(--md-sys-color-on-surface); }
     .sidebar-link.active { background: var(--md-sys-color-primary-container); color: var(--md-sys-color-primary); font-weight: 500; }
     .sidebar-count { margin-left: auto; font-size: 12px; background: var(--md-sys-color-surface-container-highest); padding: 2px 8px; border-radius: 10px; color: var(--md-sys-color-on-surface-variant); }
@@ -85,7 +85,7 @@
     .sidebar-info { display: flex; gap: 8px; align-items: flex-start; padding: 12px; background: var(--md-sys-color-surface-container); border-radius: var(--md-sys-shape-corner-small); }
     .sidebar-info .material-symbols-outlined { color: var(--md-sys-color-primary); flex-shrink: 0; margin-top: 2px; }
     .docs-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
-    .doc-card { display: flex; gap: 20px; padding: 24px; border: 1px solid var(--md-sys-color-outline-variant); border-radius: var(--md-sys-shape-corner-medium); transition: all 0.2s; cursor: pointer; }
+    .doc-card { display: flex; gap: 20px; padding: 24px; border: 1px solid var(--md-sys-color-outline-variant); border-radius: var(--md-sys-shape-corner-medium); transition: all 0.2s; cursor: pointer; text-decoration: none; color: inherit; }
     .doc-card:hover { border-color: var(--md-sys-color-primary); box-shadow: var(--md-sys-elevation-1); transform: translateY(-2px); }
     .doc-icon { width: 48px; height: 48px; border-radius: var(--md-sys-shape-corner-small); display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0; }
     .doc-info { flex: 1; min-width: 0; }
@@ -206,13 +206,13 @@ export class DocsComponent {
     },
   ];
 
-  openDoc(file: string): void {
-    window.open(`/docs/${file}`, '_blank');
+  getDocUrl(file: string): string {
+    return `/assets/docs/${encodeURIComponent(file)}`;
   }
 
   downloadDoc(file: string, title: string): void {
     const pdfName = file.replace('.html', '.pdf');
-    const printWindow = window.open(`/docs/${file}`, '_blank');
+    const printWindow = window.open(this.getDocUrl(file), '_blank');
     if (printWindow) {
       printWindow.addEventListener('load', () => {
         printWindow.document.title = pdfName;

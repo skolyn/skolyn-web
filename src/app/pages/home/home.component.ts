@@ -34,12 +34,11 @@ import { RouterLink } from '@angular/router';
         <div class="hero-visual animate-in animate-in-delay-2">
           <div class="hero-diagram">
             <div class="diagram-center">
-              <span class="brand-mark">S</span>
-              <span class="diagram-label">SKOLYN</span>
+              <img src="assets/skolyn-logo-icon.svg" alt="Skolyn" class="brand-logo-center" />
             </div>
             <div class="diagram-orbit orbit-1">
               <div class="orbit-node rhenium" title="Rhenium OS - MRI">
-                <span class="material-symbols-outlined">mri</span>
+                <span class="material-symbols-outlined">neurology</span>
               </div>
               <div class="orbit-node seaborgium" title="Seaborgium OS - CT">
                 <span class="material-symbols-outlined">scan</span>
@@ -415,24 +414,10 @@ import { RouterLink } from '@angular/router';
       gap: 4px;
     }
 
-    .brand-mark {
-      width: 72px;
-      height: 72px;
-      border-radius: var(--md-sys-shape-corner-large);
-      background: var(--md-sys-color-primary);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 36px;
-      font-weight: 700;
-      box-shadow: var(--md-sys-elevation-3);
-    }
-
-    .diagram-label {
-      font: var(--md-sys-typescale-label-medium);
-      color: var(--md-sys-color-on-surface-variant);
-      letter-spacing: 2px;
+    .brand-logo-center {
+      width: 76px;
+      height: 76px;
+      filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.2));
     }
 
     .diagram-orbit {
@@ -836,10 +821,9 @@ import { RouterLink } from '@angular/router';
         height: 300px;
       }
 
-      .brand-mark {
-        width: 56px;
-        height: 56px;
-        font-size: 28px;
+      .brand-logo-center {
+        width: 60px;
+        height: 60px;
       }
 
       .orbit-node {
