@@ -22,7 +22,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
               <span class="material-symbols-outlined sz-20">expand_more</span>
             </a>
             <div class="dropdown-menu">
-              <a routerLink="/platform" routerLinkActive="active" (click)="closeMenu()">
+              <a routerLink="/modules/rhenium" routerLinkActive="active" (click)="closeMenu()">
                 <span class="dot rhenium"></span>
                 Rhenium OS / MRI
               </a>
