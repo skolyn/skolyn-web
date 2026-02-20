@@ -1,0 +1,210 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HIPAA Compliance Guide - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}
+.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}
+.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:0.5px}
+.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}
+.doc-header{border-bottom:3px solid #1e8e3e;padding-bottom:28px;margin-bottom:40px}
+.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px;color:#1d1d1f}
+.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}
+.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}
+.doc-header .meta-item{display:flex;align-items:center;gap:6px}
+.doc-header .meta-item strong{color:#1d1d1f}
+h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#1e8e3e;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}
+h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}
+h4{font-size:15px;color:#3c4043;margin:20px 0 8px}
+p{margin-bottom:14px}
+ul,ol{margin:0 0 18px 24px}
+li{margin-bottom:8px}
+table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:14px}
+th,td{padding:12px 16px;text-align:left;border:1px solid #dadce0}
+th{background:#e6f4ea;font-weight:600;color:#137333}
+td{color:#3c4043}
+tr:nth-child(even) td{background:#fafafa}
+code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px;font-family:'Google Sans Mono',monospace}
+pre{background:#1a1a2e;color:#e8eaed;padding:20px 24px;border-radius:12px;margin:16px 0 24px;overflow-x:auto;font-size:13px;line-height:1.7}
+pre code{background:none;padding:0;color:inherit}
+.callout{padding:16px 20px;border-radius:8px;margin:16px 0 24px;font-size:14px}
+.callout-info{background:#e8f0fe;border-left:4px solid #1a73e8;color:#174ea6}
+.callout-warning{background:#fef7e0;border-left:4px solid #ea8600;color:#b06000}
+.callout-critical{background:#fce8e6;border-left:4px solid #d32f2f;color:#a50e0e}
+.signature-section{margin-top:64px;page-break-inside:avoid}
+.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}
+.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}
+.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;color:#1d1d1f;margin-bottom:4px}
+.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}
+.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}
+.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}
+.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}
+.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}
+.doc-footer p{margin-bottom:4px}
+@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}h2{color:#1e8e3e !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}th{background:#e6f4ea !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+
+<div class="doc-id-bar">
+  <span class="doc-id">SKL-SEC-002</span>
+  <span>Skolyn Platform Documentation</span>
+  <span class="doc-class">CONFIDENTIAL</span>
+</div>
+
+<div class="doc-header">
+  <h1>HIPAA Compliance Guide</h1>
+  <div class="subtitle">Health Insurance Portability and Accountability Act Compliance Framework for the Skolyn Platform</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Confidential</div>
+    <div class="meta-item"><strong>Owner:</strong> Compliance & Legal</div>
+    <div class="meta-item"><strong>Review Cycle:</strong> Annual</div>
+    <div class="meta-item"><strong>Next Review:</strong> February 2027</div>
+  </div>
+</div>
+
+<h2>1. Executive Summary</h2>
+<p>Skolyn is designed from the ground up to ensure full compliance with the Health Insurance Portability and Accountability Act (HIPAA) of 1996 and its subsequent amendments, including the HITECH Act. As a medical imaging AI platform that processes, stores, and transmits Protected Health Information (PHI), Skolyn implements comprehensive administrative, physical, and technical safeguards that meet or exceed the requirements specified in 45 CFR Parts 160 and 164. This document provides an exhaustive overview of Skolyn's HIPAA compliance posture, covering organizational policies, technical controls, Business Associate Agreements, breach notification procedures, and risk assessment methodology.</p>
+
+<div class="callout callout-info">
+  <strong>Note:</strong> Skolyn operates as a Business Associate (BA) under HIPAA. The Covered Entity (CE) — typically the hospital, clinic, or imaging center — retains primary responsibility for patient notification and regulatory reporting. Skolyn provides technical tools and documentation to support the CE's compliance obligations.
+</div>
+
+<h2>2. HIPAA Applicability & Roles</h2>
+<h3>2.1 Covered Entity vs. Business Associate</h3>
+<p>Under HIPAA, Skolyn functions as a <strong>Business Associate</strong> — an entity that creates, receives, maintains, or transmits PHI on behalf of a Covered Entity. This relationship is formalized through a Business Associate Agreement (BAA) that specifies permitted uses and disclosures, safeguard requirements, breach notification obligations, and subcontractor management terms.</p>
+
+<h3>2.2 Protected Health Information (PHI) Scope</h3>
+<p>PHI processed by Skolyn includes specifically:</p>
+<ul>
+  <li><strong>DICOM Images:</strong> Medical images containing patient demographics in DICOM headers (Patient Name, ID, DOB, Accession Number, Referring Physician).</li>
+  <li><strong>Diagnostic Reports:</strong> AI-generated findings, measurements, and structured reports associated with patient studies.</li>
+  <li><strong>Audit Trails:</strong> Access logs that record which users viewed or modified patient data, including timestamps and IP addresses.</li>
+  <li><strong>Clinical Metadata:</strong> Study descriptions, clinical indications, and prior study references linked to patient identifiers.</li>
+</ul>
+
+<h2>3. Administrative Safeguards (§164.308)</h2>
+<h3>3.1 Security Management Process</h3>
+<p>Skolyn maintains a formal Information Security Management System (ISMS) aligned with ISO 27001:2022. The security management process includes:</p>
+<ul>
+  <li><strong>Risk Analysis (§164.308(a)(1)(ii)(A)):</strong> Annual comprehensive risk assessments using the NIST SP 800-30 methodology. Threat modeling covers all PHI data flows, from DICOM ingestion through AI inference to report delivery. Risk register is maintained with assigned owners and remediation timelines.</li>
+  <li><strong>Risk Management (§164.308(a)(1)(ii)(B)):</strong> Identified risks are mitigated through technical controls, policy updates, or accepted with documented justification and executive sign-off. The residual risk threshold is reviewed quarterly by the CISO.</li>
+  <li><strong>Sanction Policy (§164.308(a)(1)(ii)(C)):</strong> Employees who violate HIPAA policies face progressive disciplinary action ranging from mandatory retraining to immediate termination. All sanctions are documented and reported to the Privacy Officer.</li>
+  <li><strong>Information System Activity Review (§164.308(a)(1)(ii)(D)):</strong> Automated review of audit logs, access reports, and security incident logs on a daily basis. Anomalies trigger immediate investigation by the Security Operations team.</li>
+</ul>
+
+<h3>3.2 Workforce Security</h3>
+<ul>
+  <li><strong>Authorization & Supervision:</strong> All workforce members undergo background checks before access to PHI systems is provisioned. Access requests require manager approval and are reviewed by the Security team.</li>
+  <li><strong>Clearance Procedures:</strong> Upon termination or role change, PHI access is revoked within 4 hours. Hardware (laptops, tokens) is returned and wiped within 24 hours. Exit interviews include HIPAA obligations reminders.</li>
+  <li><strong>Security Awareness Training:</strong> Mandatory annual HIPAA training for all employees with quarterly phishing simulations. Completion rates are tracked; non-compliant employees are escalated to HR.</li>
+</ul>
+
+<h3>3.3 Contingency Planning</h3>
+<p>Skolyn maintains a documented contingency plan covering:</p>
+<ul>
+  <li><strong>Data Backup Plan:</strong> Automated daily backups with cross-region replication. Backups are encrypted and stored in immutable (WORM) storage for 7 years.</li>
+  <li><strong>Disaster Recovery Plan:</strong> RTO of 4 hours, RPO of 1 hour. Failover to standby region is tested quarterly through tabletop exercises and annual live failover drills.</li>
+  <li><strong>Emergency Mode Operation Plan:</strong> Critical clinical functions (study viewing, report access) remain available during infrastructure degradation through read-only failover modes.</li>
+</ul>
+
+<h2>4. Physical Safeguards (§164.310)</h2>
+<h3>4.1 Facility Access Controls</h3>
+<p>Skolyn's infrastructure runs on SOC 2 Type II and ISO 27001 certified cloud data centers. Physical security includes biometric access controls, 24/7 CCTV monitoring, mantrap entry systems, and security personnel at all entry points. Visitor access requires pre-approval and escort at all times.</p>
+
+<h3>4.2 Workstation & Device Security</h3>
+<ul>
+  <li><strong>Workstation Use:</strong> Policies define acceptable use for devices accessing PHI, including mandatory full-disk encryption (BitLocker/FileVault), automatic screen lock (5-minute timeout), and prohibition of PHI on personal devices.</li>
+  <li><strong>Device Disposal:</strong> Media containing PHI is destroyed using NIST SP 800-88 compliant methods (cryptographic erasure for SSDs, degaussing and shredding for HDDs). Certificates of destruction are maintained.</li>
+</ul>
+
+<h2>5. Technical Safeguards (§164.312)</h2>
+<h3>5.1 Access Control</h3>
+<table>
+  <tr><th>Control</th><th>Implementation</th><th>Standard Reference</th></tr>
+  <tr><td>Unique User Identification</td><td>Individual accounts with UUID; no shared credentials</td><td>§164.312(a)(2)(i)</td></tr>
+  <tr><td>Emergency Access</td><td>Break-glass procedure with 2-person authorization</td><td>§164.312(a)(2)(ii)</td></tr>
+  <tr><td>Automatic Logoff</td><td>Session timeout: 15 min inactive, 8 hours absolute</td><td>§164.312(a)(2)(iii)</td></tr>
+  <tr><td>Encryption & Decryption</td><td>AES-256-GCM at rest, TLS 1.3 in transit</td><td>§164.312(a)(2)(iv)</td></tr>
+</table>
+
+<h3>5.2 Audit Controls (§164.312(b))</h3>
+<p>All access to PHI is logged with immutable audit trails. Audit records include: user identity, timestamp, action performed, resource accessed, source IP, and outcome (success/failure). Logs are written to append-only storage and retained for a minimum of 7 years. Real-time alerting is configured for unusual access patterns such as bulk record access, off-hours access, and access from new devices or locations.</p>
+
+<h3>5.3 Transmission Security (§164.312(e))</h3>
+<p>All PHI transmitted over networks is encrypted using TLS 1.3 for HTTPS/REST traffic and DICOM TLS for imaging transfers. Integrity controls use SHA-256 HMAC verification for all transmitted data. VPN tunnels (WireGuard/IPsec) are used for site-to-site connectivity with healthcare facilities.</p>
+
+<h2>6. Business Associate Agreement (BAA)</h2>
+<p>Skolyn executes a comprehensive BAA with every Covered Entity before processing PHI. The BAA covers:</p>
+<ul>
+  <li>Permitted uses and disclosures of PHI limited to service delivery</li>
+  <li>Requirement to implement safeguards described in this document</li>
+  <li>Breach notification obligations (within 24 hours of discovery)</li>
+  <li>Return or destruction of PHI upon contract termination</li>
+  <li>Subcontractor management requirements (sub-BAAs with cloud providers)</li>
+  <li>Right of CE to audit Skolyn's compliance posture</li>
+</ul>
+
+<h2>7. Breach Notification (§164.400-414)</h2>
+<h3>7.1 Breach Detection</h3>
+<p>Skolyn maintains automated breach detection capabilities including DLP (Data Loss Prevention) monitoring, anomalous access pattern detection, and unauthorized data exfiltration alerts. Any suspected breach triggers the Incident Response Plan (IRP).</p>
+
+<h3>7.2 Notification Timeline</h3>
+<table>
+  <tr><th>Recipient</th><th>Timeline</th><th>Method</th></tr>
+  <tr><td>Covered Entity</td><td>Within 24 hours of confirmation</td><td>Secure email + phone call</td></tr>
+  <tr><td>HHS OCR (via CE)</td><td>Within 60 days (by CE)</td><td>HHS Breach Portal</td></tr>
+  <tr><td>Affected Individuals (via CE)</td><td>Within 60 days (by CE)</td><td>First-class mail (by CE)</td></tr>
+</table>
+
+<h2>8. Risk Assessment Summary</h2>
+<p>Skolyn conducts annual HIPAA risk assessments in compliance with §164.308(a)(1)(ii)(A). The assessment covers all systems, applications, and processes that create, receive, maintain, or transmit ePHI. Key risk areas evaluated include unauthorized access, data loss, natural disasters, malicious software, and insider threats. Results are documented in the Risk Register with assigned risk owners and remediation plans tracked to completion.</p>
+
+<h2>9. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>Compliance Team</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-03-01</td><td>Compliance Team</td><td>Added HITECH, breach notification detail</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>Compliance & Legal</td><td>Updated safeguards, BAA terms, risk assessment</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn. By signing below, the signatories confirm that the HIPAA compliance controls described herein are implemented and maintained in accordance with 45 CFR Parts 160 and 164.</p>
+  <div class="signature-grid">
+    <div class="signature-block">
+      <div class="role">Chief Technology Officer (CTO)</div>
+      <div class="name">Skolyn Technology Division</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+    <div class="signature-block">
+      <div class="role">Chief Executive Officer (CEO)</div>
+      <div class="name">Skolyn Executive Office</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+  </div>
+</div>
+
+<div class="doc-footer">
+  <p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p>
+  <p>Document ID: SKL-SEC-002 | Version 3.0 | Classification: Confidential</p>
+  <p>&copy; 2026 Skolyn. All rights reserved. Unauthorized reproduction or distribution is strictly prohibited.</p>
+</div>
+
+</body>
+</html>

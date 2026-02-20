@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Access Control - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #7b1fa2;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#7b1fa2;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:14px}th,td{padding:12px 16px;text-align:left;border:1px solid #dadce0}th{background:#f3e5f5;font-weight:600;color:#6a1b9a}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}pre{background:#1a1a2e;color:#e8eaed;padding:20px 24px;border-radius:12px;margin:16px 0 24px;overflow-x:auto;font-size:13px;line-height:1.7}pre code{background:none;padding:0;color:inherit}.callout{padding:16px 20px;border-radius:8px;margin:16px 0 24px;font-size:14px}.callout-info{background:#e8f0fe;border-left:4px solid #1a73e8;color:#174ea6}.callout-warning{background:#fef7e0;border-left:4px solid #ea8600;color:#b06000}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}
+</style>
+</head>
+<body>
+
+<div class="doc-id-bar">
+  <span class="doc-id">SKL-SEC-005</span>
+  <span>Skolyn Platform Documentation</span>
+  <span class="doc-class">CONFIDENTIAL</span>
+</div>
+
+<div class="doc-header">
+  <h1>Access Control</h1>
+  <div class="subtitle">Identity and Access Management Framework for the Skolyn Diagnostic AI Platform</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Confidential</div>
+    <div class="meta-item"><strong>Owner:</strong> Security Engineering</div>
+    <div class="meta-item"><strong>Review Cycle:</strong> Quarterly</div>
+    <div class="meta-item"><strong>Next Review:</strong> May 2026</div>
+  </div>
+</div>
+
+<h2>1. Executive Summary</h2>
+<p>Skolyn implements a Zero Trust identity and access management framework that enforces the principle of least privilege across all platform interactions. The system combines Role-Based Access Control (RBAC) with Attribute-Based Access Control (ABAC) to provide fine-grained, context-aware authorization decisions. This document defines the access control model, role hierarchy, permission granularity, session management policies, emergency access procedures, and integration patterns with enterprise identity providers. Every access decision is logged, auditable, and reversible to maintain full regulatory compliance with HIPAA, GDPR, and SOC 2 requirements.</p>
+
+<h2>2. Access Control Model</h2>
+<h3>2.1 Hybrid RBAC + ABAC Architecture</h3>
+<p>Skolyn's access control architecture employs a two-layer authorization model. The first layer, <strong>Role-Based Access Control (RBAC)</strong>, assigns permissions based on organizational roles. Each user is assigned one or more roles that define a baseline set of allowed actions. The second layer, <strong>Attribute-Based Access Control (ABAC)</strong>, evaluates contextual attributes such as the user's location, device posture, time of day, and the sensitivity of the requested resource to make dynamic authorization decisions. This hybrid approach ensures that a Radiologist can view studies (RBAC) but only from compliant devices within the hospital network during working hours (ABAC).</p>
+
+<h3>2.2 Policy Decision Point (PDP)</h3>
+<p>All authorization requests are evaluated by a centralized Policy Decision Point implemented as an Open Policy Agent (OPA) sidecar deployed alongside each microservice. Policies are written in Rego and version-controlled in Git. Policy updates are deployed via GitOps with mandatory peer review and automated testing against a comprehensive decision matrix before production rollout.</p>
+
+<h2>3. Role Hierarchy & Permissions</h2>
+<h3>3.1 Predefined Roles</h3>
+<table>
+  <tr><th>Role</th><th>Scope</th><th>Key Permissions</th><th>PHI Access</th></tr>
+  <tr><td>Super Administrator</td><td>Platform-wide</td><td>All operations, user management, configuration, audit access</td><td>Full</td></tr>
+  <tr><td>Institution Administrator</td><td>Single institution</td><td>User management, configuration, reporting within institution</td><td>Institutional only</td></tr>
+  <tr><td>Radiologist</td><td>Assigned worklist</td><td>View studies, create reports, annotate images, export DICOM</td><td>Assigned studies</td></tr>
+  <tr><td>Referring Physician</td><td>Own patients</td><td>View reports, request studies, view AI findings</td><td>Own patients</td></tr>
+  <tr><td>Technologist</td><td>Modality-based</td><td>Upload studies, verify quality, manage worklist</td><td>Current shift</td></tr>
+  <tr><td>AI Engineer</td><td>Model registry</td><td>Deploy models, view performance metrics, configure pipelines</td><td>De-identified only</td></tr>
+  <tr><td>Compliance Officer</td><td>Audit system</td><td>View audit logs, generate compliance reports, manage policies</td><td>Metadata only</td></tr>
+  <tr><td>API Service Account</td><td>Scoped by client</td><td>Programmatic access to specific API endpoints per OAuth scope</td><td>Scoped</td></tr>
+</table>
+
+<h3>3.2 Custom Roles</h3>
+<p>Institution Administrators can create custom roles by combining individual permissions from the platform's permission catalog. Custom roles allow granular delegation such as creating a "Trainee Radiologist" role that permits study viewing but requires attending co-signature for report finalization, or a "Research Coordinator" role limited to de-identified data export. All custom role definitions are audited and require documented justification.</p>
+
+<h2>4. Authentication Requirements</h2>
+<h3>4.1 Identity Provider Integration</h3>
+<p>Skolyn acts as a Service Provider (SP) and delegates primary authentication to the institution's Identity Provider (IdP) via industry-standard protocols:</p>
+<ul>
+  <li><strong>SAML 2.0:</strong> For enterprise SSO integration with Microsoft Entra ID, Okta, Ping Identity, and ADFS. Assertion attributes map directly to Skolyn roles and institutional affiliation.</li>
+  <li><strong>OpenID Connect:</strong> Authorization Code flow with PKCE for web and mobile clients. ID tokens contain role claims that drive RBAC assignments.</li>
+  <li><strong>LDAP/Active Directory:</strong> Direct bind authentication for on-premise deployments with group-to-role mapping synchronized every 5 minutes.</li>
+</ul>
+
+<h3>4.2 Multi-Factor Authentication</h3>
+<p>MFA is mandatory for all administrative roles and configurable per institution for clinical roles. Supported second factors include:</p>
+<ul>
+  <li><strong>FIDO2/WebAuthn:</strong> Hardware security keys (YubiKey, Titan) — recommended for highest assurance.</li>
+  <li><strong>TOTP:</strong> Time-based one-time passwords via Google Authenticator, Authy, or Microsoft Authenticator (RFC 6238).</li>
+  <li><strong>Push Notifications:</strong> App-based push approval for mobile-friendly workflows.</li>
+  <li><strong>Smart Cards:</strong> PIV/CAC support for government and military healthcare deployments.</li>
+</ul>
+
+<h2>5. Session Management</h2>
+<table>
+  <tr><th>Parameter</th><th>Default Value</th><th>Configurable</th><th>Compliance Reference</th></tr>
+  <tr><td>Idle Session Timeout</td><td>15 minutes</td><td>Yes (5-60 min)</td><td>HIPAA §164.312(a)(2)(iii)</td></tr>
+  <tr><td>Absolute Session Timeout</td><td>8 hours</td><td>Yes (1-12 hours)</td><td>NIST SP 800-63B</td></tr>
+  <tr><td>Concurrent Session Limit</td><td>3 per user</td><td>Yes</td><td>SOC 2 CC6.1</td></tr>
+  <tr><td>Session Token Rotation</td><td>Every 15 minutes</td><td>No</td><td>OWASP Session Mgmt</td></tr>
+  <tr><td>Refresh Token Lifetime</td><td>24 hours</td><td>Yes (1-72 hours)</td><td>OAuth 2.0 Best Practices</td></tr>
+</table>
+
+<p>Sessions are bound to the originating IP address and device fingerprint. Any change in these attributes triggers a re-authentication challenge. Session tokens are stored in HttpOnly, Secure, SameSite=Strict cookies with AES-256-GCM encryption.</p>
+
+<h2>6. Emergency Access (Break-Glass)</h2>
+<p>For life-threatening clinical emergencies where the assigned radiologist is unavailable, Skolyn provides a documented Break-Glass procedure:</p>
+<ol>
+  <li><strong>Initiation:</strong> The requesting clinician invokes the emergency access flow from the study viewer, providing a clinical justification (free text + structured reason code).</li>
+  <li><strong>Authorization:</strong> A second authorized user (Charge Radiologist, Department Head, or Administrator) must confirm the emergency access request in real-time via push notification.</li>
+  <li><strong>Access Grant:</strong> Temporary elevated access is granted for a maximum of 4 hours, limited to the specific study/patient context.</li>
+  <li><strong>Audit & Review:</strong> All break-glass events generate P2 security alerts and are flagged for mandatory review by the Compliance Officer within 24 hours. The clinical justification is preserved in the immutable audit trail.</li>
+</ol>
+
+<div class="callout callout-warning">
+  <strong>Warning:</strong> Break-glass events that cannot be clinically justified after review may result in disciplinary action and are reported to the institution's Privacy Officer.
+</div>
+
+<h2>7. API Access Control</h2>
+<h3>7.1 OAuth 2.0 Scopes</h3>
+<p>API access is governed by OAuth 2.0 scopes that map to specific platform capabilities:</p>
+<pre><code># Read-only access to studies
+scope: studies:read
+
+# Write access to reports
+scope: reports:write
+
+# Administrative configuration
+scope: admin:config
+
+# Audit log access
+scope: audit:read
+
+# AI model management
+scope: models:manage</code></pre>
+
+<h3>7.2 Rate Limiting</h3>
+<p>API rate limits are enforced per-client using a sliding window algorithm. Default limits are 1,000 requests per minute for read operations and 200 requests per minute for write operations. Burst capacity allows 50% overage for 30-second windows. Rate limit exhaustion returns HTTP 429 with a Retry-After header indicating the reset time.</p>
+
+<h2>8. Access Reviews & Certification</h2>
+<p>Quarterly access reviews (User Access Reviews / UAR) are conducted by Institution Administrators with Security team oversight. The review process includes certification that each user's role and permissions remain appropriate for their current job function, identification and removal of dormant accounts (no login for 90 days), verification of service account permissions and ownership, and documentation of any exceptions with risk acceptance sign-off.</p>
+
+<h2>9. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-07-01</td><td>Security Engineering</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-04-01</td><td>Security Engineering</td><td>Added ABAC, break-glass, API scopes</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>Security Engineering</td><td>Updated session mgmt, MFA, access reviews</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block">
+      <div class="role">Chief Technology Officer (CTO)</div>
+      <div class="name">Skolyn Technology Division</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+    <div class="signature-block">
+      <div class="role">Chief Executive Officer (CEO)</div>
+      <div class="name">Skolyn Executive Office</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+  </div>
+</div>
+
+<div class="doc-footer">
+  <p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p>
+  <p>Document ID: SKL-SEC-005 | Version 3.0 | Classification: Confidential</p>
+  <p>&copy; 2026 Skolyn. All rights reserved.</p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Musculoskeletal X-Ray Analysis - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #ff6f00;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#ff6f00;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:13px}th,td{padding:10px 14px;text-align:left;border:1px solid #dadce0}th{background:#fff3e0;font-weight:600;color:#e65100}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}</style>
+</head>
+<body>
+
+<div class="doc-id-bar"><span class="doc-id">SKL-XR-003</span><span>Skolyn Platform Documentation</span><span class="doc-class">CONFIDENTIAL</span></div>
+
+<div class="doc-header">
+  <h1>Musculoskeletal X-Ray Analysis</h1>
+  <div class="subtitle">Fracture Detection, Joint Assessment, and Orthopedic Measurement Automation</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Confidential</div>
+    <div class="meta-item"><strong>Owner:</strong> X-Ray Engineering</div>
+  </div>
+</div>
+
+<h2>1. Overview</h2>
+<p>Musculoskeletal (MSK) radiography accounts for the largest volume of X-ray examinations, encompassing all skeletal imaging from cervical spine to foot. MSK X-ray interpretation is a high-volume, repetitive task with substantial missed fracture rates, particularly in emergency departments where studies are initially interpreted by non-radiologist physicians. Published literature reports fracture miss rates of 3-9% in emergency department radiographs, with wrist, scaphoid, and hip fractures being the most commonly missed. Skolyn's MSK X-ray AI within Terbium OS provides automated fracture detection across all anatomical regions, joint space assessment, alignment measurement, and orthopedic angle computation. The module processes each study in under 5 seconds, supporting over 20 anatomical regions with region-specific analysis pipelines optimized for the unique anatomy and common pathology patterns at each body part.</p>
+
+<h2>2. Fracture Detection</h2>
+<h3>2.1 Regional Coverage</h3>
+<p>The fracture detection engine supports 24 anatomical regions with specialized models for each: shoulder (proximal humerus, clavicle, scapula), elbow (radial head, olecranon, supracondylar), forearm (radius, ulna shaft), wrist (distal radius/ulna, scaphoid, perilunate), hand (metacarpal, phalanx), pelvis (acetabular, pubic rami, sacral), hip (femoral neck, intertrochanteric, subtrochanteric), knee (tibial plateau, patella, fibular head), ankle (lateral malleolus, medial malleolus, posterior malleolus), and foot (metatarsal, calcaneus, Lisfranc). Each regional model is trained on 5,000-15,000 annotated fracture cases with balanced representation of subtle, non-displaced fractures that are most commonly missed in clinical practice.</p>
+
+<h3>2.2 Fracture Classification</h3>
+<p>Detected fractures are classified by type (transverse, oblique, spiral, comminuted, avulsion, stress/insufficiency, pathologic), displacement (non-displaced, minimally displaced &lt;2mm, displaced &gt;2mm), and angulation (measured in degrees). For specific anatomical regions, the system applies standard orthopedic classification systems: Neer classification for proximal humerus fractures, Garden classification for femoral neck fractures, Schatzker classification for tibial plateau fractures, Lauge-Hansen for ankle fractures, and Weber classification for fibular fractures. Each classification helps guide treatment decisions regarding operative vs. conservative management.</p>
+
+<h2>3. Joint Assessment</h2>
+<p>The joint space analysis module quantifies joint space width at standardized measurement locations for all major joints. Joint space narrowing is graded per the Kellgren-Lawrence (KL) classification for osteoarthritis: Grade 0 (none), Grade 1 (doubtful — minute osteophyte), Grade 2 (minimal — definite osteophyte, possible narrowing), Grade 3 (moderate — moderate narrowing, sclerosis), Grade 4 (severe — near-complete loss, large osteophytes, cysts, deformity). The system measures both medial and lateral compartments for knee radiographs, detecting asymmetric narrowing patterns. For hip joints, the minimum joint space width is measured at the superior aspect per OARSI guidelines. Automated detection of osteophytes, subchondral sclerosis, and subchondral cysts complements the joint space measurement.</p>
+
+<h2>4. Orthopedic Measurements</h2>
+<table>
+  <tr><th>Measurement</th><th>Anatomical Region</th><th>Normal Range</th></tr>
+  <tr><td>Cobb Angle</td><td>Spine (scoliosis)</td><td>&lt;10 degrees</td></tr>
+  <tr><td>Hip-Knee-Ankle Angle</td><td>Lower extremity alignment</td><td>0 +/- 3 degrees</td></tr>
+  <tr><td>Alpha Angle (Notzli)</td><td>Hip (femoroacetabular impingement)</td><td>&lt;55 degrees</td></tr>
+  <tr><td>Lateral Center-Edge Angle</td><td>Hip (acetabular coverage)</td><td>25-40 degrees</td></tr>
+  <tr><td>Bohler Angle</td><td>Calcaneus</td><td>25-40 degrees</td></tr>
+  <tr><td>Lateral Talocalcaneal Angle</td><td>Foot (flatfoot assessment)</td><td>35-50 degrees</td></tr>
+  <tr><td>Insall-Salvati Ratio</td><td>Knee (patella height)</td><td>0.8-1.2</td></tr>
+</table>
+
+<h2>5. Implant Assessment</h2>
+<p>For post-operative radiographs, the module identifies and classifies orthopedic hardware including plates, screws, intramedullary nails, joint prostheses (total hip, total knee), and external fixation devices. The system assesses hardware position for signs of failure: screw back-out, plate fracture, periprosthetic fracture, prosthetic loosening (radiolucent lines &gt;2mm circumferential or progressive), subsidence, and heterotopic ossification grading (Brooker classification).</p>
+
+<h2>6. Clinical Performance</h2>
+<table>
+  <tr><th>Task</th><th>Metric</th><th>Performance</th><th>Benchmark</th></tr>
+  <tr><td>Fracture Detection (all)</td><td>Sensitivity</td><td>94.7%</td><td>30K clinical, CT correlation</td></tr>
+  <tr><td>Wrist Fracture</td><td>Sensitivity</td><td>96.2%</td><td>8K clinical</td></tr>
+  <tr><td>Hip Fracture</td><td>Sensitivity</td><td>97.1%</td><td>10K clinical</td></tr>
+  <tr><td>KL Classification</td><td>Agreement</td><td>85.3%</td><td>Expert consensus</td></tr>
+  <tr><td>Orthopedic Angles</td><td>MAE</td><td>1.8 degrees</td><td>Expert measurement</td></tr>
+</table>
+
+<h2>7. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>X-Ray Engineering</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-06-01</td><td>X-Ray Engineering</td><td>Added joint assessment, implants</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>X-Ray Engineering</td><td>Updated performance, classifications</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block"><div class="role">Chief Technology Officer (CTO)</div><div class="name">Skolyn Technology Division</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+    <div class="signature-block"><div class="role">Chief Executive Officer (CEO)</div><div class="name">Skolyn Executive Office</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+  </div>
+</div>
+
+<div class="doc-footer"><p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p><p>Document ID: SKL-XR-003 | Version 3.0 | Classification: Confidential</p><p>&copy; 2026 Skolyn. All rights reserved.</p></div>
+
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PACS Connectivity - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #1a73e8;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#1a73e8;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:14px}th,td{padding:12px 16px;text-align:left;border:1px solid #dadce0}th{background:#e8f0fe;font-weight:600;color:#174ea6}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}pre{background:#1a1a2e;color:#e8eaed;padding:20px 24px;border-radius:12px;margin:16px 0 24px;overflow-x:auto;font-size:13px;line-height:1.7}pre code{background:none;padding:0;color:inherit}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}
+</style>
+</head>
+<body>
+
+<div class="doc-id-bar">
+  <span class="doc-id">SKL-INT-005</span>
+  <span>Skolyn Platform Documentation</span>
+  <span class="doc-class">RESTRICTED</span>
+</div>
+
+<div class="doc-header">
+  <h1>PACS Connectivity</h1>
+  <div class="subtitle">Production Integration Guide for Picture Archiving and Communication Systems</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Restricted</div>
+    <div class="meta-item"><strong>Owner:</strong> Integration Engineering</div>
+    <div class="meta-item"><strong>Review Cycle:</strong> Quarterly</div>
+    <div class="meta-item"><strong>Next Review:</strong> May 2026</div>
+  </div>
+</div>
+
+<h2>1. Introduction</h2>
+<p>Skolyn integrates with institutional Picture Archiving and Communication Systems (PACS) as a transparent, inline or side-channel AI analysis node. The platform supports connectivity with all major PACS vendors including Sectra, Agfa Enterprise Imaging, Philips IntelliSpace, GE Centricity, Fujifilm Synapse, Hologic, and open-source solutions like Orthanc and DCM4CHEE. This document provides vendor-specific configuration guides, routing rule templates, and troubleshooting procedures to enable seamless PACS integration. Whether deployed as a DICOM routing destination, a query-retrieve source, or a DICOMweb client, Skolyn adapts to your existing imaging infrastructure without requiring workflow modifications for radiologists or technologists.</p>
+
+<h2>2. Integration Architectures</h2>
+<h3>2.1 Inline (Router) Architecture</h3>
+<p>In the inline architecture, studies flow from the modality through Skolyn before reaching the PACS. The DICOM router (typically an interface engine like Laurel Bridge Compass or Mirth Connect) forwards a copy of each incoming study to Skolyn's DICOM Gateway while simultaneously forwarding the original to the PACS. Skolyn processes the study and sends the AI results back as a new series (DICOM SR, secondary capture key images) to the PACS under the same Study Instance UID. This architecture ensures AI results appear alongside source images in the radiologist's reading workflow.</p>
+
+<h3>2.2 Side-Channel Architecture</h3>
+<p>In the side-channel architecture, Skolyn operates as a DICOM Query/Retrieve SCU, pulling completed studies from the PACS on a configurable schedule or triggered by HL7 ORM messages from the RIS. This approach requires no changes to the existing DICOM routing infrastructure and is ideal for sites that cannot modify their modality-to-PACS routing. Skolyn queries the PACS for new studies matching configured criteria (modality, body part, study description), retrieves the instances via C-MOVE or C-GET, processes them, and sends results back to the PACS via C-STORE.</p>
+
+<h3>2.3 Hybrid Architecture</h3>
+<p>The hybrid architecture combines inline forwarding for high-priority modalities (CT, MR for stroke/trauma) with side-channel retrieval for lower-priority workloads (routine X-ray, mammography screening). This provides sub-minute turnaround for STAT studies while minimizing network bandwidth impact for the bulk of the imaging volume.</p>
+
+<h2>3. Vendor-Specific Configuration</h2>
+<h3>3.1 Sectra IDS7 / WISE</h3>
+<table>
+  <tr><th>Parameter</th><th>Value</th></tr>
+  <tr><td>AE Title</td><td>SKOLYN_AI (register in Sectra Admin Console > DICOM > Known Nodes)</td></tr>
+  <tr><td>Port</td><td>11112 (TLS)</td></tr>
+  <tr><td>Transfer Syntax</td><td>Explicit VR Little Endian (preferred), JPEG 2000 Lossless</td></tr>
+  <tr><td>Auto-Route</td><td>Configure in Sectra DICOM Routing Rules > Add Destination > SKOLYN_AI</td></tr>
+  <tr><td>Result Display</td><td>AI SR appears automatically in study series list. Key images mapped to "AI Findings" series description.</td></tr>
+</table>
+
+<h3>3.2 GE Centricity PACS / Universal Viewer</h3>
+<table>
+  <tr><th>Parameter</th><th>Value</th></tr>
+  <tr><td>AE Title</td><td>SKOLYN_AI (register in GE PACS Admin > DICOM Nodes)</td></tr>
+  <tr><td>Port</td><td>11112 (TLS)</td></tr>
+  <tr><td>Auto-Forward</td><td>GE PACS Admin > Routing > Auto-Forward Rules: match on modality and body part</td></tr>
+  <tr><td>Q/R Support</td><td>Enable C-MOVE on the PACS node with SKOLYN_AI in the allowed move destinations</td></tr>
+  <tr><td>Hanging Protocol</td><td>Configure hanging protocol to display AI SR alongside corresponding series</td></tr>
+</table>
+
+<h3>3.3 Fujifilm Synapse</h3>
+<table>
+  <tr><th>Parameter</th><th>Value</th></tr>
+  <tr><td>AE Title</td><td>SKOLYN_AI (Synapse Admin > System > DICOM > Remote Nodes)</td></tr>
+  <tr><td>Port</td><td>11112 (TLS)</td></tr>
+  <tr><td>Routing</td><td>Synapse Admin > Workflow > Auto-Route: filter by modality, schedule</td></tr>
+  <tr><td>AI Overlay</td><td>Synapse 7 supports AI overlay display for compatible key image formats</td></tr>
+</table>
+
+<h3>3.4 Orthanc (Open Source)</h3>
+<pre><code># orthanc.json configuration for Skolyn forwarding
+{
+  "DicomModalities": {
+    "SKOLYN_AI": {
+      "AET": "SKOLYN_AI",
+      "Host": "10.0.10.50",
+      "Port": 11112,
+      "UseTls": true,
+      "ClientCertificateFile": "/etc/orthanc/certs/client.pem",
+      "TrustedCertificatesFile": "/etc/orthanc/certs/ca.pem"
+    }
+  },
+  "AutoRouting": {
+    "SKOLYN_AI": {
+      "Filter": "function(tags) { return tags['0008,0060'] !== undefined; }"
+    }
+  }
+}</code></pre>
+
+<h2>4. Result Delivery to PACS</h2>
+<h3>4.1 DICOM Structured Report</h3>
+<p>Skolyn generates DICOM SR (TID 1500 Measurement Report) for each analyzed study. The SR is stored as a new series within the original study, with series description "Skolyn AI Analysis" and series number 999. The SR contains coded findings using SNOMED CT, RadLex, and LOINC terminologies, numeric measurements with UCUM units, and references to attention map key images. Most modern PACS viewers can display DICOM SR content inline or in a dedicated panel.</p>
+
+<h3>4.2 Key Images (Secondary Capture)</h3>
+<p>For PACS systems that have limited SR display capabilities, Skolyn generates secondary capture images with AI overlay annotations (bounding boxes, attention heatmaps, measurement callouts) burned into the pixel data. These key images are stored as a separate series within the study, providing a visual summary of AI findings that is viewable on any DICOM-compliant workstation.</p>
+
+<h2>5. Network Requirements</h2>
+<table>
+  <tr><th>Component</th><th>Bandwidth</th><th>Latency</th><th>Notes</th></tr>
+  <tr><td>CT forwarding</td><td>50-200 Mbps sustained</td><td>&lt; 50ms</td><td>Large studies (1000+ slices)</td></tr>
+  <tr><td>MR forwarding</td><td>20-100 Mbps sustained</td><td>&lt; 50ms</td><td>Multi-sequence studies</td></tr>
+  <tr><td>X-Ray forwarding</td><td>5-20 Mbps burst</td><td>&lt; 100ms</td><td>Single/dual image studies</td></tr>
+  <tr><td>US forwarding</td><td>10-50 Mbps sustained</td><td>&lt; 50ms</td><td>Clip-based studies</td></tr>
+  <tr><td>Result delivery</td><td>&lt; 5 Mbps</td><td>&lt; 100ms</td><td>SR + key images</td></tr>
+</table>
+
+<h2>6. Troubleshooting</h2>
+<ul>
+  <li><strong>Association rejected:</strong> Verify AE Title is registered in both Skolyn and PACS. Check that the calling AE Title matches the registered entry exactly (case-sensitive).</li>
+  <li><strong>Transfer syntax negotiation failure:</strong> Ensure at least one common transfer syntax is configured. Use Explicit VR Little Endian as the universal fallback.</li>
+  <li><strong>Studies not arriving:</strong> Verify network connectivity (<code>echoscu</code> test), firewall rules (port 11112 inbound), and TLS certificate validity.</li>
+  <li><strong>Results not appearing in PACS:</strong> Verify the return C-STORE association from Skolyn to PACS is configured. Check that the Study Instance UID matches the original study.</li>
+</ul>
+
+<h2>7. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-07-01</td><td>Integration Engineering</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-06-01</td><td>Integration Engineering</td><td>Added vendor configs, hybrid arch</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>Integration Engineering</td><td>Updated Sectra, GE, Fujifilm, network reqs</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block">
+      <div class="role">Chief Technology Officer (CTO)</div>
+      <div class="name">Skolyn Technology Division</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+    <div class="signature-block">
+      <div class="role">Chief Executive Officer (CEO)</div>
+      <div class="name">Skolyn Executive Office</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+  </div>
+</div>
+
+<div class="doc-footer">
+  <p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p>
+  <p>Document ID: SKL-INT-005 | Version 3.0 | Classification: Restricted</p>
+  <p>&copy; 2026 Skolyn. All rights reserved.</p>
+</div>
+
+</body>
+</html>

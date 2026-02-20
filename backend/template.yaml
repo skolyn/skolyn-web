@@ -1,0 +1,137 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Skolyn unified backend API — Contact, Applications, Newsletter
+  (Go Lambda + API Gateway HTTP API + DynamoDB + S3 + SES)
+
+Globals:
+  Function:
+    Runtime: provided.al2023
+    Architectures:
+      - x86_64
+    Timeout: 15
+    MemorySize: 256
+
+Parameters:
+  NotifyEmail:
+    Type: String
+    Default: noreply@skolyn.se
+    Description: Verified SES sender email address.
+  AdminHospitalId:
+    Type: String
+    Default: HSK-10023
+    Description: Restricted Hospital ID for the dashboard
+  AdminPassword:
+    Type: String
+    Default: SecureSkolynAdmin2026!
+    Description: Password for the dashboard
+    NoEcho: true
+
+Resources:
+  # ─── DynamoDB Tables ──────────────────────────────────────────────
+  ContactTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      SSESpecification:
+        SSEEnabled: true
+
+  ApplicationsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      SSESpecification:
+        SSEEnabled: true
+
+  NewsletterTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: email
+          AttributeType: S
+      KeySchema:
+        - AttributeName: email
+          KeyType: HASH
+      SSESpecification:
+        SSEEnabled: true
+
+  # ─── S3 Bucket for resume uploads ────────────────────────────────
+  ResumesBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      LifecycleConfiguration:
+        Rules:
+          - Id: ExpireOldResumes
+            Status: Enabled
+            ExpirationInDays: 365
+
+  # ─── Lambda Function (unified API) ───────────────────────────────
+  ApiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: bootstrap
+      Environment:
+        Variables:
+          CONTACT_TABLE_NAME: !Ref ContactTable
+          APPLICATIONS_TABLE_NAME: !Ref ApplicationsTable
+          NEWSLETTER_TABLE_NAME: !Ref NewsletterTable
+          RESUMES_BUCKET_NAME: !Ref ResumesBucket
+          NOTIFY_EMAIL: !Ref NotifyEmail
+          ADMIN_HOSPITAL_ID: !Ref AdminHospitalId
+          ADMIN_PASSWORD: !Ref AdminPassword
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ContactTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ApplicationsTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref NewsletterTable
+        - S3CrudPolicy:
+            BucketName: !Ref ResumesBucket
+        - Statement:
+            - Effect: Allow
+              Action:
+                - ses:SendEmail
+                - ses:SendRawEmail
+              Resource: "*"
+      Events:
+        ApiProxy:
+          Type: HttpApi
+          Properties:
+            Path: /api/{proxy+}
+            Method: ANY
+        ApiOptions:
+          Type: HttpApi
+          Properties:
+            Path: /api/{proxy+}
+            Method: OPTIONS
+    Metadata:
+      BuildMethod: makefile
+
+Outputs:
+  ApiBaseUrl:
+    Value: !Sub "https://${ServerlessHttpApi}.execute-api.${AWS::Region}.amazonaws.com"
+    Description: Base URL for the backend API. Use in Amplify rewrites.

@@ -1,0 +1,185 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FHIR API Reference - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #ea8600;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#ea8600;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:13px}th,td{padding:10px 14px;text-align:left;border:1px solid #dadce0}th{background:#fef7e0;font-weight:600;color:#b06000}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}pre{background:#1a1a2e;color:#e8eaed;padding:20px 24px;border-radius:12px;margin:16px 0 24px;overflow-x:auto;font-size:13px;line-height:1.7}pre code{background:none;padding:0;color:inherit}.callout{padding:16px 20px;border-radius:8px;margin:16px 0 24px;font-size:14px}.callout-info{background:#e8f0fe;border-left:4px solid #1a73e8;color:#174ea6}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}
+</style>
+</head>
+<body>
+
+<div class="doc-id-bar">
+  <span class="doc-id">SKL-INT-003</span>
+  <span>Skolyn Platform Documentation</span>
+  <span class="doc-class">RESTRICTED</span>
+</div>
+
+<div class="doc-header">
+  <h1>FHIR API Reference</h1>
+  <div class="subtitle">HL7 FHIR R4 REST API for Programmatic Access to Skolyn Diagnostic Resources</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Restricted</div>
+    <div class="meta-item"><strong>Owner:</strong> Integration Engineering</div>
+    <div class="meta-item"><strong>Review Cycle:</strong> Quarterly</div>
+    <div class="meta-item"><strong>Next Review:</strong> May 2026</div>
+  </div>
+</div>
+
+<h2>1. Overview</h2>
+<p>Skolyn exposes a standards-compliant HL7 FHIR R4 (v4.0.1) REST API enabling programmatic access to diagnostic imaging resources, AI-generated findings, and clinical workflow data. The FHIR API serves as the modern interoperability layer for integration with EHR systems, clinical decision support tools, population health platforms, and third-party applications. This document provides a complete reference for all supported FHIR resource types, RESTful interactions, search parameters, authentication mechanisms, and code examples. The API conforms to the FHIR US Core Implementation Guide (v6.1) and the IHE Radiology profiles (RAD-141, RAD-142) for radiology-specific workflows.</p>
+
+<h2>2. Authentication & Authorization</h2>
+<h3>2.1 SMART on FHIR</h3>
+<p>Skolyn's FHIR API supports the SMART on FHIR authorization framework (SMART App Launch v2.0), enabling secure third-party application access with granular scope-based permissions. The authorization flow follows the standard OAuth 2.0 Authorization Code grant with PKCE:</p>
+<pre><code># Discovery endpoint
+GET /fhir/.well-known/smart-configuration
+
+# Response
+{
+  "authorization_endpoint": "https://auth.skolyn.com/authorize",
+  "token_endpoint": "https://auth.skolyn.com/token",
+  "capabilities": ["launch-standalone", "launch-ehr", "client-public", "sso-openid-connect"],
+  "scopes_supported": [
+    "patient/DiagnosticReport.read",
+    "patient/ImagingStudy.read",
+    "patient/Observation.read",
+    "system/DiagnosticReport.read",
+    "system/*.read"
+  ]
+}</code></pre>
+
+<h3>2.2 OAuth 2.0 Client Credentials</h3>
+<p>For backend system-to-system integrations, Skolyn supports the OAuth 2.0 Client Credentials grant. Client credentials are issued via the Management Console and scoped to specific FHIR resource types and operations. Tokens have a configurable lifetime (default 1 hour) and must be refreshed before expiration.</p>
+
+<h2>3. Supported Resources</h2>
+<table>
+  <tr><th>Resource</th><th>Interactions</th><th>Profiles</th></tr>
+  <tr><td>DiagnosticReport</td><td>read, search, create</td><td>US Core DiagnosticReport, IHE RAD-141</td></tr>
+  <tr><td>ImagingStudy</td><td>read, search</td><td>US Core ImagingStudy</td></tr>
+  <tr><td>Observation</td><td>read, search, create</td><td>US Core Observation</td></tr>
+  <tr><td>Patient</td><td>read, search</td><td>US Core Patient</td></tr>
+  <tr><td>Practitioner</td><td>read, search</td><td>US Core Practitioner</td></tr>
+  <tr><td>ServiceRequest</td><td>read, search, create</td><td>US Core ServiceRequest</td></tr>
+  <tr><td>Endpoint</td><td>read, search</td><td>FHIR Base Endpoint</td></tr>
+  <tr><td>Binary</td><td>read</td><td>FHIR Base Binary (attention maps, PDFs)</td></tr>
+  <tr><td>Bundle</td><td>search (type), transaction</td><td>FHIR Base Bundle</td></tr>
+</table>
+
+<h2>4. DiagnosticReport API</h2>
+<h3>4.1 Read DiagnosticReport</h3>
+<pre><code>GET /fhir/DiagnosticReport/dr-12345
+Authorization: Bearer &lt;token&gt;
+Accept: application/fhir+json
+
+# Response (200 OK)
+{
+  "resourceType": "DiagnosticReport",
+  "id": "dr-12345",
+  "meta": { "profile": ["http://hl7.org/fhir/us/core/StructureDefinition/us-core-diagnosticreport-note"] },
+  "status": "final",
+  "category": [{ "coding": [{ "system": "http://loinc.org", "code": "LP29684-5", "display": "Radiology" }] }],
+  "code": { "coding": [{ "system": "http://loinc.org", "code": "24590-2", "display": "MRI Brain" }] },
+  "subject": { "reference": "Patient/pat-67890" },
+  "effectiveDateTime": "2026-02-10T14:30:00Z",
+  "performer": [{ "reference": "Organization/skolyn-ai", "display": "Skolyn AI Engine" }],
+  "result": [
+    { "reference": "Observation/obs-001", "display": "Right temporal enhancing lesion" }
+  ],
+  "conclusion": "AI analysis identified 1 significant finding requiring radiologist review.",
+  "presentedForm": [
+    { "contentType": "application/pdf", "url": "/fhir/Binary/report-pdf-12345", "title": "AI Analysis Report" }
+  ]
+}</code></pre>
+
+<h3>4.2 Search DiagnosticReports</h3>
+<pre><code># Search by patient and date range
+GET /fhir/DiagnosticReport?patient=Patient/pat-67890&date=ge2026-01-01&date=le2026-02-28&_sort=-date&_count=20
+
+# Search by status
+GET /fhir/DiagnosticReport?status=final&category=LP29684-5
+
+# Search by accession number
+GET /fhir/DiagnosticReport?identifier=http://hospital.com/accession|ACC-2026-001</code></pre>
+
+<h2>5. Observation API (AI Findings)</h2>
+<p>Each AI-generated finding is represented as a FHIR Observation resource linked to its parent DiagnosticReport. Observations include coded finding types (SNOMED CT, RadLex), numeric measurements with units (UCUM), confidence scores, and references to attention map Binary resources.</p>
+<pre><code>{
+  "resourceType": "Observation",
+  "id": "obs-001",
+  "status": "final",
+  "category": [{ "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "imaging" }] }],
+  "code": { "coding": [{ "system": "http://snomed.info/sct", "code": "425771", "display": "Ring-enhancing lesion" }] },
+  "subject": { "reference": "Patient/pat-67890" },
+  "valueString": "Right temporal lobe enhancing lesion, 12x8mm",
+  "component": [
+    {
+      "code": { "coding": [{ "system": "http://skolyn.com/fhir/cs/ai-metrics", "code": "confidence" }] },
+      "valueQuantity": { "value": 0.94, "unit": "probability", "system": "http://unitsofmeasure.org" }
+    },
+    {
+      "code": { "coding": [{ "system": "http://skolyn.com/fhir/cs/ai-metrics", "code": "attention-map" }] },
+      "valueReference": { "reference": "Binary/attn-map-001" }
+    }
+  ]
+}</code></pre>
+
+<h2>6. Pagination & Bundle Responses</h2>
+<p>Search results are returned as FHIR Bundle resources with pagination support. The default page size is 20 resources, configurable up to 100 via the <code>_count</code> parameter. Navigation links (<code>self</code>, <code>next</code>, <code>previous</code>) are included in the Bundle for cursor-based pagination. Total result counts are returned in <code>Bundle.total</code> when the count is below 10,000; larger result sets return an estimate with an OperationOutcome warning.</p>
+
+<h2>7. Error Handling</h2>
+<table>
+  <tr><th>HTTP Status</th><th>FHIR OperationOutcome</th><th>Description</th></tr>
+  <tr><td>400</td><td>invalid</td><td>Malformed request or invalid search parameters</td></tr>
+  <tr><td>401</td><td>login</td><td>Missing or expired authentication token</td></tr>
+  <tr><td>403</td><td>forbidden</td><td>Valid token but insufficient scope for requested resource</td></tr>
+  <tr><td>404</td><td>not-found</td><td>Resource does not exist</td></tr>
+  <tr><td>429</td><td>throttled</td><td>Rate limit exceeded (Retry-After header included)</td></tr>
+  <tr><td>500</td><td>exception</td><td>Internal server error (incident ID in diagnostics)</td></tr>
+</table>
+
+<h2>8. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>Integration Engineering</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-06-01</td><td>Integration Engineering</td><td>Added SMART, Observation, Binary</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>Integration Engineering</td><td>Updated US Core 6.1, pagination, errors</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block">
+      <div class="role">Chief Technology Officer (CTO)</div>
+      <div class="name">Skolyn Technology Division</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+    <div class="signature-block">
+      <div class="role">Chief Executive Officer (CEO)</div>
+      <div class="name">Skolyn Executive Office</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+  </div>
+</div>
+
+<div class="doc-footer">
+  <p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p>
+  <p>Document ID: SKL-INT-003 | Version 3.0 | Classification: Restricted</p>
+  <p>&copy; 2026 Skolyn. All rights reserved.</p>
+</div>
+
+</body>
+</html>

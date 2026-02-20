@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chest X-Ray Analysis - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #ff6f00;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#ff6f00;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:13px}th,td{padding:10px 14px;text-align:left;border:1px solid #dadce0}th{background:#fff3e0;font-weight:600;color:#e65100}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}</style>
+</head>
+<body>
+
+<div class="doc-id-bar"><span class="doc-id">SKL-XR-001</span><span>Skolyn Platform Documentation</span><span class="doc-class">CONFIDENTIAL</span></div>
+
+<div class="doc-header">
+  <h1>Chest X-Ray Analysis</h1>
+  <div class="subtitle">AI-Powered CXR Interpretation: 14-Pathology Detection, Tube/Line Positioning, and Temporal Comparison</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Confidential</div>
+    <div class="meta-item"><strong>Owner:</strong> X-Ray Engineering</div>
+  </div>
+</div>
+
+<h2>1. Overview</h2>
+<p>Chest radiography is the most commonly performed diagnostic imaging examination worldwide, with hundreds of millions of studies acquired annually. It is the cornerstone of pulmonary, cardiac, and thoracic evaluation, serving as the first-line study for dyspnea, cough, chest pain, fever, and post-procedural assessment. Skolyn's Chest X-Ray (CXR) analysis within Terbium OS provides simultaneous detection and localization of 14 distinct thoracic pathologies, automated cardiothoracic ratio measurement, medical device and tube/line position verification, and temporal comparison with prior studies. The CXR module processes each study in under 3 seconds with performance that meets or exceeds average radiologist accuracy on validated benchmarks (CheXpert AUC 0.941), making it the highest-throughput and most impactful component of the Terbium OS platform.</p>
+
+<h2>2. 14-Pathology Detection</h2>
+<table>
+  <tr><th>#</th><th>Pathology</th><th>Sensitivity</th><th>Specificity</th><th>AUC</th></tr>
+  <tr><td>1</td><td>Pneumonia / Consolidation</td><td>94.2%</td><td>91.8%</td><td>0.953</td></tr>
+  <tr><td>2</td><td>Pleural Effusion</td><td>96.1%</td><td>94.5%</td><td>0.971</td></tr>
+  <tr><td>3</td><td>Cardiomegaly</td><td>93.8%</td><td>95.2%</td><td>0.962</td></tr>
+  <tr><td>4</td><td>Pneumothorax</td><td>95.3%</td><td>96.8%</td><td>0.977</td></tr>
+  <tr><td>5</td><td>Pulmonary Nodule/Mass</td><td>88.7%</td><td>90.3%</td><td>0.921</td></tr>
+  <tr><td>6</td><td>Atelectasis</td><td>89.5%</td><td>88.2%</td><td>0.912</td></tr>
+  <tr><td>7</td><td>Pulmonary Edema</td><td>91.3%</td><td>89.7%</td><td>0.935</td></tr>
+  <tr><td>8</td><td>Rib Fracture</td><td>87.2%</td><td>93.5%</td><td>0.918</td></tr>
+  <tr><td>9</td><td>Emphysema</td><td>85.6%</td><td>91.4%</td><td>0.905</td></tr>
+  <tr><td>10</td><td>Fibrosis</td><td>82.1%</td><td>89.8%</td><td>0.897</td></tr>
+  <tr><td>11</td><td>Pleural Thickening</td><td>84.3%</td><td>90.1%</td><td>0.908</td></tr>
+  <tr><td>12</td><td>Mediastinal Widening</td><td>90.5%</td><td>92.7%</td><td>0.938</td></tr>
+  <tr><td>13</td><td>Hilar Enlargement</td><td>86.8%</td><td>91.2%</td><td>0.915</td></tr>
+  <tr><td>14</td><td>Foreign Body / Device</td><td>97.2%</td><td>98.1%</td><td>0.988</td></tr>
+</table>
+
+<h2>3. Localization and Explainability</h2>
+<p>For each detected pathology, the system generates bounding box annotations on the CXR image, showing the precise location of the finding with a confidence score. Grad-CAM++ attention heatmaps provide pixel-level explainability, highlighting the image regions that drove the AI's classification decision. The attention maps are overlaid as semi-transparent color gradients (red = high attention, blue = low attention), allowing the radiologist to verify that the AI is attending to the correct anatomical region. All findings are described using SNOMED CT terminology and mapped to ICD-10 diagnostic codes for seamless integration with clinical documentation systems.</p>
+
+<h2>4. Cardiothoracic Ratio</h2>
+<p>The cardiothoracic ratio (CTR) is automatically computed by measuring the maximum transverse cardiac diameter and dividing by the maximum internal thoracic diameter at the same level. CTR &gt;0.5 on a PA projection is flagged as cardiomegaly. The measurement accounts for projection type — AP projections inherently magnify the cardiac silhouette, so projection-specific thresholds are applied. Serial CTR tracking enables longitudinal monitoring of cardiac size in heart failure patients, with automated trend visualization and alerting for significant interval change (&gt;10% increase).</p>
+
+<h2>5. Tube and Line Position Verification</h2>
+<p>The tube/line detection module identifies and assesses positioning for endotracheal tubes (ETT) — ideal tip 3-5 cm above the carina; central venous catheters (CVC, PICC) — tip at the cavoatrial junction; nasogastric tubes (NGT) — tip below the diaphragm in the stomach; chest tubes — tip in the dependent pleural space for effusion or apex for pneumothorax; and cardiac devices (pacemaker, ICD) — lead positions in the RA/RV/CS. Malpositioned tubes trigger STAT alerts with specific corrective recommendations (e.g., "ETT tip at carina level — recommend withdrawal 2 cm"). This capability is critical for ICU workflow where daily portable CXR is performed specifically for device position verification.</p>
+
+<h2>6. Temporal Comparison</h2>
+<p>When prior CXR studies are available, the temporal comparison engine performs affine registration to align the current and prior studies, then generates a difference map highlighting interval changes. New findings not present on the prior study are flagged with yellow annotations, resolved findings present only on the prior study are displayed in green, and persistent/worsening findings are shown in red. This automated comparison reduces the risk of missed interval changes.</p>
+
+<h2>7. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>X-Ray Engineering</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-06-01</td><td>X-Ray Engineering</td><td>Added tube/line, temporal comparison</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>X-Ray Engineering</td><td>Updated 14-path performance</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block"><div class="role">Chief Technology Officer (CTO)</div><div class="name">Skolyn Technology Division</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+    <div class="signature-block"><div class="role">Chief Executive Officer (CEO)</div><div class="name">Skolyn Executive Office</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+  </div>
+</div>
+
+<div class="doc-footer"><p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p><p>Document ID: SKL-XR-001 | Version 3.0 | Classification: Confidential</p><p>&copy; 2026 Skolyn. All rights reserved.</p></div>
+
+</body>
+</html>

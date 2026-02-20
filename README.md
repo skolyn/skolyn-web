@@ -1,0 +1,62 @@
+# Skolyn Web
+
+Angular frontend for the Skolyn platform, prepared for AWS Amplify Console hosting and a Go backend API.
+
+## Project structure
+
+- `src/`: Angular 21 frontend.
+- `backend/`: Go Lambda backend (Contact, Applications, Newsletter APIs).
+- `amplify.yml`: Amplify Console build configuration.
+
+## Local development
+
+```bash
+npm ci
+npm run start
+```
+
+Open `http://localhost:4200`.
+
+## Production build
+
+```bash
+npm run build
+```
+
+## Deploy frontend with AWS Amplify Console
+
+1. Push this repository to GitHub.
+2. In **AWS Amplify Console**, choose **New app → Host web app** and connect the GitHub repo.
+3. Amplify detects `amplify.yml` automatically.
+4. Keep build image defaults and deploy.
+
+## Deploy backend (Go + AWS Lambda)
+
+From `backend/`:
+
+```bash
+sam build
+sam deploy --stack-name skolyn-api --resolve-s3 --capabilities CAPABILITY_IAM --parameter-overrides NotifyEmail=noreply@skolyn.se
+```
+
+After deployment, copy the CloudFormation output `ApiBaseUrl`.
+
+## Wire frontend to backend in Amplify Console
+
+In Amplify Hosting **Rewrites and redirects**, add a rewrite rule:
+
+- **Source address:** `/api/<*>`
+- **Target address:** `https://YOUR_API_BASE_URL/api/<*>`
+- **Type:** `200 (Rewrite)`
+
+The frontend posts to `/api/contact`, `/api/apply`, and `/api/newsletter` — this rule routes traffic to the Go API.
+
+## Icon reliability fixes
+
+- Material symbol styling now uses explicit icon font-family fallbacks.
+- Remote Google Sans font dependency was removed from `index.html` to prevent blocked font inlining failures during CI/CD builds.
+
+## Commands
+
+- `npm run start` – Angular dev server.
+- `npm run build` – Production build.

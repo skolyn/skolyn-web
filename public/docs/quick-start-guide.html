@@ -1,0 +1,179 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Start Guide - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #1e8e3e;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#1e8e3e;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:14px}th,td{padding:12px 16px;text-align:left;border:1px solid #dadce0}th{background:#e6f4ea;font-weight:600;color:#137333}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}pre{background:#1a1a2e;color:#e8eaed;padding:20px 24px;border-radius:12px;margin:16px 0 24px;overflow-x:auto;font-size:13px;line-height:1.7}pre code{background:none;padding:0;color:inherit}.callout{padding:16px 20px;border-radius:8px;margin:16px 0 24px;font-size:14px}.callout-info{background:#e8f0fe;border-left:4px solid #1a73e8;color:#174ea6}.callout-success{background:#e6f4ea;border-left:4px solid #1e8e3e;color:#137333}.callout-warning{background:#fef7e0;border-left:4px solid #ea8600;color:#b06000}.step-box{border:1px solid #dadce0;border-radius:12px;padding:24px;margin:20px 0;background:#fff}.step-box .step-num{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#1e8e3e;color:#fff;border-radius:50%;font-weight:700;font-size:14px;margin-right:12px}.step-box h3{display:inline;margin:0;font-size:17px}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}
+</style>
+</head>
+<body>
+
+<div class="doc-id-bar">
+  <span class="doc-id">SKL-GS-002</span>
+  <span>Skolyn Platform Documentation</span>
+  <span class="doc-class">GENERAL</span>
+</div>
+
+<div class="doc-header">
+  <h1>Quick Start Guide</h1>
+  <div class="subtitle">Get From Zero to First AI-Analyzed Study in Under 30 Minutes</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> General</div>
+    <div class="meta-item"><strong>Owner:</strong> Customer Engineering</div>
+    <div class="meta-item"><strong>Review Cycle:</strong> Quarterly</div>
+    <div class="meta-item"><strong>Next Review:</strong> May 2026</div>
+  </div>
+</div>
+
+<h2>1. Overview</h2>
+<p>This Quick Start Guide walks you through the fastest path to getting Skolyn operational in your environment. By the end of this guide, you will have connected your PACS, processed your first imaging study through the AI pipeline, reviewed the AI-generated findings, and verified integration with your reporting system. This guide assumes you have a Skolyn cloud-hosted subscription or have completed the on-premises installation (see <strong>SKL-GS-003: Installation Guide</strong>). The entire process takes approximately 25-30 minutes for an experienced healthcare IT professional.</p>
+
+<div class="callout callout-info">
+  <strong>Prerequisites:</strong> Active Skolyn account, PACS with DICOMweb or C-STORE capability, network connectivity to Skolyn endpoints (port 443 HTTPS, port 11112 DICOM TLS), at least one test DICOM study available for processing.
+</div>
+
+<h2>2. Step-by-Step Setup</h2>
+
+<div class="step-box">
+  <span class="step-num">1</span>
+  <h3>Access the Management Console</h3>
+  <p style="margin-top:12px">Navigate to your Skolyn instance URL (e.g., <code>https://your-org.skolyn.cloud</code>) and sign in with your administrator credentials. If your organization uses SSO, you will be redirected to your identity provider (Microsoft Entra ID, Okta, etc.) for authentication. Upon first login, you will be prompted to set up MFA using a TOTP authenticator app or hardware security key.</p>
+  <p>After authentication, you will land on the <strong>Dashboard</strong> showing system status, pending configuration tasks, and getting-started checklist widgets. The checklist provides real-time progress tracking through the initial setup process.</p>
+</div>
+
+<div class="step-box">
+  <span class="step-num">2</span>
+  <h3>Configure PACS Connection</h3>
+  <p style="margin-top:12px">Navigate to <strong>Settings > Integrations > DICOM Sources</strong> and click <strong>Add Source</strong>. Configure your PACS connection with the following parameters:</p>
+  <table>
+    <tr><th>Parameter</th><th>Description</th><th>Example</th></tr>
+    <tr><td>Source Name</td><td>Display name for this connection</td><td>"Main PACS - GE Centricity"</td></tr>
+    <tr><td>AE Title (Remote)</td><td>Your PACS AE Title</td><td>"GEPACS"</td></tr>
+    <tr><td>AE Title (Local)</td><td>Skolyn's AE Title</td><td>"SKOLYN_AI"</td></tr>
+    <tr><td>Host</td><td>PACS server IP/hostname</td><td>"10.0.10.50"</td></tr>
+    <tr><td>Port</td><td>DICOM port (TLS required)</td><td>11112</td></tr>
+    <tr><td>Protocol</td><td>C-STORE SCP or DICOMweb STOW-RS</td><td>"DICOMweb"</td></tr>
+    <tr><td>TLS</td><td>Must be enabled</td><td>Enabled (TLS 1.3)</td></tr>
+  </table>
+  <p>Click <strong>Test Connection</strong> to verify C-ECHO (or WADO-RS ping for DICOMweb). A green checkmark confirms successful connectivity. If the test fails, verify network routes, firewall rules, and AE Title registration on your PACS.</p>
+</div>
+
+<div class="step-box">
+  <span class="step-num">3</span>
+  <h3>Configure Result Destination</h3>
+  <p style="margin-top:12px">Navigate to <strong>Settings > Integrations > Result Destinations</strong> to configure where Skolyn delivers AI findings. Supported destination types include:</p>
+  <ul>
+    <li><strong>DICOM SR (Structured Report):</strong> Push findings as DICOM Structured Reports back to your PACS. The SR is associated with the original study and appears as an additional series in your viewer.</li>
+    <li><strong>HL7v2 ORU:</strong> Send results as HL7 ORU^R01 messages to your RIS or EHR. Fields map to standard OBR/OBX segments with configurable observation identifiers.</li>
+    <li><strong>FHIR DiagnosticReport:</strong> POST structured findings to your FHIR R4 server as DiagnosticReport resources with linked Observation resources for each finding.</li>
+    <li><strong>PDF Report:</strong> Generate formatted PDF reports delivered via secure email or available for download from the Management Console.</li>
+  </ul>
+  <p>For the quickest setup, we recommend configuring a DICOM SR destination to your existing PACS. This requires no changes to your reporting workflow — the AI findings simply appear alongside the study in your viewer.</p>
+</div>
+
+<div class="step-box">
+  <span class="step-num">4</span>
+  <h3>Select Active Modules</h3>
+  <p style="margin-top:12px">Navigate to <strong>Settings > Modules</strong> to activate the AI analysis modules relevant to your clinical needs. Each module can be enabled independently:</p>
+  <ul>
+    <li><strong>Rhenium OS (MRI):</strong> Enable specific subtypes (Brain, Cardiac, Breast, MSK, etc.) based on your exam volume and clinical priorities.</li>
+    <li><strong>Seaborgium OS (CT):</strong> Enable CT subtypes with optional STAT triage for critical findings.</li>
+    <li><strong>Scandium OS (Ultrasound):</strong> Enable real-time streaming analysis for ultrasound exams.</li>
+    <li><strong>Terbium OS (X-Ray):</strong> Enable projection radiography analysis with critical finding alerts.</li>
+  </ul>
+  <p>Each subtype can be configured with a processing priority (Normal, High, STAT) and threshold settings for alerting sensitivity. We recommend starting with one modality, validating the workflow, and then expanding to additional modules.</p>
+</div>
+
+<div class="step-box">
+  <span class="step-num">5</span>
+  <h3>Submit Your First Study</h3>
+  <p style="margin-top:12px">With PACS connectivity configured and modules activated, submit a test study for AI analysis. There are three methods:</p>
+  <ul>
+    <li><strong>Automatic Routing:</strong> Configure your PACS to auto-route new studies to Skolyn's AE Title (SKOLYN_AI). Studies matching the enabled module criteria are processed automatically.</li>
+    <li><strong>Manual Push:</strong> From your PACS, C-STORE an individual study to the Skolyn AE Title.</li>
+    <li><strong>Console Upload:</strong> In the Management Console, navigate to <strong>Studies > Upload</strong> and drag-and-drop DICOM files for immediate processing.</li>
+  </ul>
+  <p>Once submitted, the study appears in the <strong>Processing Queue</strong> with a real-time status indicator. Processing typically completes within 15-30 seconds for a standard study. Upon completion, the status changes to "Complete" and results are delivered to your configured destination.</p>
+</div>
+
+<div class="step-box">
+  <span class="step-num">6</span>
+  <h3>Review AI Findings</h3>
+  <p style="margin-top:12px">Open the processed study in your PACS viewer. The Skolyn AI findings appear as a new series (DICOM SR) within the study. The structured report includes:</p>
+  <ul>
+    <li><strong>Summary Section:</strong> Overall assessment with key findings highlighted and prioritized by clinical significance.</li>
+    <li><strong>Detailed Findings:</strong> Each finding includes location, description, measurements, confidence score, and differential diagnosis.</li>
+    <li><strong>Attention Maps:</strong> Grad-CAM++ heatmap overlays showing exactly which image regions influenced the AI's assessment.</li>
+    <li><strong>Comparison Data:</strong> If prior studies are available, temporal comparison results showing change analysis.</li>
+  </ul>
+</div>
+
+<div class="callout callout-success">
+  <strong>Success!</strong> You have completed the Quick Start setup. Skolyn is now actively analyzing incoming studies, delivering AI-powered insights directly into your radiology workflow.
+</div>
+
+<h2>3. Troubleshooting Common Issues</h2>
+<table>
+  <tr><th>Issue</th><th>Possible Cause</th><th>Resolution</th></tr>
+  <tr><td>C-ECHO fails</td><td>Firewall blocking port 11112</td><td>Verify firewall rules allow bidirectional TCP on the DICOM port</td></tr>
+  <tr><td>Study not processing</td><td>Module not enabled for modality</td><td>Check Settings > Modules and enable the correct subtype</td></tr>
+  <tr><td>Results not appearing in PACS</td><td>Result destination misconfigured</td><td>Verify AE Title and destination port in Result Destinations</td></tr>
+  <tr><td>Slow processing</td><td>Large multi-sequence study</td><td>Multi-sequence MRI studies may take 60-90s; check Processing Queue</td></tr>
+  <tr><td>TLS handshake failure</td><td>Certificate trust issue</td><td>Import Skolyn's CA certificate into your PACS trust store</td></tr>
+</table>
+
+<h2>4. Next Steps</h2>
+<ul>
+  <li>Review the <strong>Installation Guide (SKL-GS-003)</strong> for detailed deployment options and hardware requirements.</li>
+  <li>Configure <strong>STAT alerts</strong> for critical finding notification to referring physicians.</li>
+  <li>Set up <strong>user accounts and roles</strong> for your radiology team via Settings > User Management.</li>
+  <li>Explore the <strong>Analytics Dashboard</strong> for processing statistics and model performance metrics.</li>
+  <li>Review the <strong>Configuration Reference (SKL-GS-004)</strong> for advanced tuning options.</li>
+</ul>
+
+<h2>5. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>Customer Engineering</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-06-01</td><td>Customer Engineering</td><td>Added DICOMweb setup, troubleshooting</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>Customer Engineering</td><td>Updated UI screenshots, module config, Step 6 review</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block">
+      <div class="role">Chief Technology Officer (CTO)</div>
+      <div class="name">Skolyn Technology Division</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+    <div class="signature-block">
+      <div class="role">Chief Executive Officer (CEO)</div>
+      <div class="name">Skolyn Executive Office</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+  </div>
+</div>
+
+<div class="doc-footer">
+  <p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p>
+  <p>Document ID: SKL-GS-002 | Version 3.0 | Classification: General</p>
+  <p>&copy; 2026 Skolyn. All rights reserved.</p>
+</div>
+
+</body>
+</html>

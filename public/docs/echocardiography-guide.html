@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Echocardiography Guide - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #00897b;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#00897b;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:13px}th,td{padding:10px 14px;text-align:left;border:1px solid #dadce0}th{background:#e0f2f1;font-weight:600;color:#00695c}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}</style>
+</head>
+<body>
+
+<div class="doc-id-bar"><span class="doc-id">SKL-US-001</span><span>Skolyn Platform Documentation</span><span class="doc-class">CONFIDENTIAL</span></div>
+
+<div class="doc-header">
+  <h1>Echocardiography AI Guide</h1>
+  <div class="subtitle">Automated Echocardiographic Analysis: Ejection Fraction, Wall Motion, Valve Assessment, and Strain Imaging</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Confidential</div>
+    <div class="meta-item"><strong>Owner:</strong> Ultrasound Engineering</div>
+  </div>
+</div>
+
+<h2>1. Overview</h2>
+<p>Echocardiography is the most widely performed cardiac imaging modality, with over 30 million studies performed annually in the United States. However, echocardiographic interpretation is highly operator-dependent, time-consuming, and subject to significant inter-observer variability — studies report 10-15% variability in ejection fraction measurement between expert readers. Skolyn's echocardiography AI within Scandium OS automates the entire echocardiographic analysis workflow, from view identification through chamber quantification, wall motion analysis, valve assessment, and strain imaging. The module processes standard transthoracic echocardiography (TTE) studies with apical 4-chamber, apical 2-chamber, parasternal long-axis (PLAX), and parasternal short-axis (PSAX) cine clips, delivering comprehensive results in under 45 seconds with reproducibility that exceeds expert inter-reader agreement.</p>
+
+<h2>2. View Classification</h2>
+<p>The first stage of the echocardiography pipeline is automated view identification. Each acquired cine clip is classified into one of 23 standard echocardiographic views using an EfficientNet-B5 classifier trained on 2 million annotated frames from 150,000 studies. Supported views include apical 4-chamber (A4C), apical 2-chamber (A2C), apical 3-chamber (A3C), apical 5-chamber (A5C), parasternal long-axis (PLAX), parasternal short-axis at aortic valve, mitral valve, and papillary muscle levels, subcostal 4-chamber, subcostal IVC, suprasternal notch, and all standard Doppler views (PW, CW, color, tissue Doppler). View classification accuracy exceeds 97% across all views, enabling fully automated study routing without manual view labeling.</p>
+
+<h2>3. Chamber Quantification</h2>
+<h3>3.1 Left Ventricular Function</h3>
+<p>LV ejection fraction is computed using both the modified Simpson's biplane method (automated endocardial tracing in A4C and A2C views at end-diastole and end-systole) and a direct deep learning regression model for robustness. The biplane method uses a U-Net segmentation network with temporal attention that identifies end-diastolic and end-systolic phases automatically and segments the LV endocardium with sub-pixel precision. The regression model provides an independent EF estimate from the apical views, and the final reported EF is the consensus of both approaches. Additional LV measurements include end-diastolic volume (EDV), end-systolic volume (ESV), stroke volume (SV), and cardiac output (CO), all indexed to body surface area (BSA) and compared to ASE-recommended normal ranges by age and sex.</p>
+
+<h3>3.2 Chamber Dimensions</h3>
+<table>
+  <tr><th>Parameter</th><th>View</th><th>Normal Range</th></tr>
+  <tr><td>LV Internal Diameter (diastole)</td><td>PLAX</td><td>3.9-5.3 cm (M), 3.5-5.2 cm (F)</td></tr>
+  <tr><td>LV Internal Diameter (systole)</td><td>PLAX</td><td>2.1-4.0 cm</td></tr>
+  <tr><td>Interventricular Septum</td><td>PLAX</td><td>0.6-1.0 cm</td></tr>
+  <tr><td>Posterior Wall Thickness</td><td>PLAX</td><td>0.6-1.0 cm</td></tr>
+  <tr><td>LA Volume (indexed)</td><td>A4C/A2C</td><td>&lt;34 mL/m2</td></tr>
+  <tr><td>RV Basal Diameter</td><td>A4C</td><td>&lt;4.2 cm</td></tr>
+  <tr><td>TAPSE</td><td>A4C (M-mode)</td><td>&gt;1.7 cm</td></tr>
+  <tr><td>Aortic Root Diameter</td><td>PLAX</td><td>2.0-3.7 cm</td></tr>
+</table>
+
+<h2>4. Wall Motion Analysis</h2>
+<p>Wall motion is assessed using the AHA 17-segment model with automated classification of each segment as normokinetic (score 1), hypokinetic (score 2), akinetic (score 3), or dyskinetic (score 4). The wall motion score index (WMSI) provides a global summary of contractile function (normal WMSI = 1.0). Regional wall motion abnormalities are mapped to coronary artery territories for clinical correlation. The AI achieves 89% agreement with expert consensus across all 17 segments, compared to 82% inter-reader agreement between expert echocardiographers.</p>
+
+<h2>5. Strain Analysis</h2>
+<p>Global longitudinal strain (GLS) is computed using AI-based speckle tracking across the A4C, A2C, and A3C views. The algorithm tracks myocardial deformation patterns frame-by-frame, generating strain curves for each of the 17 LV segments. Normal GLS ranges from -18% to -22% (more negative = better function). GLS is clinically superior to LVEF for early detection of subclinical systolic dysfunction, particularly in oncology patients receiving cardiotoxic chemotherapy (trastuzumab, anthracyclines) and in hypertensive heart disease. The module generates the standard 17-segment bull's-eye strain map with red-blue color encoding.</p>
+
+<h2>6. Clinical Performance</h2>
+<table>
+  <tr><th>Task</th><th>Metric</th><th>Performance</th><th>Benchmark</th></tr>
+  <tr><td>View Classification</td><td>Accuracy</td><td>97.3%</td><td>EchoNet-Dynamic + 8K clinical</td></tr>
+  <tr><td>LVEF</td><td>MAE</td><td>3.2%</td><td>Expert manual measurement</td></tr>
+  <tr><td>Wall Motion</td><td>Agreement</td><td>89.1%</td><td>Expert consensus</td></tr>
+  <tr><td>GLS</td><td>ICC</td><td>0.93</td><td>Vendor GLS software</td></tr>
+</table>
+
+<h2>7. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>Ultrasound Engineering</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-06-01</td><td>Ultrasound Engineering</td><td>Added strain, view classifier</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>Ultrasound Engineering</td><td>Updated performance, WMSI</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block"><div class="role">Chief Technology Officer (CTO)</div><div class="name">Skolyn Technology Division</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+    <div class="signature-block"><div class="role">Chief Executive Officer (CEO)</div><div class="name">Skolyn Executive Office</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+  </div>
+</div>
+
+<div class="doc-footer"><p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p><p>Document ID: SKL-US-001 | Version 3.0 | Classification: Confidential</p><p>&copy; 2026 Skolyn. All rights reserved.</p></div>
+
+</body>
+</html>

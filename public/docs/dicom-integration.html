@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DICOM Integration - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #1a73e8;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#1a73e8;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:14px}th,td{padding:12px 16px;text-align:left;border:1px solid #dadce0}th{background:#e8f0fe;font-weight:600;color:#174ea6}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}pre{background:#1a1a2e;color:#e8eaed;padding:20px 24px;border-radius:12px;margin:16px 0 24px;overflow-x:auto;font-size:13px;line-height:1.7}pre code{background:none;padding:0;color:inherit}.callout{padding:16px 20px;border-radius:8px;margin:16px 0 24px;font-size:14px}.callout-info{background:#e8f0fe;border-left:4px solid #1a73e8;color:#174ea6}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}
+</style>
+</head>
+<body>
+
+<div class="doc-id-bar">
+  <span class="doc-id">SKL-INT-001</span>
+  <span>Skolyn Platform Documentation</span>
+  <span class="doc-class">RESTRICTED</span>
+</div>
+
+<div class="doc-header">
+  <h1>DICOM Integration</h1>
+  <div class="subtitle">Comprehensive DICOM Networking and Conformance Guide for Skolyn Platform Integration</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Restricted</div>
+    <div class="meta-item"><strong>Owner:</strong> Integration Engineering</div>
+    <div class="meta-item"><strong>Review Cycle:</strong> Quarterly</div>
+    <div class="meta-item"><strong>Next Review:</strong> May 2026</div>
+  </div>
+</div>
+
+<h2>1. Introduction</h2>
+<p>The Digital Imaging and Communications in Medicine (DICOM) standard is the universal protocol for medical image exchange, and Skolyn's DICOM integration layer is designed to interoperate seamlessly with any DICOM-conformant PACS, modality, or workstation. This document details Skolyn's DICOM conformance statement, supported Service-Object Pair (SOP) classes, transfer syntax negotiation, association management, TLS security configuration, and testing procedures. Skolyn supports both the traditional DICOM Upper Layer Protocol (C-STORE, C-FIND, C-MOVE, C-GET, C-ECHO) and the modern DICOMweb RESTful interfaces (WADO-RS, STOW-RS, QIDO-RS), enabling flexible integration with legacy and modern medical imaging infrastructure alike.</p>
+
+<h2>2. DICOM Conformance Statement</h2>
+<h3>2.1 Supported SOP Classes</h3>
+<table>
+  <tr><th>SOP Class</th><th>UID</th><th>Role</th></tr>
+  <tr><td>Verification</td><td>1.2.840.10008.1.1</td><td>SCP/SCU</td></tr>
+  <tr><td>CT Image Storage</td><td>1.2.840.10008.5.1.4.1.1.2</td><td>SCP</td></tr>
+  <tr><td>Enhanced CT Image Storage</td><td>1.2.840.10008.5.1.4.1.1.2.1</td><td>SCP</td></tr>
+  <tr><td>MR Image Storage</td><td>1.2.840.10008.5.1.4.1.1.4</td><td>SCP</td></tr>
+  <tr><td>Enhanced MR Image Storage</td><td>1.2.840.10008.5.1.4.1.1.4.1</td><td>SCP</td></tr>
+  <tr><td>US Image Storage</td><td>1.2.840.10008.5.1.4.1.1.6.1</td><td>SCP</td></tr>
+  <tr><td>US Multi-frame Image Storage</td><td>1.2.840.10008.5.1.4.1.1.3.1</td><td>SCP</td></tr>
+  <tr><td>Digital X-Ray Image Storage</td><td>1.2.840.10008.5.1.4.1.1.1.1</td><td>SCP</td></tr>
+  <tr><td>Digital Mammography</td><td>1.2.840.10008.5.1.4.1.1.1.2</td><td>SCP</td></tr>
+  <tr><td>CR Image Storage</td><td>1.2.840.10008.5.1.4.1.1.1</td><td>SCP</td></tr>
+  <tr><td>Secondary Capture</td><td>1.2.840.10008.5.1.4.1.1.7</td><td>SCP/SCU</td></tr>
+  <tr><td>Comprehensive SR</td><td>1.2.840.10008.5.1.4.1.1.88.33</td><td>SCP/SCU</td></tr>
+  <tr><td>Enhanced SR</td><td>1.2.840.10008.5.1.4.1.1.88.22</td><td>SCP/SCU</td></tr>
+</table>
+
+<h3>2.2 Transfer Syntax Support</h3>
+<table>
+  <tr><th>Transfer Syntax</th><th>UID</th><th>Supported</th></tr>
+  <tr><td>Implicit VR Little Endian</td><td>1.2.840.10008.1.2</td><td>Yes</td></tr>
+  <tr><td>Explicit VR Little Endian</td><td>1.2.840.10008.1.2.1</td><td>Yes (preferred)</td></tr>
+  <tr><td>JPEG 2000 Lossless</td><td>1.2.840.10008.1.2.4.90</td><td>Yes</td></tr>
+  <tr><td>JPEG 2000 Lossy</td><td>1.2.840.10008.1.2.4.91</td><td>Yes</td></tr>
+  <tr><td>JPEG Lossless</td><td>1.2.840.10008.1.2.4.70</td><td>Yes</td></tr>
+  <tr><td>JPEG Baseline (Lossy)</td><td>1.2.840.10008.1.2.4.50</td><td>Yes</td></tr>
+  <tr><td>RLE Lossless</td><td>1.2.840.10008.1.2.5</td><td>Yes</td></tr>
+</table>
+
+<h2>3. Association Configuration</h2>
+<h3>3.1 Association Parameters</h3>
+<p>Skolyn's DICOM Gateway manages association establishment, presentation context negotiation, and data transfer. The gateway supports up to 64 concurrent associations per instance, configurable via the <code>dicom.concurrent_associations</code> parameter. Each association is authenticated via TLS client certificate verification or AE Title allowlist, depending on the security configuration. Association negotiation follows the standard DICOM Upper Layer Protocol handshake: A-ASSOCIATE-RQ from the SCU, A-ASSOCIATE-AC (or A-ASSOCIATE-RJ) from the SCP, followed by C-STORE DIMSE commands for each instance in the study.</p>
+
+<h3>3.2 AE Title Management</h3>
+<p>Skolyn maintains an AE Title registry that maps remote AE Titles to configured DICOM sources. Only pre-registered AE Titles are accepted for association — unregistered AE Titles receive an A-ASSOCIATE-RJ with a rejection reason of "calling AE not recognized." The AE Title registry is managed via the Management Console (Settings > Integrations > DICOM Sources) or the Skolyn CLI (<code>skolyn dicom ae-title add</code>). Each registered AE Title can be associated with specific module processing rules — for example, studies from AE Title "MRI_SCANNER_01" can be automatically routed to the Rhenium OS (MRI) module only.</p>
+
+<h2>4. DICOM Structured Reports</h2>
+<p>Skolyn generates DICOM Structured Reports (SR) conforming to TID 1500 (Measurement Report) for delivering AI findings back to the PACS. Each SR includes coded finding terms mapped to SNOMED CT (SCT), RadLex, and ICD-10-CM vocabularies. Measurement groups contain numeric measurements (lesion dimensions, volumes, densities) with standardized units (UCUM). The SR is stored as a new series within the original study, preserving the study-series-instance hierarchy. This allows radiologists to review AI findings alongside the source images in their native PACS viewer without any workflow modification.</p>
+
+<h2>5. Network Architecture</h2>
+<h3>5.1 Firewall Requirements</h3>
+<table>
+  <tr><th>Direction</th><th>Source</th><th>Destination</th><th>Port</th><th>Protocol</th></tr>
+  <tr><td>Inbound</td><td>PACS/Modalities</td><td>Skolyn DICOM Gateway</td><td>11112</td><td>TCP (DICOM TLS)</td></tr>
+  <tr><td>Outbound</td><td>Skolyn DICOM Gateway</td><td>PACS (C-STORE SCU)</td><td>Varies</td><td>TCP (DICOM TLS)</td></tr>
+  <tr><td>Inbound</td><td>REST Clients</td><td>Skolyn DICOMweb</td><td>443</td><td>HTTPS</td></tr>
+  <tr><td>Inbound</td><td>HL7 Interface Engine</td><td>Skolyn HL7 Gateway</td><td>2575</td><td>TCP (MLLP TLS)</td></tr>
+</table>
+
+<h3>5.2 TLS Configuration</h3>
+<p>DICOM TLS is mandatory for all production deployments. Skolyn supports TLS 1.2 and TLS 1.3 for DICOM associations, with TLS 1.3 preferred. The DICOM Gateway presents a server certificate signed by the institution's CA or a publicly trusted CA. Mutual TLS (client certificate verification) is optional but recommended for highest security — when enabled, the PACS must present a valid client certificate during the TLS handshake. Certificate management is handled through the Skolyn Certificate Manager, which supports ACME (Let's Encrypt), manual PEM upload, and integration with enterprise PKI (Microsoft AD CS, HashiCorp Vault PKI).</p>
+
+<h2>6. Testing & Validation</h2>
+<h3>6.1 DICOM Echo Test</h3>
+<pre><code># Test connectivity using dcm4che echoscu
+echoscu -b SKOLYN_AI -c TEST_SCU@10.0.10.50:11112 --tls
+
+# Expected output:
+# Received Echo Response (Status: 0000H)
+# C-ECHO completed successfully</code></pre>
+
+<h3>6.2 C-STORE Test</h3>
+<pre><code># Send a test study
+storescu -b SKOLYN_AI -c TEST_SCU@10.0.10.50:11112 --tls \
+  --tls-protocol TLSv1.3 \
+  /path/to/test/study/*.dcm
+
+# Verify study processing
+skolyn-cli study status --accession ACC-2026-TEST</code></pre>
+
+<h2>7. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>Integration Engineering</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-06-01</td><td>Integration Engineering</td><td>Added DICOMweb, SR generation, mTLS</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>Integration Engineering</td><td>Updated conformance, network arch</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block">
+      <div class="role">Chief Technology Officer (CTO)</div>
+      <div class="name">Skolyn Technology Division</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+    <div class="signature-block">
+      <div class="role">Chief Executive Officer (CEO)</div>
+      <div class="name">Skolyn Executive Office</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+  </div>
+</div>
+
+<div class="doc-footer">
+  <p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p>
+  <p>Document ID: SKL-INT-001 | Version 3.0 | Classification: Restricted</p>
+  <p>&copy; 2026 Skolyn. All rights reserved.</p>
+</div>
+
+</body>
+</html>

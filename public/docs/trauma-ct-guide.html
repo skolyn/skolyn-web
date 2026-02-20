@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trauma CT Guide - Skolyn Documentation</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:860px;margin:0 auto;padding:48px 32px;color:#1a1a2e;line-height:1.75}.doc-header{border-bottom:3px solid #00acc1;padding-bottom:24px;margin-bottom:40px}.doc-header h1{font-size:28px;margin-bottom:8px}.doc-header .meta{font-size:14px;color:#5f6368}h2{font-size:22px;color:#00acc1;margin:36px 0 16px;border-bottom:1px solid #e8eaed;padding-bottom:8px}h3{font-size:18px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 16px 28px}li{margin-bottom:6px}table{width:100%;border-collapse:collapse;margin:16px 0 24px}th,td{padding:10px 14px;text-align:left;border:1px solid #dadce0;font-size:14px}th{background:#e0f7fa;font-weight:600}code{background:#f1f3f4;padding:2px 6px;border-radius:4px;font-size:13px}pre{background:#1a1a2e;color:#e8eaed;padding:16px 20px;border-radius:8px;margin:16px 0;overflow-x:auto;font-size:13px;line-height:1.6}pre code{background:none;padding:0;color:inherit}.footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}@media print{body{max-width:100%;padding:24px}}</style>
+</head>
+<body>
+<div class="doc-header">
+  <h1>Trauma CT Guide</h1>
+  <div class="meta">Seaborgium OS Module - Version 2.0 - Last updated: February 2026</div>
+</div>
+
+<h2>1. Overview</h2>
+<p>The Trauma CT analysis module in Seaborgium OS is engineered for high-speed, comprehensive detection of acute traumatic injuries. Designed for the "Golden Hour" of trauma care, it processes whole-body trauma CT scans (Pan-Scan) in under 3 minutes, identifying life-threatening conditions such as hemorrhage, organ injury, fractures, and vascular dissection.</p>
+<p>The system prioritizes findings based on clinical urgency, instantly alerting trauma teams to critical pathologies via PACS, mobile app, and secure messaging.</p>
+
+<h2>2. Head & Neck Trauma</h2>
+<h3>2.1 Intracranial Hemorrhage</h3>
+<p>Automated detection and volumetric quantification of all hemorrhage subtypes:</p>
+<ul>
+  <li><strong>Epidural Hematoma:</strong> Convex/lens-shaped, does not cross sutures</li>
+  <li><strong>Subdural Hematoma:</strong> Concave/crescentic, crosses sutures</li>
+  <li><strong>Subarachnoid Hemorrhage:</strong> High density within sulci/cisterns</li>
+  <li><strong>Intraparenchymal Hemorrhage:</strong> Focal hyperdensity with/without edema</li>
+  <li><strong>Mass Effect:</strong> Midline shift measurement (>5mm alerts neurosurgery)</li>
+</ul>
+
+<h3>2.2 Cervical Spine Injury</h3>
+<p>Comprehensive fracture detection and alignment analysis:</p>
+<ul>
+  <li><strong>Fractures:</strong> Vertebral body, posterior elements, odontoid process (Type I/II/III)</li>
+  <li><strong>Alignment:</strong> Atlanto-occipital dislocation (CCI > 2.5mm), subluxation, spondylolisthesis</li>
+  <li><strong>Ligament:</strong> Prevertebral soft tissue swelling measurement</li>
+</ul>
+
+<h2>3. Thoracic Trauma</h2>
+<h3>3.1 Vascular Injury</h3>
+<p>Detection of major vascular trauma:</p>
+<ul>
+  <li><strong>Aortic Transection:</strong> Mediastinal hematoma, contour irregularity, intimal flap</li>
+  <li><strong>Active Bleeding:</strong> Contrast extravasation (blush) in arterial/venous phase</li>
+</ul>
+
+<h3>3.2 Pulmonary Injury</h3>
+<p>Quantification of lung and pleural space injuries:</p>
+<ul>
+  <li><strong>Pneumothorax:</strong> Detection (deep sulcus sign), depth measurement, occult vs. overt</li>
+  <li><strong>Hemothorax:</strong> Pleural fluid density analysis (>30 HU), volume estimation</li>
+  <li><strong>Contusion:</strong> Classification of lung parenchymal injury pattern</li>
+  <li><strong>Rib Fractures:</strong> Automated detection and mapping (flail chest identification)</li>
+</ul>
+
+<h2>4. Abdominal & Pelvic Trauma</h2>
+<h3>4.1 Solid Organ Injury</h3>
+<p>AAST (American Association for the Surgery of Trauma) grading for liver, spleen, and kidney injuries:</p>
+<table>
+  <tr><th>Organ</th><th>Grading Criteria</th><th>Example</th></tr>
+  <tr><td>Spleen</td><td>Laceration depth, subcapsular hematoma %</td><td>Grade III: Laceration >3cm depth</td></tr>
+  <tr><td>Liver</td><td>Laceration depth, hematoma %, vascular injury</td><td>Grade IV: Disrupting >50% of lobe</td></tr>
+  <tr><td>Kidney</td><td>Laceration depth, collecting system involv.</td><td>Grade IV: Urinary extravasation</td></tr>
+</table>
+
+<h3>4.2 Pelvic Fractures</h3>
+<p>Young-Burgess classification of pelvic ring fractures:</p>
+<ul>
+  <li><strong>Lateral Compression:</strong> LC-1, LC-2, LC-3</li>
+  <li><strong>Anteroposterior Compression:</strong> APC-1, APC-2, APC-3 ("Open Book")</li>
+  <li><strong>Vertical Shear:</strong> Vertical displacement of hemipelvis</li>
+  <li><strong>Acetabular Fractures:</strong> Judet-Letournel classification support</li>
+</ul>
+
+<h3>4.3 Hemorrhage Detection</h3>
+<p>Automated detection of:</p>
+<ul>
+  <li><strong>Active Extravasation:</strong> High-density contrast pooling</li>
+  <li><strong>Hemoperitoneum:</strong> Free fluid density analysis (30-45 HU) in dependent regions (Morison's pouch)</li>
+</ul>
+
+<h2>5. Spine & Musculoskeletal</h2>
+<h3>5.1 Thoracolumbar Spine</h3>
+<p>Automated detection of burst fractures, chance fractures, and compression deformities. Evaluation of stability using TLICS (Thoracolumbar Injury Classification and Severity) scoring parameters (morphology, neurological status, ligamentous complex).</p>
+
+<h3>5.2 Extremity Fractures</h3>
+<p>Detection of long bone fractures (femur, tibia, humerus) and major joint dislocations (hip, knee, shoulder). Identification of vascular compromise associated with fractures (e.g., popliteal artery in knee dislocation).</p>
+
+<h2>6. Automated Reporting</h2>
+<h3>6.1 Trauma Summary</h3>
+<pre><code>{
+  "exam": "Whole Body Trauma CT",
+  "priority": "STAT - Critical Findings",
+  "alerts": ["Active Bleeding (Spleen)", "Unstable Pelvic Fracture", "Cervical Spine Fracture"],
+  "findings": {
+    "head": "No intracranial hemorrhage. No midline shift.",
+    "c_spine": "Acute fracture C2 odontoid process (Type II). Alignment preserved.",
+    "chest": "Right-sided 20% pneumothorax. Rib fractures R 4-6 laterally.",
+    "abdomen": {
+      "spleen": "Grade IV laceration with active contrast extravasation.",
+      "liver": "Intact.",
+      "kidneys": "Intact."
+    },
+    "pelvis": "Widening of pubic symphysis (2.8cm). Diastasis of left SI joint.",
+    "spine": "L1 anterior compression fracture (20% height loss)."
+  },
+  "impression": "1. Unstable APC-2 pelvic fracture requiring stabilization.\n2. Grade IV splenic injury with active bleeding - Interventional Radiology consult recommended.\n3. Type II odontoid fracture - Neurosurgery consult recommended."
+}</code></pre>
+
+<h2>7. Performance</h2>
+<table>
+  <tr><th>Pathology</th><th>Sensitivity</th><th>Specificity</th><th>Time to Alert</th></tr>
+  <tr><td>Intracranial Hemorrhage</td><td>98.5%</td><td>99.1%</td><td>< 45 sec</td></tr>
+  <tr><td>Cervical Fracture</td><td>96.2%</td><td>98.4%</td><td>< 60 sec</td></tr>
+  <tr><td>Solid Organ Injury</td><td>94.8%</td><td>96.5%</td><td>< 90 sec</td></tr>
+  <tr><td>Active Bleeding</td><td>93.5%</td><td>97.2%</td><td>< 90 sec</td></tr>
+</table>
+
+<div class="footer"><p>&copy; 2026 Skolyn. All rights reserved.</p><p>Seaborgium OS - Trauma CT Analysis Module</p></div>
+</body>
+</html>

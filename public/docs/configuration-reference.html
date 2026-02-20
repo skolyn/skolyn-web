@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Configuration Reference - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #7b1fa2;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#7b1fa2;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:13px}th,td{padding:10px 14px;text-align:left;border:1px solid #dadce0}th{background:#f3e5f5;font-weight:600;color:#6a1b9a}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}pre{background:#1a1a2e;color:#e8eaed;padding:20px 24px;border-radius:12px;margin:16px 0 24px;overflow-x:auto;font-size:13px;line-height:1.7}pre code{background:none;padding:0;color:inherit}.callout{padding:16px 20px;border-radius:8px;margin:16px 0 24px;font-size:14px}.callout-info{background:#e8f0fe;border-left:4px solid #1a73e8;color:#174ea6}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}
+</style>
+</head>
+<body>
+
+<div class="doc-id-bar">
+  <span class="doc-id">SKL-GS-004</span>
+  <span>Skolyn Platform Documentation</span>
+  <span class="doc-class">RESTRICTED</span>
+</div>
+
+<div class="doc-header">
+  <h1>Configuration Reference</h1>
+  <div class="subtitle">Complete Reference for All Configurable Parameters Across the Skolyn Platform</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Restricted</div>
+    <div class="meta-item"><strong>Owner:</strong> Platform Engineering</div>
+    <div class="meta-item"><strong>Review Cycle:</strong> Quarterly</div>
+    <div class="meta-item"><strong>Next Review:</strong> May 2026</div>
+  </div>
+</div>
+
+<h2>1. Overview</h2>
+<p>This Configuration Reference provides a comprehensive listing of all configurable parameters available in the Skolyn platform. Parameters are organized by functional area and can be set through the Management Console UI, the Skolyn CLI, environment variables, or the Helm values file (for Kubernetes deployments). Each parameter includes its type, default value, valid range, and a description of its behavior. Configuration changes are version-controlled and audited — all modifications create an immutable audit trail entry with the before/after state, the identity of the operator, and a timestamp. Critical configuration changes (those affecting security, authentication, or data handling) require a secondary approval workflow before taking effect in production.</p>
+
+<div class="callout callout-info">
+  <strong>Configuration Precedence:</strong> Helm values &lt; Environment variables &lt; ConfigMap/Secret &lt; Management Console (runtime). Runtime changes via the console take highest priority and persist across pod restarts via the configuration database.
+</div>
+
+<h2>2. DICOM Configuration</h2>
+<table>
+  <tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr>
+  <tr><td><code>dicom.ae_title</code></td><td>String</td><td><code>SKOLYN_AI</code></td><td>Application Entity title for DICOM communication. Must be 1-16 characters, uppercase alphanumeric.</td></tr>
+  <tr><td><code>dicom.port</code></td><td>Integer</td><td><code>11112</code></td><td>TCP port for DICOM C-STORE SCP listener. Default 11112 (DICOM TLS standard).</td></tr>
+  <tr><td><code>dicom.tls.enabled</code></td><td>Boolean</td><td><code>true</code></td><td>Enable TLS encryption for DICOM connections. Must be true in production.</td></tr>
+  <tr><td><code>dicom.tls.min_version</code></td><td>String</td><td><code>TLSv1.3</code></td><td>Minimum TLS version. Options: TLSv1.2, TLSv1.3.</td></tr>
+  <tr><td><code>dicom.tls.cert_path</code></td><td>String</td><td><code>/etc/skolyn/tls/dicom.crt</code></td><td>Path to PEM-encoded TLS certificate for DICOM listener.</td></tr>
+  <tr><td><code>dicom.tls.key_path</code></td><td>String</td><td><code>/etc/skolyn/tls/dicom.key</code></td><td>Path to PEM-encoded private key for DICOM listener.</td></tr>
+  <tr><td><code>dicom.max_pdu_size</code></td><td>Integer</td><td><code>131072</code></td><td>Maximum Protocol Data Unit size in bytes (default 128 KB).</td></tr>
+  <tr><td><code>dicom.timeout.association</code></td><td>Integer</td><td><code>30</code></td><td>DICOM association timeout in seconds.</td></tr>
+  <tr><td><code>dicom.timeout.dimse</code></td><td>Integer</td><td><code>600</code></td><td>DIMSE operation timeout in seconds (default 10 min for large studies).</td></tr>
+  <tr><td><code>dicom.concurrent_associations</code></td><td>Integer</td><td><code>64</code></td><td>Maximum concurrent DICOM associations per instance.</td></tr>
+  <tr><td><code>dicom.compression.accept</code></td><td>Array</td><td><code>[1.2.840.10008.1.2, 1.2.840.10008.1.2.1, 1.2.840.10008.1.2.4.90]</code></td><td>Accepted DICOM Transfer Syntaxes (Implicit VR, Explicit VR, JPEG 2000).</td></tr>
+</table>
+
+<h2>3. Inference Engine Configuration</h2>
+<table>
+  <tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr>
+  <tr><td><code>inference.batch_size</code></td><td>Integer</td><td><code>4</code></td><td>Number of studies processed concurrently per GPU. Increase for smaller studies, decrease for multi-sequence MRI.</td></tr>
+  <tr><td><code>inference.timeout</code></td><td>Integer</td><td><code>300</code></td><td>Maximum inference time per study in seconds. Studies exceeding this timeout are marked as failed.</td></tr>
+  <tr><td><code>inference.precision</code></td><td>String</td><td><code>fp16</code></td><td>Inference precision mode: fp32 (full), fp16 (half), int8 (quantized). fp16 recommended for optimal speed/accuracy balance.</td></tr>
+  <tr><td><code>inference.gpu_memory_fraction</code></td><td>Float</td><td><code>0.85</code></td><td>Maximum fraction of GPU memory allocated per worker (0.0-1.0). Reserve 15% for system overhead.</td></tr>
+  <tr><td><code>inference.queue.max_depth</code></td><td>Integer</td><td><code>1000</code></td><td>Maximum pending studies in the processing queue before rejecting new submissions.</td></tr>
+  <tr><td><code>inference.queue.priority.stat</code></td><td>Integer</td><td><code>0</code></td><td>Priority weight for STAT studies (0 = highest priority). STAT studies preempt normal queue.</td></tr>
+  <tr><td><code>inference.explainability.enabled</code></td><td>Boolean</td><td><code>true</code></td><td>Generate attention map (Grad-CAM++) overlays for findings. Adds ~5% processing time.</td></tr>
+  <tr><td><code>inference.explainability.resolution</code></td><td>String</td><td><code>high</code></td><td>Attention map resolution: low (64x64), medium (128x128), high (256x256).</td></tr>
+</table>
+
+<h2>4. Integration Configuration</h2>
+<h3>4.1 HL7v2 Settings</h3>
+<table>
+  <tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr>
+  <tr><td><code>hl7.port</code></td><td>Integer</td><td><code>2575</code></td><td>MLLP listening port for inbound HL7v2 messages.</td></tr>
+  <tr><td><code>hl7.tls.enabled</code></td><td>Boolean</td><td><code>true</code></td><td>Enable TLS encryption for MLLP connections.</td></tr>
+  <tr><td><code>hl7.sending_application</code></td><td>String</td><td><code>SKOLYN</code></td><td>MSH-3 Sending Application name in outbound HL7 messages.</td></tr>
+  <tr><td><code>hl7.sending_facility</code></td><td>String</td><td><code>SKOLYN_AI</code></td><td>MSH-4 Sending Facility in outbound HL7 messages.</td></tr>
+  <tr><td><code>hl7.version</code></td><td>String</td><td><code>2.5.1</code></td><td>HL7 version for outbound messages. Options: 2.3.1, 2.5, 2.5.1.</td></tr>
+  <tr><td><code>hl7.encoding</code></td><td>String</td><td><code>UTF-8</code></td><td>Character encoding for HL7 messages.</td></tr>
+</table>
+
+<h3>4.2 FHIR Settings</h3>
+<table>
+  <tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr>
+  <tr><td><code>fhir.server_url</code></td><td>String</td><td><code>null</code></td><td>Base URL of the target FHIR R4 server for result delivery.</td></tr>
+  <tr><td><code>fhir.auth.type</code></td><td>String</td><td><code>oauth2</code></td><td>Authentication type: oauth2, basic, smart-on-fhir.</td></tr>
+  <tr><td><code>fhir.auth.token_url</code></td><td>String</td><td><code>null</code></td><td>OAuth 2.0 token endpoint for FHIR server authentication.</td></tr>
+  <tr><td><code>fhir.resources.diagnostic_report</code></td><td>Boolean</td><td><code>true</code></td><td>Create DiagnosticReport resources for AI findings.</td></tr>
+  <tr><td><code>fhir.resources.observation</code></td><td>Boolean</td><td><code>true</code></td><td>Create linked Observation resources for individual findings.</td></tr>
+  <tr><td><code>fhir.resources.imaging_study</code></td><td>Boolean</td><td><code>false</code></td><td>Update ImagingStudy resource with AI analysis reference.</td></tr>
+</table>
+
+<h2>5. Security Configuration</h2>
+<table>
+  <tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr>
+  <tr><td><code>auth.session.idle_timeout</code></td><td>Integer</td><td><code>900</code></td><td>Session idle timeout in seconds (default 15 minutes). HIPAA compliance requires ≤ 900s.</td></tr>
+  <tr><td><code>auth.session.max_lifetime</code></td><td>Integer</td><td><code>28800</code></td><td>Maximum session lifetime in seconds (default 8 hours).</td></tr>
+  <tr><td><code>auth.mfa.required</code></td><td>Boolean</td><td><code>true</code></td><td>Require multi-factor authentication for all users.</td></tr>
+  <tr><td><code>auth.mfa.admin_required</code></td><td>Boolean</td><td><code>true</code></td><td>MFA always required for admin roles (cannot be disabled).</td></tr>
+  <tr><td><code>auth.password.min_length</code></td><td>Integer</td><td><code>12</code></td><td>Minimum password length for local accounts.</td></tr>
+  <tr><td><code>auth.lockout.threshold</code></td><td>Integer</td><td><code>5</code></td><td>Failed login attempts before account lockout.</td></tr>
+  <tr><td><code>auth.lockout.duration</code></td><td>Integer</td><td><code>1800</code></td><td>Account lockout duration in seconds (default 30 minutes).</td></tr>
+  <tr><td><code>encryption.at_rest.algorithm</code></td><td>String</td><td><code>AES-256-GCM</code></td><td>Encryption algorithm for data at rest. Cannot be changed after initial deployment.</td></tr>
+  <tr><td><code>encryption.key_rotation.interval</code></td><td>Integer</td><td><code>90</code></td><td>Key rotation interval in days.</td></tr>
+</table>
+
+<h2>6. Logging & Monitoring</h2>
+<table>
+  <tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr>
+  <tr><td><code>logging.level</code></td><td>String</td><td><code>INFO</code></td><td>Application log level: DEBUG, INFO, WARN, ERROR. Never use DEBUG in production.</td></tr>
+  <tr><td><code>logging.format</code></td><td>String</td><td><code>json</code></td><td>Log output format: json, text.</td></tr>
+  <tr><td><code>audit.enabled</code></td><td>Boolean</td><td><code>true</code></td><td>Enable audit logging. Cannot be disabled in production.</td></tr>
+  <tr><td><code>audit.retention.days</code></td><td>Integer</td><td><code>2555</code></td><td>Audit log retention in days (default 7 years).</td></tr>
+  <tr><td><code>metrics.prometheus.enabled</code></td><td>Boolean</td><td><code>true</code></td><td>Expose Prometheus metrics endpoint on /metrics.</td></tr>
+  <tr><td><code>metrics.prometheus.port</code></td><td>Integer</td><td><code>9090</code></td><td>Port for Prometheus metrics scraping.</td></tr>
+</table>
+
+<h2>7. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>Platform Engineering</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-06-01</td><td>Platform Engineering</td><td>Added FHIR, explainability, security params</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>Platform Engineering</td><td>Updated inference, logging, DICOM params</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block">
+      <div class="role">Chief Technology Officer (CTO)</div>
+      <div class="name">Skolyn Technology Division</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+    <div class="signature-block">
+      <div class="role">Chief Executive Officer (CEO)</div>
+      <div class="name">Skolyn Executive Office</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+  </div>
+</div>
+
+<div class="doc-footer">
+  <p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p>
+  <p>Document ID: SKL-GS-004 | Version 3.0 | Classification: Restricted</p>
+  <p>&copy; 2026 Skolyn. All rights reserved.</p>
+</div>
+
+</body>
+</html>

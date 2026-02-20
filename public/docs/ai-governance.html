@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Governance - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #00897b;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#00897b;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:13px}th,td{padding:10px 14px;text-align:left;border:1px solid #dadce0}th{background:#e0f2f1;font-weight:600;color:#00695c}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}</style>
+</head>
+<body>
+
+<div class="doc-id-bar"><span class="doc-id">SKL-AI-005</span><span>Skolyn Platform Documentation</span><span class="doc-class">CONFIDENTIAL</span></div>
+
+<div class="doc-header">
+  <h1>AI Governance</h1>
+  <div class="subtitle">Organizational AI Governance Framework: Ethics Board, Risk Assessment, Model Registry, and Accountability Structure</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Confidential</div>
+    <div class="meta-item"><strong>Owner:</strong> Chief AI Officer</div>
+  </div>
+</div>
+
+<h2>1. Overview</h2>
+<p>AI governance provides the organizational framework, policies, and accountability structures that ensure Skolyn's AI systems are developed, deployed, and operated responsibly, ethically, and in compliance with applicable regulations. As a medical device manufacturer deploying AI in clinical settings, Skolyn's governance requirements extend beyond standard corporate AI governance to encompass ISO 13485 quality management, IEC 62304 software lifecycle, FDA Quality System Regulation, EU MDR post-market surveillance, and emerging AI-specific regulations including the EU AI Act. The governance framework establishes clear roles and responsibilities, risk-based classification of AI systems, mandatory review gates for model development and deployment, continuous monitoring requirements, and incident response procedures for AI-related safety events.</p>
+
+<h2>2. Governance Structure</h2>
+<h3>2.1 AI Ethics Board</h3>
+<p>The AI Ethics Board is an independent advisory body comprising seven members: two clinical radiologists, one data scientist, one bioethicist, one patient advocate, one regulatory affairs specialist, and one independent external AI researcher. The Board meets monthly and has review authority over all new model deployments, significant model updates, fairness analyses, and adverse event investigations. Board recommendations are advisory but carry strong institutional weight — deviation from Board recommendations requires written justification from the Chief AI Officer with CEO approval. Board meeting minutes and decisions are documented in the quality management system and available for regulatory audit.</p>
+
+<h3>2.2 Responsible AI Committee</h3>
+<p>The Responsible AI Committee (RAIC) is an operational committee that implements the Ethics Board's policies and coordinates day-to-day governance activities. The RAIC includes representation from engineering, product, clinical, regulatory, legal, and quality assurance teams. The RAIC manages the AI risk register, conducts algorithmic impact assessments, coordinates bias audits, and maintains the model inventory documenting all deployed AI systems, their intended uses, known limitations, and responsible individuals.</p>
+
+<h2>3. Risk Classification</h2>
+<table>
+  <tr><th>Risk Level</th><th>Criteria</th><th>Governance Requirements</th></tr>
+  <tr><td>Critical</td><td>Life-threatening finding detection (e.g., tension pneumothorax, stroke)</td><td>Full Ethics Board review, independent validation, 100% canary monitoring</td></tr>
+  <tr><td>High</td><td>Cancer screening, treatment-altering findings</td><td>Ethics Board review, multi-site validation, 10% canary monitoring</td></tr>
+  <tr><td>Medium</td><td>Quantitative measurements, workflow prioritization</td><td>RAIC review, single-site validation, standard monitoring</td></tr>
+  <tr><td>Low</td><td>Image quality assessment, routing, technical classification</td><td>Team lead review, internal validation</td></tr>
+</table>
+
+<h2>4. Model Registry and Lifecycle Management</h2>
+<p>Every AI model deployed in Terbium OS is registered in the central Model Registry, which tracks: model identity (unique ID, version, architecture family), intended use (predicate device, anatomical region, pathology, clinical context), training data provenance (dataset composition, demographic distribution, annotation methodology, inter-annotator agreement), validation evidence (clinical study results, fairness analyses, known limitations), deployment status (development, staging, canary, production, deprecated, retired), responsible individuals (model owner, clinical lead, regulatory lead), and change history (every modification, validation, and deployment decision with timestamps and rationale). The Model Registry implements SBOM (Software Bill of Materials) concepts for AI, enabling complete traceability from deployed model to training data and training process.</p>
+
+<h2>5. Incident Response for AI Safety Events</h2>
+<p>AI safety incidents are classified by severity and follow a structured response protocol. A safety incident is any event where the AI's output contributed to or could have contributed to patient harm, including missed critical findings, false positive alerts leading to unnecessary invasive procedures, and systematic performance degradation affecting a patient subgroup. Severity 1 incidents (actual patient harm) trigger immediate model quarantine (removed from production within 1 hour), root cause analysis within 24 hours, regulatory reporting per FDA MDR/MedWatch and EU MDR vigilance requirements, and Ethics Board emergency session. Severity 2 incidents (potential harm, near-miss) trigger enhanced monitoring, investigation within 72 hours, and corrective action planning.</p>
+
+<h2>6. Regulatory Alignment</h2>
+<p>Skolyn's governance framework is aligned with emerging AI regulations: the EU AI Act (high-risk classification for medical AI, conformity assessment requirements, transparency obligations), FDA's Total Product Lifecycle approach (TPLC, continuous monitoring and improvement within PCPC bounds), IMDRF Software as Medical Device framework (definition of intended use, risk categorization), and ISO/IEC 42001 AI Management System standard (organizational AI governance, risk management, performance evaluation). Annual governance audits verify alignment with evolving regulatory requirements and industry best practices.</p>
+
+<h2>7. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>Chief AI Officer</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-06-01</td><td>Chief AI Officer</td><td>Added EU AI Act, incident response</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>Chief AI Officer</td><td>Updated registry, ISO 42001</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block"><div class="role">Chief Technology Officer (CTO)</div><div class="name">Skolyn Technology Division</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+    <div class="signature-block"><div class="role">Chief Executive Officer (CEO)</div><div class="name">Skolyn Executive Office</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+  </div>
+</div>
+
+<div class="doc-footer"><p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p><p>Document ID: SKL-AI-005 | Version 3.0 | Classification: Confidential</p><p>&copy; 2026 Skolyn. All rights reserved.</p></div>
+
+</body>
+</html>

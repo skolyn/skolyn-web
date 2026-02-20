@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brain MRI Analysis - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #673ab7;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#673ab7;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:13px}th,td{padding:10px 14px;text-align:left;border:1px solid #dadce0}th{background:#ede7f6;font-weight:600;color:#4527a0}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}</style>
+</head>
+<body>
+
+<div class="doc-id-bar"><span class="doc-id">SKL-MRI-001</span><span>Skolyn Platform Documentation</span><span class="doc-class">CONFIDENTIAL</span></div>
+
+<div class="doc-header">
+  <h1>Brain MRI Analysis</h1>
+  <div class="subtitle">Comprehensive Neuro-MRI AI Analysis: Tumor Segmentation, White Matter Quantification, and Volumetric Intelligence</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Confidential</div>
+    <div class="meta-item"><strong>Owner:</strong> MRI Engineering</div>
+  </div>
+</div>
+
+<h2>1. Overview</h2>
+<p>The Brain MRI analysis subtype within Rhenium OS is Skolyn's most advanced neuro-imaging AI capability, covering the complete spectrum of brain MRI pathologies encountered in clinical practice. The subtype processes multi-sequence brain MRI examinations (T1, T1 post-contrast, T2, FLAIR, DWI, ADC, SWI, and MRA) and generates comprehensive findings including brain tumor segmentation with sub-compartment volumetrics, white matter lesion quantification and burden scoring, acute infarct detection with territory mapping, intracranial hemorrhage classification, brain atrophy quantification with normative percentile ranking, and hydrocephalus assessment. Each finding is delivered with Grad-CAM++ attention map overlays, SNOMED CT-coded terminology, and structured measurements suitable for RANO and McDonald criteria assessment.</p>
+
+<h2>2. Tumor Segmentation</h2>
+<h3>2.1 Multi-Compartment Volumetrics</h3>
+<p>The brain tumor segmentation engine produces pixel-level delineation of tumor sub-compartments following the BraTS (Brain Tumor Segmentation) challenge standard. Four compartments are segmented: enhancing tumor core (gadolinium-enhancing component on T1+C), non-enhancing tumor core (T2/FLAIR hyperintense without enhancement), peritumoral edema/infiltration (T2/FLAIR hyperintense surrounding region), and necrotic core (non-enhancing core within the tumor). Volume is computed for each compartment in milliliters with sub-voxel interpolation precision. The segmentation model (nnU-Net v2 backbone with 3D full-resolution and cascade configurations) achieves a mean Dice score of 0.912 on the BraTS 2024 validation set and 0.896 on Skolyn's internal multi-institutional clinical validation set of 15,000 brain tumor MRIs.</p>
+
+<h3>2.2 Longitudinal Tracking</h3>
+<p>When prior brain MRI studies are available, the system performs automated volumetric comparison using deformable registration (VoxelMorph) to account for patient repositioning differences. Growth rates are calculated for each tumor compartment, and response assessment is performed following RANO criteria for high-grade gliomas and RANO-LGG for low-grade gliomas. The system classifies response as complete response (CR), partial response (PR), stable disease (SD), or progressive disease (PD), with supporting measurements and clear explanation of classification rationale. For immunotherapy-treated patients, the system additionally evaluates for pseudoprogression using the iRANO criteria, analyzing enhancement kinetics and diffusion characteristics.</p>
+
+<h2>3. White Matter Analysis</h2>
+<h3>3.1 Lesion Detection and Quantification</h3>
+<p>The white matter analysis module detects, segments, and quantifies T2/FLAIR hyperintense lesions characteristic of multiple sclerosis, small vessel ischemic disease, and other white matter pathologies. Each detected lesion is characterized by location (periventricular, juxtacortical, infratentorial, or deep white matter — per McDonald 2017 criteria spatial dissemination), volume (mL), longest axis diameter (mm), and enhancement status (active vs. inactive on T1+C). Total lesion volume and count are computed, along with a white matter lesion burden score normalized to intracranial volume. For MS patients, the system tracks dissemination in space (DIS) and dissemination in time (DIT) criteria, flagging whether new or enlarging lesions are present compared to prior studies.</p>
+
+<h2>4. Acute Stroke Assessment</h2>
+<p>The acute stroke module processes DWI/ADC maps to detect acute infarcts, measure restricted diffusion volumes, and map the affected vascular territory (ACA, MCA, PCA, vertebrobasilar). ADC threshold-based segmentation identifies cytotoxic edema (ADC &lt; 620 x 10-6 mm2/s) and estimates ischemic core volume. DWI-FLAIR mismatch analysis provides an estimate of onset timing (within vs. beyond 4.5 hours) for patients presenting with unknown onset. The ASPECTS (Alberta Stroke Program Early CT Score) equivalent is computed from DWI data for standardized severity assessment. Critical finding alerts are triggered for large territory infarcts (volume &gt; 70 mL or ASPECTS &lt; 6) with sub-60-second notification to the stroke team.</p>
+
+<h2>5. Brain Volumetrics</h2>
+<p>Automated brain segmentation (143 regions per Desikan-Killiany-Tourville atlas) provides normative-referenced volumetric measurements for each brain structure. Key measurements include total brain volume, hippocampal volume (with asymmetry index), ventricular volume (with Evans index), and cortical thickness by region. All volumes are compared against age- and sex-matched normative databases (n=30,000) with percentile rankings. This capability supports clinical evaluation of neurodegenerative conditions including Alzheimer's disease, frontotemporal dementia, and Parkinson's disease, where regional atrophy patterns aid differential diagnosis.</p>
+
+<h2>6. Clinical Performance</h2>
+<table>
+  <tr><th>Task</th><th>Metric</th><th>Performance</th><th>Benchmark</th></tr>
+  <tr><td>Tumor Segmentation (Enhancing)</td><td>Dice Score</td><td>0.912</td><td>BraTS 2024</td></tr>
+  <tr><td>WM Lesion Detection</td><td>Sensitivity</td><td>94.7%</td><td>15K clinical MS studies</td></tr>
+  <tr><td>Acute Infarct Detection</td><td>Sensitivity</td><td>97.2%</td><td>10K clinical stroke MRIs</td></tr>
+  <tr><td>Hippocampal Volume</td><td>ICC</td><td>0.96</td><td>Manual expert segmentation</td></tr>
+  <tr><td>RANO Response Category</td><td>Agreement</td><td>91.4%</td><td>Neuro-oncology board consensus</td></tr>
+</table>
+
+<h2>7. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>MRI Engineering</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-06-01</td><td>MRI Engineering</td><td>Added volumetrics, stroke, iRANO</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>MRI Engineering</td><td>Updated performance, McDonald 2017</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block"><div class="role">Chief Technology Officer (CTO)</div><div class="name">Skolyn Technology Division</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+    <div class="signature-block"><div class="role">Chief Executive Officer (CEO)</div><div class="name">Skolyn Executive Office</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+  </div>
+</div>
+
+<div class="doc-footer"><p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p><p>Document ID: SKL-MRI-001 | Version 3.0 | Classification: Confidential</p><p>&copy; 2026 Skolyn. All rights reserved.</p></div>
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Regulatory Approval - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #00897b;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#00897b;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:13px}th,td{padding:10px 14px;text-align:left;border:1px solid #dadce0}th{background:#e0f2f1;font-weight:600;color:#00695c}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}</style>
+</head>
+<body>
+
+<div class="doc-id-bar"><span class="doc-id">SKL-AI-006</span><span>Skolyn Platform Documentation</span><span class="doc-class">CONFIDENTIAL</span></div>
+
+<div class="doc-header">
+  <h1>Regulatory Approval</h1>
+  <div class="subtitle">Global Regulatory Strategy: FDA 510(k)/De Novo, EU MDR CE Marking, MHRA UKCA, and International Market Access</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Confidential</div>
+    <div class="meta-item"><strong>Owner:</strong> Regulatory Affairs</div>
+  </div>
+</div>
+
+<h2>1. Overview</h2>
+<p>Skolyn's Terbium OS platform is classified as a medical device — specifically, Software as a Medical Device (SaMD) — in all major regulatory jurisdictions. As an SaMD that analyzes medical images and provides diagnostic assistance to radiologists, Terbium OS requires regulatory clearance or approval before commercial marketing in each target market. Skolyn's regulatory strategy pursues parallel clearance across the three largest medical device markets: United States (FDA), European Union (EU MDR via Notified Body), and United Kingdom (MHRA UKCA), with additional market access through MDSAP (Medical Device Single Audit Program) participating countries (Australia, Brazil, Canada, Japan). This document outlines the regulatory pathway for each market, submission requirements, Quality Management System (QMS) infrastructure, and the post-market surveillance program that maintains ongoing regulatory compliance.</p>
+
+<h2>2. FDA Regulatory Pathway</h2>
+<h3>2.1 Classification and Pathway Selection</h3>
+<p>Terbium OS modules are classified as Class II medical devices under FDA product code QAS (Radiological Computer Aided Detection/Diagnosis Software) and QFM (Radiological Computer Aided Triage). The primary regulatory pathway is 510(k) premarket notification with substantial equivalence to predicate devices. For novel AI capabilities without clear predicates (e.g., multi-modality ensemble analysis), Skolyn pursues the De Novo classification pathway to establish a new regulatory classification with appropriately tailored special controls. Each Terbium OS analysis module is submitted as an independent device with module-specific intended use, indications for use, and clinical evidence.</p>
+
+<h3>2.2 Submission Components</h3>
+<p>FDA submissions include: device description and intended use, substantial equivalence comparison (510(k)) or risk-benefit analysis (De Novo), software documentation per FDA guidance on Software as Medical Device (including software requirements specification, architecture design, risk analysis per IEC 14971, and verification/validation testing), cybersecurity documentation per FDA premarket cybersecurity guidance, clinical evidence (standalone performance data, reader studies), algorithmic description and performance specifications, labeling (including Instructions for Use, intended use limitations, and clinical decision support considerations), and the Predetermined Change Control Plan (PCPC) for anticipated model updates.</p>
+
+<h2>3. EU MDR CE Marking</h2>
+<p>Under EU MDR 2017/745, Terbium OS is classified as Class IIa (Rule 11 — software intended to provide information used to make decisions with diagnosis or therapeutic purposes). CE marking requires conformity assessment by a Notified Body (NB), involving: Quality Management System audit (ISO 13485), Technical Documentation review (including clinical evaluation per MDCG 2020-1 guidance), Declaration of Conformity, and ongoing post-market surveillance. The Clinical Evaluation Report (CER) synthesizes systematic literature review (appraisal of equivalent devices and state-of-the-art), clinical investigation data (reader studies), and post-market clinical follow-up (PMCF) plans. Skolyn maintains UDI-DI (Unique Device Identification) registrations in EUDAMED and submits periodic safety update reports (PSURs) to the Notified Body.</p>
+
+<h2>4. Quality Management System</h2>
+<table>
+  <tr><th>Standard</th><th>Scope</th><th>Status</th></tr>
+  <tr><td>ISO 13485:2016</td><td>Medical Device QMS</td><td>Certified</td></tr>
+  <tr><td>IEC 62304:2015</td><td>Medical Device Software Lifecycle</td><td>Implemented</td></tr>
+  <tr><td>ISO 14971:2019</td><td>Risk Management</td><td>Implemented</td></tr>
+  <tr><td>IEC 82304-1:2016</td><td>Health Software Products</td><td>Implemented</td></tr>
+  <tr><td>ISO 27001:2022</td><td>Information Security Management</td><td>Certified</td></tr>
+  <tr><td>MDSAP</td><td>Multi-jurisdiction audit program</td><td>Enrolled</td></tr>
+</table>
+
+<h2>5. International Market Access</h2>
+<p>MDSAP (Medical Device Single Audit Program) enables a single regulatory audit to satisfy requirements for five participating regulatory authorities: FDA (US), Health Canada, TGA (Australia), ANVISA (Brazil), and PMDA (Japan). Skolyn's MDSAP enrollment reduces audit burden while accelerating market access in these jurisdictions. Additional market access strategies include: Health Sciences Authority (HSA) registration in Singapore via ASEAN Mutual Recognition Agreement, SAHPRA registration in South Africa, and Gulf Cooperation Council (GCC) mutual recognition via SFDA (Saudi Arabia) initial registration. Each market entry is sequenced based on commercial opportunity and regulatory complexity.</p>
+
+<h2>6. Post-Market Surveillance</h2>
+<p>Regulatory compliance is not a one-time event but an ongoing obligation. Skolyn's post-market surveillance program includes: complaint handling procedures (all user-reported issues investigated within defined timelines), adverse event reporting to regulatory authorities (FDA MDR, EU Vigilance), periodic safety update reports (PSURs for EU MDR, annual reports for FDA), post-market clinical follow-up (PMCF) studies validating ongoing clinical performance, and proactive monitoring of scientific literature and competitive landscape for emerging safety signals. The regulatory affairs team maintains a regulatory intelligence system that tracks evolving requirements across all target markets.</p>
+
+<h2>7. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>Regulatory Affairs</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-06-01</td><td>Regulatory Affairs</td><td>Added MDSAP, De Novo pathway</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>Regulatory Affairs</td><td>Updated EU MDR, PCPC</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block"><div class="role">Chief Technology Officer (CTO)</div><div class="name">Skolyn Technology Division</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+    <div class="signature-block"><div class="role">Chief Executive Officer (CEO)</div><div class="name">Skolyn Executive Office</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+  </div>
+</div>
+
+<div class="doc-footer"><p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p><p>Document ID: SKL-AI-006 | Version 3.0 | Classification: Confidential</p><p>&copy; 2026 Skolyn. All rights reserved.</p></div>
+
+</body>
+</html>

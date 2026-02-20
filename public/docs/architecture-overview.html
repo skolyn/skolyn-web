@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Architecture Overview - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #1a73e8;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#1a73e8;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:14px}th,td{padding:12px 16px;text-align:left;border:1px solid #dadce0}th{background:#e8f0fe;font-weight:600;color:#174ea6}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}pre{background:#1a1a2e;color:#e8eaed;padding:20px 24px;border-radius:12px;margin:16px 0 24px;overflow-x:auto;font-size:13px;line-height:1.7}pre code{background:none;padding:0;color:inherit}.callout{padding:16px 20px;border-radius:8px;margin:16px 0 24px;font-size:14px}.callout-info{background:#e8f0fe;border-left:4px solid #1a73e8;color:#174ea6}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}
+</style>
+</head>
+<body>
+
+<div class="doc-id-bar">
+  <span class="doc-id">SKL-GS-006</span>
+  <span>Skolyn Platform Documentation</span>
+  <span class="doc-class">CONFIDENTIAL</span>
+</div>
+
+<div class="doc-header">
+  <h1>Architecture Overview</h1>
+  <div class="subtitle">Deep-Dive into the Distributed Systems Architecture Powering Skolyn's Diagnostic AI Engine</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Confidential</div>
+    <div class="meta-item"><strong>Owner:</strong> Platform Architecture</div>
+    <div class="meta-item"><strong>Review Cycle:</strong> Quarterly</div>
+    <div class="meta-item"><strong>Next Review:</strong> May 2026</div>
+  </div>
+</div>
+
+<h2>1. Introduction</h2>
+<p>Skolyn's architecture is a domain-driven, microservices-based distributed system designed for the unique requirements of medical imaging AI: high-throughput DICOM processing, GPU-accelerated deep learning inference, sub-minute latency for critical findings, and strict regulatory compliance. This document provides a technical deep-dive into the system's bounded contexts, service topology, data flow, scaling strategy, and resilience patterns. It is intended for engineering teams, solution architects, and technical evaluators who need to understand how Skolyn achieves its performance, reliability, and security guarantees.</p>
+
+<h2>2. Domain-Driven Design</h2>
+<h3>2.1 Bounded Contexts</h3>
+<p>The platform is organized into seven bounded contexts, each implemented as a cluster of related microservices with clearly defined API boundaries:</p>
+<ul>
+  <li><strong>Ingestion Context:</strong> Responsible for receiving, validating, and storing DICOM studies from external sources. Services include the DICOM Gateway (C-STORE SCP, DICOMweb endpoints), Study Validator (DICOM conformance checking, de-duplication), and Object Store Manager (S3/GCS lifecycle management).</li>
+  <li><strong>Preprocessing Context:</strong> Handles modality-specific image preprocessing. Services include the Normalizer (pixel rescaling, windowing), Segmentation Engine (anatomy segmentation, region-of-interest extraction), and Cache Manager (preprocessed data caching for repeat analysis). This context communicates exclusively via event-driven messaging with the Ingestion and Inference contexts.</li>
+  <li><strong>Inference Context:</strong> The core AI engine. Services include the Model Router (directing studies to the correct modality-specific model), Inference Workers (GPU-bound model execution on NVIDIA Triton), the Ensemble Aggregator (combining outputs from multiple sub-models), and the Explainability Engine (Grad-CAM++, SHAP computation).</li>
+  <li><strong>Integration Context:</strong> Manages outbound delivery of AI results. Services include the DICOM SR Generator, HL7 Message Builder, FHIR Resource Publisher, PDF Report Renderer, and the Alert Dispatcher (critical finding notifications via pager, SMS, and push notifications).</li>
+  <li><strong>Identity Context:</strong> Handles all authentication and authorization. Services include the Auth Gateway (SAML/OIDC federation), Token Service (JWT issuance and refresh), Policy Decision Point (OPA-based RBAC/ABAC), and the Session Manager.</li>
+  <li><strong>Observability Context:</strong> Provides system-wide monitoring and auditing. Services include the Audit Logger (immutable event capture), Metrics Aggregator (Prometheus), Log Pipeline (structured log collection and forwarding), and the Alert Manager (operational alerting).</li>
+  <li><strong>Management Context:</strong> Administrative and configuration services. Services include the Admin API, Configuration Service, User Management, Licensing, and the Analytics Engine (processing statistics and model performance dashboards).</li>
+</ul>
+
+<h2>3. Service Communication Patterns</h2>
+<h3>3.1 Synchronous Communication</h3>
+<p>Inter-service synchronous calls use gRPC with Protocol Buffers for internal APIs and REST/JSON for external-facing APIs. All synchronous calls are mediated through the Istio service mesh, which provides automatic mTLS encryption, circuit breaking (Envoy proxy), load balancing (LEAST_REQUEST algorithm), and distributed tracing (OpenTelemetry). Timeout budgets are enforced at the mesh level: internal calls have a 5-second default timeout, and external API calls have a 30-second timeout. Circuit breakers trip after 5 consecutive failures or when error rates exceed 50%, preventing cascade failures across service boundaries.</p>
+
+<h3>3.2 Asynchronous Communication</h3>
+<p>The primary asynchronous communication layer is Apache Kafka, configured as a multi-topic event bus. Key topics include:</p>
+<table>
+  <tr><th>Topic</th><th>Producers</th><th>Consumers</th><th>Partitions</th><th>Retention</th></tr>
+  <tr><td><code>study.received</code></td><td>DICOM Gateway</td><td>Preprocessing Engine</td><td>32</td><td>7 days</td></tr>
+  <tr><td><code>study.preprocessed</code></td><td>Preprocessing Engine</td><td>Model Router</td><td>32</td><td>7 days</td></tr>
+  <tr><td><code>inference.completed</code></td><td>Inference Workers</td><td>Integration Services</td><td>16</td><td>30 days</td></tr>
+  <tr><td><code>audit.events</code></td><td>All services</td><td>Audit Logger</td><td>64</td><td>90 days</td></tr>
+  <tr><td><code>alerts.critical</code></td><td>Inference Workers</td><td>Alert Dispatcher</td><td>8</td><td>30 days</td></tr>
+</table>
+
+<h2>4. Data Flow</h2>
+<h3>4.1 Study Processing Pipeline</h3>
+<p>The end-to-end study processing pipeline flow proceeds as follows: An external PACS sends a DICOM study via C-STORE to the DICOM Gateway. The gateway validates the association and stores pixel data in the DICOM Object Store (S3/GCS). A <code>study.received</code> event is published to Kafka. The Preprocessing Engine consumes this event, retrieves the raw DICOM data, applies modality-specific normalization (window/level, rescale, orientation correction), runs atlas-based anatomical segmentation, and publishes a <code>study.preprocessed</code> event. The Model Router consumes the preprocessed event, determines which modality module and subtypes apply (based on DICOM header analysis — Modality, Body Part, Study Description), and dispatches the study to the appropriate Inference Workers. The workers execute the ensemble of specialized sub-models on GPU, compute attention maps for explainability, aggregate findings through the Ensemble Aggregator, and publish an <code>inference.completed</code> event. Integration services consume this event and deliver results to configured destinations (DICOM SR, HL7, FHIR, PDF). If any finding exceeds the STAT alert threshold, the Alert Dispatcher is triggered in parallel.</p>
+
+<h2>5. Scaling Architecture</h2>
+<h3>5.1 Horizontal Pod Autoscaling</h3>
+<p>All stateless services (API servers, preprocessing workers, integration services) scale horizontally based on CPU utilization, memory pressure, and custom Kafka consumer lag metrics. Inference Workers use a custom GPU-aware Horizontal Pod Autoscaler (HPA) that scales based on GPU utilization and processing queue depth. The autoscaler targets 70% GPU utilization and less than 100 pending studies in the queue. During off-peak hours, the autoscaler aggressively scales down to minimize infrastructure costs while maintaining a minimum of 2 inference workers for availability.</p>
+
+<h3>5.2 Cluster Autoscaling</h3>
+<p>Kubernetes Cluster Autoscaler manages the underlying compute capacity. GPU node pools use separate autoscaling groups with pre-configured NVIDIA drivers and container toolkit. New GPU nodes become schedulable within 4 minutes of autoscaling trigger, which is acceptable given the processing queue buffer. For on-premises deployments where physical capacity is fixed, a priority-based scheduling policy ensures STAT studies are never queued behind normal-priority studies.</p>
+
+<h2>6. Resilience Patterns</h2>
+<ul>
+  <li><strong>Circuit Breaking:</strong> Envoy proxy circuit breakers prevent cascade failures. Trips after 5 consecutive 5xx errors with configurable recovery windows.</li>
+  <li><strong>Retry with Exponential Backoff:</strong> Transient failures trigger automatic retries (max 3 attempts) with jittered exponential backoff (initial 100ms, max 5s).</li>
+  <li><strong>Bulkhead Isolation:</strong> Critical services (DICOM Gateway, Inference, Alert Dispatcher) run in dedicated resource pools with guaranteed CPU/GPU and memory reservations, preventing noisy-neighbor effects.</li>
+  <li><strong>Graceful Degradation:</strong> If the Explainability Engine is unavailable, the system delivers findings without attention maps rather than failing the entire study. Non-critical enrichments (geo-IP, device fingerprinting) are similarly optional.</li>
+  <li><strong>Dead Letter Queues:</strong> Failed Kafka message processing routes messages to dead letter topics for manual investigation without blocking the processing pipeline.</li>
+</ul>
+
+<h2>7. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>Platform Architecture</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-06-01</td><td>Platform Architecture</td><td>Added DDD contexts, Kafka topics, scaling</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>Platform Architecture</td><td>Updated resilience, data flow, service mesh</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block">
+      <div class="role">Chief Technology Officer (CTO)</div>
+      <div class="name">Skolyn Technology Division</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+    <div class="signature-block">
+      <div class="role">Chief Executive Officer (CEO)</div>
+      <div class="name">Skolyn Executive Office</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+  </div>
+</div>
+
+<div class="doc-footer">
+  <p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p>
+  <p>Document ID: SKL-GS-006 | Version 3.0 | Classification: Confidential</p>
+  <p>&copy; 2026 Skolyn. All rights reserved.</p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DICOMweb API - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #7b1fa2;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#7b1fa2;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:13px}th,td{padding:10px 14px;text-align:left;border:1px solid #dadce0}th{background:#f3e5f5;font-weight:600;color:#6a1b9a}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}pre{background:#1a1a2e;color:#e8eaed;padding:20px 24px;border-radius:12px;margin:16px 0 24px;overflow-x:auto;font-size:13px;line-height:1.7}pre code{background:none;padding:0;color:inherit}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}
+</style>
+</head>
+<body>
+
+<div class="doc-id-bar">
+  <span class="doc-id">SKL-INT-004</span>
+  <span>Skolyn Platform Documentation</span>
+  <span class="doc-class">RESTRICTED</span>
+</div>
+
+<div class="doc-header">
+  <h1>DICOMweb API</h1>
+  <div class="subtitle">RESTful DICOM Web Services (WADO-RS, STOW-RS, QIDO-RS) for Modern Medical Image Exchange</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Restricted</div>
+    <div class="meta-item"><strong>Owner:</strong> Integration Engineering</div>
+    <div class="meta-item"><strong>Review Cycle:</strong> Quarterly</div>
+    <div class="meta-item"><strong>Next Review:</strong> May 2026</div>
+  </div>
+</div>
+
+<h2>1. Overview</h2>
+<p>DICOMweb is the DICOM standard for RESTful web services, replacing traditional DICOM networking for modern HTTP-based medical image exchange. Skolyn implements the full DICOMweb specification (DICOM PS3.18) including WADO-RS (Web Access to DICOM Objects - RESTful Services) for retrieving studies, series, and instances; STOW-RS (Store Over the Web - RESTful Services) for uploading DICOM objects; and QIDO-RS (Query based on ID for DICOM Objects - RESTful Services) for searching studies, series, and instances. All DICOMweb endpoints are served over HTTPS (TLS 1.3) with OAuth 2.0 Bearer token authentication, making integration straightforward for modern web applications, mobile apps, and cloud-native PACS systems.</p>
+
+<h2>2. Base URL & Versioning</h2>
+<pre><code># DICOMweb base URL
+https://your-org.skolyn.cloud/dicomweb
+
+# API versioning is embedded in the path for future compatibility
+# Current version: v1 (implicit, no version prefix required)
+
+# Service discovery (Capabilities)
+GET /dicomweb/
+Accept: application/dicom+json</code></pre>
+
+<h2>3. QIDO-RS (Query)</h2>
+<h3>3.1 Study-Level Search</h3>
+<pre><code># Search studies by patient ID and modality
+GET /dicomweb/studies?PatientID=MRN12345&ModalitiesInStudy=MR&limit=25&offset=0
+Authorization: Bearer &lt;token&gt;
+Accept: application/dicom+json
+
+# Response (200 OK)
+[
+  {
+    "00080020": { "vr": "DA", "Value": ["20260210"] },
+    "00080030": { "vr": "TM", "Value": ["120000"] },
+    "00080050": { "vr": "SH", "Value": ["ACC-2026-001234"] },
+    "00080060": { "vr": "CS", "Value": ["MR"] },
+    "00080061": { "vr": "CS", "Value": ["MR"] },
+    "0020000D": { "vr": "UI", "Value": ["1.2.840.113619.2.12345"] },
+    "00100010": { "vr": "PN", "Value": [{ "Alphabetic": "DOE^JOHN" }] },
+    "00100020": { "vr": "LO", "Value": ["MRN12345"] },
+    "00201208": { "vr": "IS", "Value": [286] }
+  }
+]</code></pre>
+
+<h3>3.2 Supported Search Parameters</h3>
+<table>
+  <tr><th>DICOM Tag</th><th>Keyword</th><th>Level</th><th>Description</th></tr>
+  <tr><td>(0008,0020)</td><td>StudyDate</td><td>Study</td><td>Study date (range: 20260101-20260228)</td></tr>
+  <tr><td>(0008,0050)</td><td>AccessionNumber</td><td>Study</td><td>Accession number (exact match)</td></tr>
+  <tr><td>(0008,0060)</td><td>Modality</td><td>Series</td><td>Modality type (CT, MR, US, DX, etc.)</td></tr>
+  <tr><td>(0008,0061)</td><td>ModalitiesInStudy</td><td>Study</td><td>Modalities in study</td></tr>
+  <tr><td>(0008,1030)</td><td>StudyDescription</td><td>Study</td><td>Study description (fuzzy match)</td></tr>
+  <tr><td>(0010,0010)</td><td>PatientName</td><td>Study</td><td>Patient name (fuzzy match)</td></tr>
+  <tr><td>(0010,0020)</td><td>PatientID</td><td>Study</td><td>Patient ID (exact match)</td></tr>
+  <tr><td>(0020,000D)</td><td>StudyInstanceUID</td><td>Study</td><td>Study Instance UID</td></tr>
+  <tr><td>(0020,000E)</td><td>SeriesInstanceUID</td><td>Series</td><td>Series Instance UID</td></tr>
+</table>
+
+<h2>4. WADO-RS (Retrieve)</h2>
+<h3>4.1 Retrieve Study</h3>
+<pre><code># Retrieve all instances in a study
+GET /dicomweb/studies/1.2.840.113619.2.12345
+Authorization: Bearer &lt;token&gt;
+Accept: multipart/related; type="application/dicom"
+
+# Retrieve study metadata (JSON, no pixel data)
+GET /dicomweb/studies/1.2.840.113619.2.12345/metadata
+Accept: application/dicom+json
+
+# Retrieve specific series
+GET /dicomweb/studies/1.2.840.113619.2.12345/series/1.2.840.113619.2.67890
+Accept: multipart/related; type="application/dicom"
+
+# Retrieve specific instance
+GET /dicomweb/studies/1.2.840.113619.2.12345/series/1.2.840.113619.2.67890/instances/1.2.840.113619.2.11111
+Accept: application/dicom</code></pre>
+
+<h3>4.2 Rendered Frame Retrieval</h3>
+<pre><code># Retrieve a rendered JPEG/PNG frame
+GET /dicomweb/studies/{studyUID}/series/{seriesUID}/instances/{instanceUID}/frames/1/rendered
+Accept: image/jpeg
+Authorization: Bearer &lt;token&gt;
+
+# Query parameters for rendering:
+# ?window=center,width (e.g., ?window=40,400 for abdomen)
+# ?quality=75 (JPEG quality 1-100)
+# ?viewport=512,512 (resize to 512x512)</code></pre>
+
+<h2>5. STOW-RS (Store)</h2>
+<h3>5.1 Store DICOM Instances</h3>
+<pre><code># Upload DICOM instances to Skolyn
+POST /dicomweb/studies
+Authorization: Bearer &lt;token&gt;
+Content-Type: multipart/related; type="application/dicom"; boundary=----WebKitFormBoundary
+
+------WebKitFormBoundary
+Content-Type: application/dicom
+
+[DICOM binary data]
+------WebKitFormBoundary--
+
+# Response (200 OK)
+{
+  "00081190": { "vr": "UR", "Value": ["https://skolyn.cloud/dicomweb/studies/1.2.840..."] },
+  "00081199": { "vr": "SQ", "Value": [{
+    "00081150": { "vr": "UI", "Value": ["1.2.840.10008.5.1.4.1.1.4"] },
+    "00081155": { "vr": "UI", "Value": ["1.2.840.113619.2.12345.1"] },
+    "00081190": { "vr": "UR", "Value": ["https://skolyn.cloud/dicomweb/studies/..."] }
+  }]}
+}</code></pre>
+
+<h3>5.2 Store Response Status</h3>
+<table>
+  <tr><th>Status Code</th><th>Meaning</th><th>Description</th></tr>
+  <tr><td>200</td><td>Success</td><td>All instances stored successfully</td></tr>
+  <tr><td>202</td><td>Accepted</td><td>Instances accepted for deferred storage (async mode)</td></tr>
+  <tr><td>409</td><td>Conflict</td><td>Instance already exists (duplicate SOP Instance UID)</td></tr>
+  <tr><td>415</td><td>Unsupported Media Type</td><td>Content-Type not recognized as DICOM</td></tr>
+  <tr><td>503</td><td>Service Unavailable</td><td>Storage capacity exceeded or service overloaded</td></tr>
+</table>
+
+<h2>6. Skolyn AI Extensions</h2>
+<p>Skolyn extends the standard DICOMweb API with custom endpoints for accessing AI-specific functionality without requiring separate FHIR calls:</p>
+<pre><code># Get AI analysis status for a study
+GET /dicomweb/studies/{studyUID}/ai/status
+Authorization: Bearer &lt;token&gt;
+
+# Response
+{
+  "studyInstanceUID": "1.2.840.113619.2.12345",
+  "processingStatus": "complete",
+  "module": "rhenium",
+  "subtype": "brain",
+  "findingCount": 3,
+  "criticalFindings": true,
+  "processingTime": 18.4,
+  "attentionMapAvailable": true
+}
+
+# Retrieve AI attention map overlay as PNG
+GET /dicomweb/studies/{studyUID}/series/{seriesUID}/instances/{instanceUID}/ai/attention-map
+Accept: image/png</code></pre>
+
+<h2>7. Rate Limiting & Pagination</h2>
+<p>DICOMweb API requests are rate-limited per OAuth client: 500 requests/minute for queries, 100 requests/minute for stores, and 1,000 requests/minute for retrievals. Pagination is handled via <code>limit</code> and <code>offset</code> query parameters. The response includes custom headers for pagination state: <code>X-Total-Count</code> (total matching results), <code>X-Limit</code>, and <code>X-Offset</code>.</p>
+
+<h2>8. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>Integration Engineering</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-06-01</td><td>Integration Engineering</td><td>Added AI extensions, rendered frames</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>Integration Engineering</td><td>Updated STOW-RS, rate limiting, pagination</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block">
+      <div class="role">Chief Technology Officer (CTO)</div>
+      <div class="name">Skolyn Technology Division</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+    <div class="signature-block">
+      <div class="role">Chief Executive Officer (CEO)</div>
+      <div class="name">Skolyn Executive Office</div>
+      <div class="signature-line"></div>
+      <div class="signature-label">Signature</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div>
+      <div><span class="signature-label">Date:</span> ______ / ______ / ____________</div>
+      <div class="stamp-area">Official Stamp / Seal</div>
+    </div>
+  </div>
+</div>
+
+<div class="doc-footer">
+  <p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p>
+  <p>Document ID: SKL-INT-004 | Version 3.0 | Classification: Restricted</p>
+  <p>&copy; 2026 Skolyn. All rights reserved.</p>
+</div>
+
+</body>
+</html>

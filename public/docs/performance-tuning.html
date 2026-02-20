@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Performance Tuning - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #5c6bc0;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#5c6bc0;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:13px}th,td{padding:10px 14px;text-align:left;border:1px solid #dadce0}th{background:#e8eaf6;font-weight:600;color:#283593}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}</style>
+</head>
+<body>
+
+<div class="doc-id-bar"><span class="doc-id">SKL-OPS-002</span><span>Skolyn Platform Documentation</span><span class="doc-class">CONFIDENTIAL</span></div>
+
+<div class="doc-header">
+  <h1>Performance Tuning</h1>
+  <div class="subtitle">GPU Inference Optimization, DICOM Pipeline Throughput, Database Query Tuning, and Capacity Planning</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Confidential</div>
+    <div class="meta-item"><strong>Owner:</strong> Platform Engineering</div>
+  </div>
+</div>
+
+<h2>1. Overview</h2>
+<p>Performance tuning is critical for Skolyn deployments that must process hundreds to thousands of imaging studies per day with consistent sub-30-second turnaround times. The platform's performance characteristics are shaped by multiple interconnected subsystems: the DICOM networking layer that receives and routes studies, the GPU inference pipeline that runs AI models, the database and storage layer that manages study metadata and results, and the integration layer that delivers results to consuming systems. Each subsystem has distinct optimization strategies and bottleneck patterns. This document provides systematic performance tuning guidance covering hardware sizing, configuration optimization, bottleneck diagnosis, and capacity planning methodologies proven across Skolyn's production deployments ranging from single-site installations processing 50 studies/day to multi-site enterprise deployments handling 10,000+ studies/day.</p>
+
+<h2>2. GPU Inference Optimization</h2>
+<h3>2.1 Model Execution Pipeline</h3>
+<p>The inference engine uses TensorRT for model optimization, converting trained PyTorch models into optimized TensorRT engines with INT8 quantization, layer fusion, and kernel auto-tuning. Key optimization parameters include batch size (larger batches improve GPU utilization but increase latency — the optimal batch size for latency-critical deployments is 1-4, while throughput-oriented deployments benefit from batches of 8-16), precision mode (FP32, FP16, INT8 — INT8 provides 2-4x throughput improvement with &lt;0.5% accuracy loss on validated models), and CUDA stream management (multiple inference streams enable concurrent model execution when GPU memory permits). For multi-GPU deployments, model placement optimization distributes modality-specific models across available GPUs to balance utilization.</p>
+
+<h3>2.2 Memory Management</h3>
+<p>GPU memory management is critical for stable inference performance. Key settings include CUDA memory pool pre-allocation (pre-allocating 80% of GPU memory at startup prevents fragmentation), model loading strategy (warm loading — keeping all active models resident in GPU memory — versus cold loading on demand, which trades latency for memory efficiency), and DICOM volume caching (caching preprocessed volumetric data in page-locked host memory enables faster GPU transfers). Memory profiling via <code>nvidia-smi</code> and Skolyn's built-in GPU memory dashboard should be monitored continuously; memory fragmentation exceeding 15% of total GPU memory triggers automatic model reload to defragment.</p>
+
+<h2>3. DICOM Pipeline Tuning</h2>
+<p>The DICOM reception pipeline handles concurrent C-STORE associations from multiple PACS sources. Key tuning parameters include maximum concurrent associations (default 50; enterprise deployments with high-volume PACS connections may require 100-200), PDU size (maximum protocol data unit size — increasing from the default 16KB to 128KB improves transfer throughput for large CT/MRI datasets by reducing PDU overhead), study completion timeout (the time to wait after the last received instance before considering the study complete — default 30 seconds; multiframe transfers may require 60-120 seconds), and worker thread pool size for DICOM parsing and preprocessing. The DICOM store utilizes asynchronous I/O (io_uring on Linux) for disk writes to maximize storage throughput.</p>
+
+<h2>4. Database Optimization</h2>
+<p>PostgreSQL database tuning for Skolyn's metadata store includes shared_buffers (25% of available RAM, typically 4-16GB), effective_cache_size (75% of RAM), work_mem (256MB for complex analytical queries), random_page_cost (1.1 for SSD storage), and connection pooling via PgBouncer (maintaining 100-200 connections with transaction-level pooling). Index optimization ensures sub-millisecond study lookups by Patient ID, Accession Number, and Study Instance UID. Table partitioning by date enables efficient retention management and improves query performance for time-bounded analytics. Vacuum and analyze schedules are configured for daily automated maintenance.</p>
+
+<h2>5. Capacity Planning</h2>
+<table>
+  <tr><th>Deployment Size</th><th>Daily Volume</th><th>GPU Requirement</th><th>CPU</th><th>RAM</th><th>Storage</th></tr>
+  <tr><td>Small</td><td>50-200 studies</td><td>1x NVIDIA T4</td><td>8 cores</td><td>32GB</td><td>1TB SSD</td></tr>
+  <tr><td>Medium</td><td>200-1000 studies</td><td>2x NVIDIA A10</td><td>16 cores</td><td>64GB</td><td>4TB NVMe</td></tr>
+  <tr><td>Large</td><td>1000-5000 studies</td><td>4x NVIDIA A100</td><td>32 cores</td><td>128GB</td><td>10TB NVMe</td></tr>
+  <tr><td>Enterprise</td><td>5000-10000+ studies</td><td>8x NVIDIA A100</td><td>64 cores</td><td>256GB</td><td>20TB NVMe RAID</td></tr>
+</table>
+
+<h2>6. Benchmarking Methodology</h2>
+<p>Skolyn provides a built-in benchmarking tool (<code>skolyn-bench</code>) that simulates production workloads for performance validation. The benchmark generates synthetic DICOM studies at configurable volume rates and modality mixes, measuring end-to-end processing latency, GPU utilization, and system resource consumption. Benchmark results are automatically compared against reference baselines for the deployment's hardware configuration, flagging any performance regressions exceeding 10% from baseline. Production deployments should run monthly benchmarks during maintenance windows to detect gradual performance degradation.</p>
+
+<h2>7. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>Platform Engineering</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-06-01</td><td>Platform Engineering</td><td>Added GPU optimization, capacity planning</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>Platform Engineering</td><td>Updated benchmarking, TensorRT INT8</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block"><div class="role">Chief Technology Officer (CTO)</div><div class="name">Skolyn Technology Division</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+    <div class="signature-block"><div class="role">Chief Executive Officer (CEO)</div><div class="name">Skolyn Executive Office</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+  </div>
+</div>
+
+<div class="doc-footer"><p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p><p>Document ID: SKL-OPS-002 | Version 3.0 | Classification: Confidential</p><p>&copy; 2026 Skolyn. All rights reserved.</p></div>
+
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cardiac MRI Analysis - Skolyn Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Google Sans Text','Google Sans',Roboto,'Helvetica Neue',Arial,sans-serif;max-width:900px;margin:0 auto;padding:48px 40px;color:#1d1d1f;line-height:1.8;font-size:15px}.doc-id-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#f8f9fa;border:1px solid #e8eaed;border-radius:8px;margin-bottom:24px;font-size:13px;color:#5f6368}.doc-id-bar .doc-id{font-family:'Google Sans',sans-serif;font-weight:700;color:#1a73e8;font-size:14px;letter-spacing:.5px}.doc-id-bar .doc-class{padding:4px 12px;background:#e8f0fe;color:#1a73e8;border-radius:100px;font-weight:500;font-size:12px}.doc-header{border-bottom:3px solid #d32f2f;padding-bottom:28px;margin-bottom:40px}.doc-header h1{font-family:'Google Sans',sans-serif;font-size:32px;font-weight:700;margin-bottom:8px}.doc-header .subtitle{font-size:16px;color:#5f6368;margin-bottom:16px}.doc-header .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px;color:#5f6368}.doc-header .meta-item{display:flex;align-items:center;gap:6px}.doc-header .meta-item strong{color:#1d1d1f}h2{font-family:'Google Sans',sans-serif;font-size:22px;color:#d32f2f;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #e8eaed}h3{font-family:'Google Sans',sans-serif;font-size:17px;color:#202124;margin:28px 0 12px}p{margin-bottom:14px}ul,ol{margin:0 0 18px 24px}li{margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:13px}th,td{padding:10px 14px;text-align:left;border:1px solid #dadce0}th{background:#ffebee;font-weight:600;color:#b71c1c}td{color:#3c4043}tr:nth-child(even) td{background:#fafafa}code{background:#f1f3f4;padding:2px 8px;border-radius:4px;font-size:13px}.signature-section{margin-top:64px;page-break-inside:avoid}.signature-section .section-title{font-family:'Google Sans',sans-serif;font-size:18px;font-weight:700;color:#1d1d1f;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #1d1d1f}.signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}.signature-block{border:1px solid #dadce0;border-radius:12px;padding:32px;background:#fafafa}.signature-block .role{font-family:'Google Sans',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}.signature-block .name{font-size:14px;color:#5f6368;margin-bottom:24px}.signature-line{border-bottom:1px solid #1d1d1f;height:48px;margin-bottom:8px}.signature-label{font-size:12px;color:#80868b;margin-bottom:16px}.stamp-area{border:2px dashed #dadce0;border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;color:#80868b;font-size:12px;margin-top:16px}.doc-footer{margin-top:48px;padding-top:24px;border-top:2px solid #e8eaed;font-size:12px;color:#5f6368;text-align:center}.doc-footer p{margin-bottom:4px}@media print{body{max-width:100%;padding:20px;font-size:12px}.signature-section{page-break-before:always}}</style>
+</head>
+<body>
+
+<div class="doc-id-bar"><span class="doc-id">SKL-MRI-002</span><span>Skolyn Platform Documentation</span><span class="doc-class">CONFIDENTIAL</span></div>
+
+<div class="doc-header">
+  <h1>Cardiac MRI Analysis</h1>
+  <div class="subtitle">Comprehensive Cardiac MR Assessment: Ventricular Function, Tissue Characterization, and Myocardial Mapping</div>
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Version:</strong> 3.0</div>
+    <div class="meta-item"><strong>Last Updated:</strong> February 2026</div>
+    <div class="meta-item"><strong>Classification:</strong> Confidential</div>
+    <div class="meta-item"><strong>Owner:</strong> MRI Engineering</div>
+  </div>
+</div>
+
+<h2>1. Overview</h2>
+<p>The Cardiac MRI analysis subtype provides fully automated assessment of cardiac structure and function from cine SSFP (Steady-State Free Precession), late gadolinium enhancement (LGE), and parametric mapping sequences. Cardiac MRI is considered the gold standard for ventricular volume and function assessment, myocardial tissue characterization, and viability evaluation. Skolyn's cardiac MRI AI automates the labor-intensive manual contouring process, reduces inter-observer variability, and provides comprehensive quantitative analysis in under 30 seconds — compared to the 20-45 minutes typically required for manual analysis. The module supports both standard and non-standard short-axis stack orientations, automatically detecting and correcting for through-plane motion artifacts.</p>
+
+<h2>2. Ventricular Function Analysis</h2>
+<h3>2.1 Automated Contouring</h3>
+<p>The automated contouring engine segments left ventricular (LV) endocardial and epicardial borders, and right ventricular (RV) endocardial borders across all cardiac phases in the short-axis cine stack. The segmentation model (nnU-Net with temporal attention) identifies end-diastolic (ED) and end-systolic (ES) phases automatically from the cine loop, then propagates contours across all phases using a temporal consistency constraint that ensures physiologically plausible wall motion. Papillary muscles and trabeculations are handled using a dual-threshold approach: included in myocardial mass for mass calculations and excluded from cavity volume for ejection fraction calculations, following SCMR (Society for Cardiovascular Magnetic Resonance) guidelines.</p>
+
+<h3>2.2 Functional Parameters</h3>
+<table>
+  <tr><th>Parameter</th><th>Description</th><th>Normal Range</th></tr>
+  <tr><td>LVEF</td><td>Left ventricular ejection fraction</td><td>52-72% (M), 54-74% (F)</td></tr>
+  <tr><td>LVEDV</td><td>LV end-diastolic volume (indexed)</td><td>62-96 mL/m2 (M), 53-85 mL/m2 (F)</td></tr>
+  <tr><td>LVESV</td><td>LV end-systolic volume (indexed)</td><td>17-33 mL/m2 (M), 14-27 mL/m2 (F)</td></tr>
+  <tr><td>LV Mass</td><td>LV myocardial mass (indexed)</td><td>47-77 g/m2 (M), 36-60 g/m2 (F)</td></tr>
+  <tr><td>RVEF</td><td>Right ventricular ejection fraction</td><td>48-65% (M), 50-68% (F)</td></tr>
+  <tr><td>RVEDV</td><td>RV end-diastolic volume (indexed)</td><td>66-103 mL/m2 (M), 54-87 mL/m2 (F)</td></tr>
+  <tr><td>GLS</td><td>Global longitudinal strain</td><td>-18% to -22%</td></tr>
+  <tr><td>GCS</td><td>Global circumferential strain</td><td>-20% to -25%</td></tr>
+</table>
+
+<h2>3. Wall Motion Analysis</h2>
+<p>Automated wall motion assessment follows the AHA 17-segment model, classifying each segment as normokinetic, hypokinetic, akinetic, or dyskinetic based on endocardial excursion and wall thickening measurements. The wall motion score index (WMSI) is computed as the sum of segment scores divided by 17. Regional wall motion abnormalities are mapped to coronary vascular territories (LAD, LCx, RCA) for correlation with coronary artery disease distribution. The system also detects and characterizes specific motion patterns including paradoxical septal motion (post-surgical, RV volume overload), dyssynchrony (potential CRT candidates), and apical ballooning (Takotsubo pattern).</p>
+
+<h2>4. Late Gadolinium Enhancement</h2>
+<h3>4.1 Scar Quantification</h3>
+<p>The LGE analysis module performs automated scar detection and quantification using a combination of signal intensity thresholding (6-SD, 5-SD, and FWHM methods) and deep learning-based segmentation. Scar is mapped to the AHA 17-segment model with transmurality grading (subendocardial &lt;25%, 25-50%, 50-75%, and transmural &gt;75%) for viability assessment. Total scar burden is reported as a percentage of LV myocardial mass. Enhancement patterns are classified as ischemic (subendocardial following a coronary territory) or non-ischemic (mid-wall, epicardial, patchy/diffuse), supporting differential diagnosis of cardiomyopathy etiology — a critical distinction that directs patient management toward revascularization versus medical therapy.</p>
+
+<h2>5. Parametric Mapping</h2>
+<p>The module processes native T1 maps, post-contrast T1 maps, T2 maps, and ECV (extracellular volume) maps with automated myocardial segmentation and per-segment value extraction. Regional mapping values are compared against sequence-specific normative databases (MOLLI, ShMOLLI, SASHA for T1; T2-prep bSSFP for T2). Elevated native T1 and T2 values suggest myocardial edema/inflammation (myocarditis, acute MI), while elevated ECV indicates diffuse fibrosis (HCM, DCM, amyloidosis). The mapping analysis is particularly valuable for detecting diffuse myocardial disease processes that may not be visible on LGE imaging.</p>
+
+<h2>6. Clinical Performance</h2>
+<table>
+  <tr><th>Task</th><th>Metric</th><th>Performance</th><th>Benchmark</th></tr>
+  <tr><td>LVEF</td><td>MAE vs. expert</td><td>2.1%</td><td>ACDC challenge + 5K clinical</td></tr>
+  <tr><td>LV Volumes</td><td>ICC</td><td>0.97</td><td>Expert manual segmentation</td></tr>
+  <tr><td>Scar Quantification</td><td>Dice Score</td><td>0.87</td><td>Expert LGE annotation</td></tr>
+  <tr><td>Wall Motion Classification</td><td>Accuracy</td><td>89.3%</td><td>Expert consensus</td></tr>
+  <tr><td>Ischemic vs Non-ischemic Pattern</td><td>Accuracy</td><td>93.5%</td><td>Clinical diagnosis</td></tr>
+</table>
+
+<h2>7. Document Revision History</h2>
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>2024-06-15</td><td>MRI Engineering</td><td>Initial release</td></tr>
+  <tr><td>2.0</td><td>2025-06-01</td><td>MRI Engineering</td><td>Added mapping, scar quantification</td></tr>
+  <tr><td>3.0</td><td>2026-02-10</td><td>MRI Engineering</td><td>Updated performance, wall motion, GLS</td></tr>
+</table>
+
+<div class="signature-section">
+  <div class="section-title">Authorization & Approval</div>
+  <p style="font-size:13px;color:#5f6368;margin-bottom:24px;">This document has been reviewed and approved by the undersigned officers of Skolyn.</p>
+  <div class="signature-grid">
+    <div class="signature-block"><div class="role">Chief Technology Officer (CTO)</div><div class="name">Skolyn Technology Division</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+    <div class="signature-block"><div class="role">Chief Executive Officer (CEO)</div><div class="name">Skolyn Executive Office</div><div class="signature-line"></div><div class="signature-label">Signature</div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div><span class="signature-label">Printed Name:</span> ___________________________</div></div><div><span class="signature-label">Date:</span> ______ / ______ / ____________</div><div class="stamp-area">Official Stamp / Seal</div></div>
+  </div>
+</div>
+
+<div class="doc-footer"><p><strong>Skolyn</strong> — Redefining Medical Imaging Through Explainable AI</p><p>Document ID: SKL-MRI-002 | Version 3.0 | Classification: Confidential</p><p>&copy; 2026 Skolyn. All rights reserved.</p></div>
+
+</body>
+</html>
