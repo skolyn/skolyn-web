@@ -37,7 +37,7 @@ func main() {
 
 	contactHandler := contact.New(dbClient, sesClient, contactTable, notifyEmail)
 	applyHandler := apply.New(dbClient, s3Client, sesClient, applicationsTable, resumesBucket, notifyEmail)
-	newsletterHandler := newsletter.New(dbClient, newsletterTable)
+	newsletterHandler := newsletter.New(dbClient, sesClient, newsletterTable, notifyEmail)
 	authHandler := auth.New(adminHospitalID, adminPassword)
 
 	r := router.New()
