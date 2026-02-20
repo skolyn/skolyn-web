@@ -10,16 +10,14 @@ var corsHeaders = map[string]string{
 	"Content-Type":                      "application/json",
 	"Access-Control-Allow-Origin":       "*",
 	"Access-Control-Allow-Methods":      "OPTIONS,POST",
-	"Access-Control-Allow-Headers":      "Content-Type",
+	"Access-Control-Allow-Headers":      "Content-Type, Authorization, Accept",
 	"Strict-Transport-Security":         "max-age=63072000; includeSubDomains; preload",
 	"X-Content-Type-Options":            "nosniff",
 	"X-Frame-Options":                   "DENY",
 	"X-XSS-Protection":                  "1; mode=block",
 	"Content-Security-Policy":           "default-src 'none'; frame-ancestors 'none'",
-	"Referrer-Policy":                   "strict-origin-when-cross-origin",
-	"Cross-Origin-Resource-Policy":      "same-site",
+	"Cross-Origin-Resource-Policy":      "cross-origin",
 	"Cross-Origin-Opener-Policy":        "same-origin",
-	"Cross-Origin-Embedder-Policy":      "require-corp",
 }
 
 // JSON builds an API Gateway V2 HTTP response with CORS headers.
