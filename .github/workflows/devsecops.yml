@@ -3,12 +3,8 @@ name: DevSecOps Backend CI
 on:
   push:
     branches: [ "main", "dev" ]
-    paths:
-      - 'backend/**'
   pull_request:
     branches: [ "main" ]
-    paths:
-      - 'backend/**'
 
 jobs:
   security-and-linting:
