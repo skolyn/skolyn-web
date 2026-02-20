@@ -53,7 +53,7 @@ jobs:
       - name: Upload Gosec SARIF Results
         uses: github/codeql-action/upload-sarif@v4
         with:
-          sarif_file: backend/results.sarif
+          sarif_file: results.sarif
 
       - name: Run govulncheck (CVE Scanner)
         run: |
