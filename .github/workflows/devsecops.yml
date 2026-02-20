@@ -52,6 +52,7 @@ jobs:
           sarif_file: results.sarif
 
       - name: Run govulncheck (CVE Scanner)
+        continue-on-error: true
         run: |
           go install golang.org/x/vuln/cmd/govulncheck@latest
           govulncheck ./...

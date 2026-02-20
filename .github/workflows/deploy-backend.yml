@@ -48,7 +48,7 @@ jobs:
       - name: SAM Deploy
         run: >
           sam deploy 
-          --stack-name skolyn-backend
+          --stack-name skolyn-api-backend
           --resolve-s3
           --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND
           --no-confirm-changeset
