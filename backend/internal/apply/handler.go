@@ -137,8 +137,9 @@ func (h *Handler) Handle(ctx context.Context, event events.APIGatewayV2HTTPReque
 		}
 	}
 
-	// Send email notification synchronously before Lambda freezes
-	h.notify(record)
+	// Send email notifications synchronously before Lambda freezes
+	h.notifyApplicant(record)
+	h.notifyHR(record)
 
 	return response.JSON(201, ApplicationResponse{
 		ID:              id,
@@ -177,15 +178,105 @@ func sanitiseFilename(name string) string {
 	return name
 }
 
-func (h *Handler) notify(r applicationRecord) {
+func (h *Handler) notifyApplicant(r applicationRecord) {
 	if h.notifyEmail == "" {
 		return
 	}
-	subject := fmt.Sprintf("New application for %s from %s %s", r.JobID, r.FirstName, r.LastName)
-	body := fmt.Sprintf(
-		"Position: %s\nName: %s %s\nEmail: %s\nPhone: %s\nLinkedIn: %s\nPortfolio: %s\nResume: %s\n\nCover Letter:\n%s",
-		r.JobID, r.FirstName, r.LastName, r.Email, r.Phone, r.LinkedIn, r.Portfolio, r.ResumeFileName, r.CoverLetter,
+	subject := "We have received your application - Skolyn"
+
+	htmlBody := fmt.Sprintf(`
+	<!DOCTYPE html>
+	<html>
+	<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+		<div style="text-align: center; margin-bottom: 20px;">
+			<h2 style="color: #0056b3;">Application Received</h2>
+		</div>
+		<p>Dear %s %s,</p>
+		<p>Thank you for submitting your application for the position <strong>%s</strong> at Skolyn.</p>
+		<p>Our Human Resources team will review your application and uploaded documents. We will contact you regarding the next steps if your qualifications match our current needs.</p>
+		<br>
+		<p>Best regards,<br><strong>The Skolyn Career Team</strong></p>
+		<hr style="border: none; border-top: 1px solid #eee; margin-top: 30px; margin-bottom: 20px;">
+		<p style="font-size: 12px; color: #777; text-align: center;">This is an automated message. Please do not reply to this email.</p>
+	</body>
+	</html>
+	`, r.FirstName, r.LastName, r.JobID)
+
+	textBody := fmt.Sprintf(
+		"Dear %s %s,\n\nThank you for submitting your application for the position %s at Skolyn.\nOur Human Resources team will review your application and uploaded documents. We will contact you regarding the next steps if your qualifications match our current needs.\n\nBest regards,\nThe Skolyn Career Team",
+		r.FirstName, r.LastName, r.JobID,
 	)
+
+	charset := "UTF-8"
+
+	_, err := h.ses.SendEmail(context.Background(), &ses.SendEmailInput{
+		Source: &h.notifyEmail,
+		Destination: &sestypes.Destination{
+			ToAddresses: []string{r.Email},
+		},
+		Message: &sestypes.Message{
+			Subject: &sestypes.Content{Data: &subject, Charset: &charset},
+			Body: &sestypes.Body{
+				Html: &sestypes.Content{Data: &htmlBody, Charset: &charset},
+				Text: &sestypes.Content{Data: &textBody, Charset: &charset},
+			},
+		},
+	})
+	if err != nil {
+		log.Printf("SES application confirmation send failed for %s: %v", r.Email, err)
+	}
+}
+
+func (h *Handler) notifyHR(r applicationRecord) {
+	if h.notifyEmail == "" {
+		return
+	}
+
+	resumeURL := ""
+	if r.ResumeS3Key != "" {
+		// Public object URL format: https://bucket-name.s3.region.amazonaws.com/key
+		// If bucket is strictly private, HR needs IAM access to view this link.
+		resumeURL = fmt.Sprintf("https://%s.s3.eu-north-1.amazonaws.com/%s", h.resumesBucket, r.ResumeS3Key)
+	}
+
+	subject := fmt.Sprintf("New Job Application: %s - %s %s", r.JobID, r.FirstName, r.LastName)
+
+	htmlBody := fmt.Sprintf(`
+	<!DOCTYPE html>
+	<html>
+	<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+		<h2 style="color: #0056b3; border-bottom: 2px solid #0056b3; padding-bottom: 10px;">New Job Application Received</h2>
+		
+		<p><strong>Position ID:</strong> %s</p>
+		<p><strong>Applicant Name:</strong> %s %s</p>
+		<p><strong>Email Address:</strong> <a href="mailto:%s">%s</a></p>
+		<p><strong>Phone Number:</strong> %s</p>
+		
+		<h3 style="margin-top: 25px; color: #444;">Professional Links</h3>
+		<ul>
+			<li><strong>LinkedIn:</strong> <a href="%s" target="_blank">%s</a></li>
+			<li><strong>Portfolio:</strong> <a href="%s" target="_blank">%s</a></li>
+		</ul>
+
+		<h3 style="margin-top: 25px; color: #444;">Application Documents</h3>
+		<ul>
+			<li><strong>Resume/CV:</strong> <a href="%s" target="_blank" style="background-color: #f0f0f0; padding: 4px 8px; border-radius: 4px; text-decoration: none; color: #0056b3; font-weight: bold;">Download / View Resume (%s)</a></li>
+		</ul>
+
+		<h3 style="margin-top: 25px; color: #444;">Cover Letter</h3>
+		<div style="background-color: #f9f9f9; padding: 15px; border-left: 4px solid #0056b3; white-space: pre-wrap;">%s</div>
+		
+		<hr style="border: none; border-top: 1px solid #eee; margin-top: 30px; margin-bottom: 20px;">
+		<p style="font-size: 12px; color: #777; text-align: center;">Skolyn Automated HR System</p>
+	</body>
+	</html>
+	`, r.JobID, r.FirstName, r.LastName, r.Email, r.Email, r.Phone, r.LinkedIn, r.LinkedIn, r.Portfolio, r.Portfolio, resumeURL, r.ResumeFileName, r.CoverLetter)
+
+	textBody := fmt.Sprintf(
+		"New Job Application\n\nPosition ID: %s\nApplicant: %s %s\nEmail: %s\nPhone: %s\nLinkedIn: %s\nPortfolio: %s\n\nResume URL: %s\n\nCover Letter:\n%s",
+		r.JobID, r.FirstName, r.LastName, r.Email, r.Phone, r.LinkedIn, r.Portfolio, resumeURL, r.CoverLetter,
+	)
+
 	charset := "UTF-8"
 
 	_, err := h.ses.SendEmail(context.Background(), &ses.SendEmailInput{
@@ -196,11 +287,12 @@ func (h *Handler) notify(r applicationRecord) {
 		Message: &sestypes.Message{
 			Subject: &sestypes.Content{Data: &subject, Charset: &charset},
 			Body: &sestypes.Body{
-				Text: &sestypes.Content{Data: &body, Charset: &charset},
+				Html: &sestypes.Content{Data: &htmlBody, Charset: &charset},
+				Text: &sestypes.Content{Data: &textBody, Charset: &charset},
 			},
 		},
 	})
 	if err != nil {
-		log.Printf("SES send failed for application %s: %v", r.ID, err)
+		log.Printf("SES HR notification send failed for application %s: %v", r.ID, err)
 	}
 }
