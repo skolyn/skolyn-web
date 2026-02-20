@@ -71,7 +71,7 @@ func (h *Handler) Handle(ctx context.Context, event events.APIGatewayV2HTTPReque
 		return response.JSON(500, map[string]string{"error": "Failed to subscribe"}), nil
 	}
 
-	go h.notifySubscriber(email)
+	h.notifySubscriber(email)
 
 	return response.JSON(201, map[string]string{"message": "Subscribed"}), nil
 }

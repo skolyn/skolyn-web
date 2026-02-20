@@ -101,8 +101,8 @@ func (h *Handler) Handle(ctx context.Context, event events.APIGatewayV2HTTPReque
 		return response.JSON(500, map[string]string{"error": "Failed to store message"}), nil
 	}
 
-	// Fire-and-forget email notification.
-	go h.notify(record)
+	// Send email notification synchronously before Lambda freezes
+	h.notify(record)
 
 	return response.JSON(201, map[string]string{"message": "Message received"}), nil
 }

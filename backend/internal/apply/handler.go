@@ -137,8 +137,8 @@ func (h *Handler) Handle(ctx context.Context, event events.APIGatewayV2HTTPReque
 		}
 	}
 
-	// Fire-and-forget email notification.
-	go h.notify(record)
+	// Send email notification synchronously before Lambda freezes
+	h.notify(record)
 
 	return response.JSON(201, ApplicationResponse{
 		ID:              id,
