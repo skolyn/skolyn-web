@@ -1,6 +1,7 @@
 import { Component, computed } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { ThemeService } from '../../services/theme.service';
+import { LanguageService, LANGUAGES, LangCode } from '../../services/language.service';
 
 @Component({
   selector: 'app-navbar',
@@ -216,10 +217,12 @@ import { ThemeService } from '../../services/theme.service';
               <span class="material-symbols-outlined sz-20 relative-top-1">language</span>
             </button>
             <div class="dropdown-menu dropdown-menu-right">
-              <a href="#" (click)="closeMenu()">English (US)</a>
-              <a href="#" (click)="closeMenu()">Deutsch</a>
-              <a href="#" (click)="closeMenu()">Svenska</a>
-              <a href="#" (click)="closeMenu()">Türkçe</a>
+              @for (lang of languages; track lang.code) {
+                <a (click)="setLanguage(lang.code); $event.preventDefault()" [class.active-lang]="currentLang() === lang.code" href="#">
+                  <span class="lang-flag">{{ lang.flag }}</span>
+                  {{ lang.label }}
+                </a>
+              }
             </div>
           </div>
 
@@ -356,16 +359,20 @@ import { ThemeService } from '../../services/theme.service';
       }
       .dropdown:hover .dropdown-menu { transform: none; }
     }
+    .active-lang { background: var(--md-sys-color-primary-container) !important; color: var(--md-sys-color-primary) !important; font-weight: 600; }
+    .lang-flag { font-size: 18px; line-height: 1; }
   `],
 })
 export class NavbarComponent {
   isScrolled = false;
   menuOpen = false;
   activeDropdown: string | null = null;
+  languages = LANGUAGES;
   
   isDarkTheme = computed(() => this.themeService.themeSignal() === 'dark');
+  currentLang = computed(() => this.languageService.languageSignal());
 
-  constructor(private themeService: ThemeService) {
+  constructor(private themeService: ThemeService, private languageService: LanguageService) {
     if (typeof window !== 'undefined') {
       window.addEventListener('scroll', () => { this.isScrolled = window.scrollY > 8; });
     }
@@ -373,6 +380,11 @@ export class NavbarComponent {
 
   toggleTheme() {
     this.themeService.toggleTheme();
+  }
+
+  setLanguage(code: LangCode) {
+    this.languageService.setLanguage(code);
+    this.closeMenu();
   }
 
   toggleMenu() {
@@ -391,7 +403,6 @@ export class NavbarComponent {
 
   onDropdownTrigger(event: Event, key: string) {
     if (typeof window !== 'undefined') {
-      // Allow trigger on desktop for language menu to click-toggle if needed
       if (window.innerWidth <= 1024 || key === 'language') {
         event.preventDefault();
         this.activeDropdown = this.activeDropdown === key ? null : key;
