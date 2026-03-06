@@ -1,0 +1,8 @@
+<svg width="248" height="64" viewBox="0 0 248 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="2" y="8" width="36" height="22" fill="#76B900"/>
+  <path d="M6 22C11 16 20 14 28 22C20 20 14 23 11 28C9 26 7 24 6 22Z" fill="white"/>
+  <text x="2" y="50" fill="#111111" font-family="Arial Black, Inter, Arial, sans-serif" font-size="19" font-weight="900">NVIDIA</text>
+  <line x1="48" y1="7" x2="48" y2="57" stroke="#CFCFCF" stroke-width="1.5"/>
+  <text x="58" y="28" fill="#111111" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="12" font-weight="600">INCEPTION</text>
+  <text x="58" y="44" fill="#111111" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="12" font-weight="600">PROGRAM</text>
+</svg>
