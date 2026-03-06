@@ -990,13 +990,13 @@ import { ToastService } from '../../services/toast.service';
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 56px;
+      height: 72px;
     }
 
     .partner-item img {
-      height: 48px;
+      height: 64px;
       width: auto;
-      max-width: 200px;
+      max-width: 260px;
       object-fit: contain;
       filter: grayscale(100%) opacity(0.45);
       transition: filter 0.3s ease, transform 0.3s ease;
