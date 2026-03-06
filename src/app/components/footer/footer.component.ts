@@ -196,9 +196,17 @@ import { ToastService } from '../../services/toast.service';
     .innoland-footer-logo { height: 28px; width: auto; }
     .programs-by { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
     .program-links { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-    .program-footer-link { display: flex; align-items: center; text-decoration: none; transition: opacity 0.2s; }
+    .program-footer-link {
+      display: flex; align-items: center; text-decoration: none; transition: opacity 0.2s;
+      padding: 4px 0;
+    }
     .program-footer-link:hover { opacity: 0.72; }
-    .program-footer-logo { height: 28px; width: auto; display: block; }
+    .program-footer-logo {
+      height: 30px; width: auto; display: block;
+      border-radius: 6px;
+      border: 1px solid var(--md-sys-color-outline-variant);
+      background: white;
+    }
     .newsletter-box { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--md-sys-color-outline-variant); }
     .newsletter-label { color: var(--md-sys-color-on-surface); margin-bottom: 10px; }
     .newsletter-form { display: flex; gap: 0; }
