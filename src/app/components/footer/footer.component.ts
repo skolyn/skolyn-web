@@ -100,49 +100,53 @@ import { ToastService } from '../../services/toast.service';
 
       <div class="footer-bottom">
         <div class="container-wide footer-bottom-inner">
-          <div class="incubated-by">
-            <span class="body-small text-secondary">Incubated by</span>
-            <a href="https://innoland.az" target="_blank" rel="noopener" class="innoland-footer-link">
-              <img src="assets/innoland-logo.svg" alt="Innoland Incubation Center" class="innoland-footer-logo" />
-            </a>
-          </div>
-          <div class="programs-by">
-            <span class="body-small text-secondary">Accelerated by</span>
-            <div class="program-links">
-              <a
-                href="https://www.microsoft.com/en-us/startups"
-                target="_blank"
-                rel="noopener"
-                class="program-footer-link"
-                aria-label="Microsoft for Startups Founders Hub"
-              >
-                <img src="assets/microsoft-for-startups.png" alt="Microsoft for Startups Founders Hub" class="program-footer-logo" />
-              </a>
-              <a
-                href="https://www.nvidia.com/en-us/startups/"
-                target="_blank"
-                rel="noopener"
-                class="program-footer-link"
-                aria-label="NVIDIA Inception Program"
-              >
-                <img src="assets/nvidia-inception.png" alt="NVIDIA Inception Program" class="program-footer-logo" />
+          <div class="footer-bottom-top">
+            <div class="incubated-by">
+              <span class="body-small text-secondary">Incubated by</span>
+              <a href="https://innoland.az" target="_blank" rel="noopener" class="innoland-footer-link">
+                <img src="assets/innoland-logo.svg" alt="Innoland Incubation Center" class="innoland-footer-logo" />
               </a>
             </div>
+            <div class="programs-by">
+              <span class="body-small text-secondary">Accelerated by</span>
+              <div class="program-links">
+                <a
+                  href="https://www.microsoft.com/en-us/startups"
+                  target="_blank"
+                  rel="noopener"
+                  class="program-footer-link"
+                  aria-label="Microsoft for Startups Founders Hub"
+                >
+                  <img src="assets/microsoft-for-startups.png" alt="Microsoft for Startups Founders Hub" class="program-footer-logo" />
+                </a>
+                <a
+                  href="https://www.nvidia.com/en-us/startups/"
+                  target="_blank"
+                  rel="noopener"
+                  class="program-footer-link"
+                  aria-label="NVIDIA Inception Program"
+                >
+                  <img src="assets/nvidia-inception.png" alt="NVIDIA Inception Program" class="program-footer-logo" />
+                </a>
+              </div>
+            </div>
           </div>
-          <p class="copyright">&copy; 2026 Skolyn. All rights reserved.</p>
-          <div class="footer-legal">
-            <a routerLink="/privacy">Privacy Policy</a>
-            <span class="divider">|</span>
-            <a routerLink="/terms">Terms of Service</a>
-            <span class="divider">|</span>
-            <a routerLink="/cookies">Cookie Policy</a>
-            <span class="divider">|</span>
-            <a routerLink="/accessibility">Accessibility</a>
-          </div>
-          <div class="footer-badges">
-            <span class="md-chip">HIPAA</span>
-            <span class="md-chip">GDPR</span>
-            <span class="md-chip">CE Mark</span>
+          <div class="footer-bottom-bottom">
+            <p class="copyright">&copy; 2026 Skolyn. All rights reserved.</p>
+            <div class="footer-legal">
+              <a routerLink="/privacy">Privacy Policy</a>
+              <span class="divider">|</span>
+              <a routerLink="/terms">Terms of Service</a>
+              <span class="divider">|</span>
+              <a routerLink="/cookies">Cookie Policy</a>
+              <span class="divider">|</span>
+              <a routerLink="/accessibility">Accessibility</a>
+            </div>
+            <div class="footer-badges">
+              <span class="md-chip">HIPAA</span>
+              <span class="md-chip">GDPR</span>
+              <span class="md-chip">CE Mark</span>
+            </div>
           </div>
         </div>
       </div>
@@ -183,7 +187,9 @@ import { ToastService } from '../../services/toast.service';
     }
     .office .material-symbols-outlined { color: var(--md-sys-color-on-surface-variant); }
     .footer-bottom { border-top: 1px solid var(--md-sys-color-outline-variant); padding: 20px 24px; }
-    .footer-bottom-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .footer-bottom-inner { display: flex; flex-direction: column; gap: 16px; }
+    .footer-bottom-top { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+    .footer-bottom-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; border-top: 1px solid var(--md-sys-color-outline-variant); padding-top: 16px; }
     .copyright { font: var(--md-sys-typescale-body-small); color: var(--md-sys-color-on-surface-variant); }
     .footer-legal { display: flex; align-items: center; gap: 8px; }
     .footer-legal a { font: var(--md-sys-typescale-body-small); color: var(--md-sys-color-on-surface-variant); text-decoration: none; transition: color 0.2s; }
@@ -202,7 +208,7 @@ import { ToastService } from '../../services/toast.service';
     }
     .program-footer-link:hover { opacity: 0.72; }
     .program-footer-logo {
-      height: 28px; width: auto; display: block;
+      height: 44px; width: auto; display: block;
     }
     .newsletter-box { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--md-sys-color-outline-variant); }
     .newsletter-label { color: var(--md-sys-color-on-surface); margin-bottom: 10px; }
