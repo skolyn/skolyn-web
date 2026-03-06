@@ -202,10 +202,7 @@ import { ToastService } from '../../services/toast.service';
     }
     .program-footer-link:hover { opacity: 0.72; }
     .program-footer-logo {
-      height: 30px; width: auto; display: block;
-      border-radius: 6px;
-      border: 1px solid var(--md-sys-color-outline-variant);
-      background: white;
+      height: 28px; width: auto; display: block;
     }
     .newsletter-box { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--md-sys-color-outline-variant); }
     .newsletter-label { color: var(--md-sys-color-on-surface); margin-bottom: 10px; }
