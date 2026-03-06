@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnInit, inject } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, AfterViewInit, OnDestroy, inject, NgZone } from '@angular/core';
 import { NgFor } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ToastService } from '../../services/toast.service';
@@ -89,8 +89,14 @@ import { ToastService } from '../../services/toast.service';
           <span class="partners-label">Trusted by leading institutions</span>
         </div>
       </div>
-      <div class="partners-marquee">
-        <div class="partners-scroll-wrapper">
+      <div class="partners-marquee" #marquee
+           (mouseenter)="onMarqueeEnter()"
+           (mouseleave)="onMarqueeLeave()"
+           (mousedown)="onMarqueeDown($event)"
+           (mousemove)="onMarqueeMove($event)"
+           (mouseup)="onMarqueeUp()"
+      >
+        <div class="partners-scroll-wrapper" [class.paused]="isMarqueePaused" #scrollWrapper>
           <div class="partners-track" #track>
             <a class="partner-item" *ngFor="let partner of partners"
                [href]="partner.url" target="_blank" rel="noopener noreferrer"
@@ -285,9 +291,9 @@ import { ToastService } from '../../services/toast.service';
               </div>
               <div class="confidence-bar-wrapper">
                 <div class="confidence-bar">
-                  <div class="confidence-fill green" style="width: 94%"></div>
+                  <div class="confidence-fill green" #confidenceFill [style.width]="confidenceWidth + '%'"></div>
                 </div>
-                <span class="confidence-value">94%</span>
+                <span class="confidence-value">{{ confidenceDisplay }}%</span>
               </div>
               <div class="confidence-label">High Confidence</div>
               <hr class="md-divider" />
@@ -961,7 +967,7 @@ import { ToastService } from '../../services/toast.service';
     .partners-scroll-wrapper {
       display: flex;
       width: max-content;
-      animation: partnersScroll 120s linear infinite;
+      animation: partnersScroll 80s linear infinite;
       will-change: transform;
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
@@ -983,6 +989,10 @@ import { ToastService } from '../../services/toast.service';
     @keyframes partnersScroll {
       0% { transform: translate3d(0, 0, 0); }
       100% { transform: translate3d(-50%, 0, 0); }
+    }
+
+    .partners-scroll-wrapper.paused {
+      animation-play-state: paused;
     }
 
     .partner-item {
@@ -1092,7 +1102,106 @@ import { ToastService } from '../../services/toast.service';
     }
   `],
 })
-export class HomeComponent {
+export class HomeComponent implements AfterViewInit, OnDestroy {
+  @ViewChild('confidenceFill') confidenceFillRef!: ElementRef<HTMLDivElement>;
+  @ViewChild('marquee') marqueeRef!: ElementRef<HTMLDivElement>;
+  @ViewChild('scrollWrapper') scrollWrapperRef!: ElementRef<HTMLDivElement>;
+
+  private zone = inject(NgZone);
+  private observer?: IntersectionObserver;
+
+  confidenceWidth = 0;
+  confidenceDisplay = 0;
+  isMarqueePaused = false;
+
+  // Drag state
+  private isDragging = false;
+  private dragStartX = 0;
+  private scrollStartX = 0;
+  private hasDragged = false;
+
+  ngAfterViewInit() {
+    this.setupConfidenceObserver();
+  }
+
+  ngOnDestroy() {
+    this.observer?.disconnect();
+  }
+
+  private setupConfidenceObserver() {
+    const el = this.confidenceFillRef?.nativeElement;
+    if (!el) return;
+    this.observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          this.zone.run(() => this.animateConfidence());
+          this.observer?.disconnect();
+        }
+      });
+    }, { threshold: 0.3 });
+    this.observer.observe(el);
+  }
+
+  private animateConfidence() {
+    const target = 94;
+    const duration = 1800;
+    const startTime = performance.now();
+    const step = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      this.confidenceWidth = Math.round(eased * target);
+      this.confidenceDisplay = Math.round(eased * target);
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      }
+    };
+    requestAnimationFrame(step);
+  }
+
+  // Marquee interactions
+  onMarqueeEnter() {
+    if (!this.isDragging) this.isMarqueePaused = true;
+  }
+
+  onMarqueeLeave() {
+    this.isMarqueePaused = false;
+    this.isDragging = false;
+  }
+
+  onMarqueeDown(e: MouseEvent) {
+    this.isDragging = true;
+    this.hasDragged = false;
+    this.dragStartX = e.clientX;
+    this.isMarqueePaused = true;
+    const wrapper = this.scrollWrapperRef?.nativeElement;
+    if (wrapper) {
+      const transform = getComputedStyle(wrapper).transform;
+      const matrix = new DOMMatrix(transform);
+      this.scrollStartX = matrix.m41;
+    }
+  }
+
+  onMarqueeMove(e: MouseEvent) {
+    if (!this.isDragging) return;
+    const dx = e.clientX - this.dragStartX;
+    if (Math.abs(dx) > 3) this.hasDragged = true;
+    const wrapper = this.scrollWrapperRef?.nativeElement;
+    if (wrapper) {
+      wrapper.style.transform = `translate3d(${this.scrollStartX + dx}px, 0, 0)`;
+    }
+  }
+
+  onMarqueeUp() {
+    if (this.hasDragged) {
+      // prevent link click after drag
+      const wrapper = this.scrollWrapperRef?.nativeElement;
+      if (wrapper) {
+        wrapper.addEventListener('click', (e: Event) => e.preventDefault(), { once: true, capture: true });
+      }
+    }
+    this.isDragging = false;
+  }
 
   partners = [
     // Global Programs
@@ -1124,7 +1233,7 @@ export class HomeComponent {
     { name: 'HUS Helsinki University Hospital', logo: 'partners/finland/hus-helsinki.svg', country: 'Finland', url: 'https://www.hus.fi/en' },
     { name: 'Business Finland', logo: 'partners/finland/business-finland.svg', country: 'Finland', url: 'https://www.businessfinland.fi/en' },
     { name: 'Findata', logo: 'partners/finland/findata.svg', country: 'Finland', url: 'https://www.findata.fi/en/' },
-    { name: 'VTT', logo: 'partners/finland/vtt.svg', country: 'Finland', url: 'https://www.vttresearch.com/en' },
+
     { name: 'TAYS Tampere University Hospital', logo: 'partners/finland/tays.svg', country: 'Finland', url: 'https://www.pirha.fi/web/english/services/hospital-care' },
     { name: 'Health Capital Helsinki', logo: 'partners/finland/health-capital-helsinki.svg', country: 'Finland', url: 'https://www.healthcapitalhelsinki.fi/' },
     // Denmark

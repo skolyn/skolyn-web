@@ -175,12 +175,12 @@ export class PartnersComponent {
       name: 'Finland',
       code: 'FI',
       flag: '🇫🇮',
-      subtitle: '6 partnerships in hospital systems, health data, and innovation',
+      subtitle: '5 partnerships in hospital systems, health data, and innovation',
       partners: [
         { name: 'HUS Helsinki University Hospital', logo: 'partners/finland/hus-helsinki.png', type: 'University Hospital', url: 'https://www.hus.fi/en' },
         { name: 'Business Finland', logo: 'partners/finland/business-finland.png', type: 'Innovation Agency', url: 'https://www.businessfinland.fi/en' },
         { name: 'Findata', logo: 'partners/finland/findata.png', type: 'Health Data Authority', url: 'https://www.findata.fi/en/' },
-        { name: 'VTT', logo: 'partners/finland/vtt.png', type: 'Research Centre', url: 'https://www.vttresearch.com/en' },
+
         { name: 'TAYS Tampere University Hospital', logo: 'partners/finland/tays.png', type: 'University Hospital', url: 'https://www.pirha.fi/web/english/services/hospital-care' },
         { name: 'Health Capital Helsinki', logo: 'partners/finland/health-capital-helsinki.png', type: 'Innovation Cluster', url: 'https://www.healthcapitalhelsinki.fi/' },
       ]
