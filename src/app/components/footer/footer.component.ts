@@ -140,8 +140,6 @@ import { ToastService } from '../../services/toast.service';
             <a routerLink="/accessibility">Accessibility</a>
           </div>
           <div class="footer-badges">
-            <span class="md-chip">ISO 13485</span>
-            <span class="md-chip">ISO 27001</span>
             <span class="md-chip">HIPAA</span>
             <span class="md-chip">GDPR</span>
             <span class="md-chip">CE Mark</span>
