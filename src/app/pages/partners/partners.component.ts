@@ -209,7 +209,7 @@ export class PartnersComponent {
         { name: 'Tartu University Hospital', logo: 'partners/estonia/tartu-university-hospital.png', type: 'University Hospital', url: 'https://www.kliinikum.ee/' },
         { name: 'Tervisekassa', logo: 'partners/estonia/estonian-health-insurance-fund.png', type: 'Health Insurance', url: 'https://www.tervisekassa.ee/' },
         { name: 'TEHIK', logo: 'partners/estonia/tehik.png', type: 'Health IT', url: 'https://www.tehik.ee/' },
-        { name: 'Tehnopol', logo: 'partners/estonia/tehnopol.png', type: 'Innovation Hub', url: 'https://www.tehnopol.ee/' },
+        { name: 'Tehnopol', logo: 'partners/estonia/tehnopol.svg', type: 'Innovation Hub', url: 'https://www.tehnopol.ee/' },
         { name: 'Ministry of Social Affairs', logo: 'partners/estonia/ministry-of-social-affairs-ee.png', type: 'Government', url: 'https://www.sm.ee/' },
       ]
     },

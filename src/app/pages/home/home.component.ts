@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnInit, AfterViewInit, OnDestroy, inject, NgZone } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, inject } from '@angular/core';
 import { NgFor } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ToastService } from '../../services/toast.service';
@@ -291,9 +291,9 @@ import { ToastService } from '../../services/toast.service';
               </div>
               <div class="confidence-bar-wrapper">
                 <div class="confidence-bar">
-                  <div class="confidence-fill green" #confidenceFill [style.width]="confidenceWidth + '%'"></div>
+                  <div class="confidence-fill green" style="width: 94%"></div>
                 </div>
-                <span class="confidence-value">{{ confidenceDisplay }}%</span>
+                <span class="confidence-value">94%</span>
               </div>
               <div class="confidence-label">High Confidence</div>
               <hr class="md-divider" />
@@ -1102,16 +1102,10 @@ import { ToastService } from '../../services/toast.service';
     }
   `],
 })
-export class HomeComponent implements AfterViewInit, OnDestroy {
-  @ViewChild('confidenceFill') confidenceFillRef!: ElementRef<HTMLDivElement>;
+export class HomeComponent {
   @ViewChild('marquee') marqueeRef!: ElementRef<HTMLDivElement>;
   @ViewChild('scrollWrapper') scrollWrapperRef!: ElementRef<HTMLDivElement>;
 
-  private zone = inject(NgZone);
-  private observer?: IntersectionObserver;
-
-  confidenceWidth = 0;
-  confidenceDisplay = 0;
   isMarqueePaused = false;
 
   // Drag state
@@ -1119,45 +1113,6 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   private dragStartX = 0;
   private scrollStartX = 0;
   private hasDragged = false;
-
-  ngAfterViewInit() {
-    this.setupConfidenceObserver();
-  }
-
-  ngOnDestroy() {
-    this.observer?.disconnect();
-  }
-
-  private setupConfidenceObserver() {
-    const el = this.confidenceFillRef?.nativeElement;
-    if (!el) return;
-    this.observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          this.zone.run(() => this.animateConfidence());
-          this.observer?.disconnect();
-        }
-      });
-    }, { threshold: 0.3 });
-    this.observer.observe(el);
-  }
-
-  private animateConfidence() {
-    const target = 94;
-    const duration = 1800;
-    const startTime = performance.now();
-    const step = (now: number) => {
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      this.confidenceWidth = Math.round(eased * target);
-      this.confidenceDisplay = Math.round(eased * target);
-      if (progress < 1) {
-        requestAnimationFrame(step);
-      }
-    };
-    requestAnimationFrame(step);
-  }
 
   // Marquee interactions
   onMarqueeEnter() {
@@ -1194,7 +1149,6 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
 
   onMarqueeUp() {
     if (this.hasDragged) {
-      // prevent link click after drag
       const wrapper = this.scrollWrapperRef?.nativeElement;
       if (wrapper) {
         wrapper.addEventListener('click', (e: Event) => e.preventDefault(), { once: true, capture: true });

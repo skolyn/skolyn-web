@@ -188,7 +188,7 @@ import { ToastService } from '../../services/toast.service';
     .office .material-symbols-outlined { color: var(--md-sys-color-on-surface-variant); }
     .footer-bottom { border-top: 1px solid var(--md-sys-color-outline-variant); padding: 20px 24px; }
     .footer-bottom-inner { display: flex; flex-direction: column; gap: 16px; }
-    .footer-bottom-top { display: flex; align-items: flex-start; gap: 24px; flex-wrap: wrap; }
+    .footer-bottom-top { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
     .footer-bottom-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; border-top: 1px solid var(--md-sys-color-outline-variant); padding-top: 16px; }
     .copyright { font: var(--md-sys-typescale-body-small); color: var(--md-sys-color-on-surface-variant); }
     .footer-legal { display: flex; align-items: center; gap: 8px; }
@@ -199,16 +199,16 @@ import { ToastService } from '../../services/toast.service';
     .incubated-by { display: flex; align-items: center; gap: 10px; }
     .innoland-footer-link { display: flex; align-items: center; text-decoration: none; transition: opacity 0.2s; }
     .innoland-footer-link:hover { opacity: 0.7; }
-    .innoland-footer-logo { height: 28px; width: auto; }
+    .innoland-footer-logo { height: 36px; width: auto; }
     .programs-by { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-    .program-links { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .program-links { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
     .program-footer-link {
       display: flex; align-items: center; text-decoration: none; transition: opacity 0.2s;
       padding: 4px 0;
     }
     .program-footer-link:hover { opacity: 0.72; }
     .program-footer-logo {
-      height: 52px; width: auto; display: block;
+      height: 40px; width: auto; display: block;
     }
     .newsletter-box { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--md-sys-color-outline-variant); }
     .newsletter-label { color: var(--md-sys-color-on-surface); margin-bottom: 10px; }
