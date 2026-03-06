@@ -113,19 +113,19 @@ import { ToastService } from '../../services/toast.service';
                 href="https://www.microsoft.com/en-us/startups"
                 target="_blank"
                 rel="noopener"
-                class="innoland-footer-link"
+                class="program-footer-link"
                 aria-label="Microsoft for Startups Founders Hub"
               >
-                <img src="partners/programs/microsoft-for-startups.svg" alt="Microsoft for Startups Founders Hub" class="innoland-footer-logo" />
+                <img src="partners/programs/microsoft-for-startups.svg" alt="Microsoft for Startups Founders Hub" class="program-footer-logo" />
               </a>
               <a
                 href="https://www.nvidia.com/en-us/startups/"
                 target="_blank"
                 rel="noopener"
-                class="innoland-footer-link"
+                class="program-footer-link"
                 aria-label="NVIDIA Inception Program"
               >
-                <img src="partners/programs/nvidia-inception.svg" alt="NVIDIA Inception Program" class="innoland-footer-logo" />
+                <img src="partners/programs/nvidia-inception.svg" alt="NVIDIA Inception Program" class="program-footer-logo" />
               </a>
             </div>
           </div>
@@ -196,6 +196,17 @@ import { ToastService } from '../../services/toast.service';
     .innoland-footer-logo { height: 28px; width: auto; }
     .programs-by { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
     .program-links { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .program-footer-link {
+      display: flex; align-items: center; text-decoration: none; transition: opacity 0.2s;
+      padding: 4px 0;
+    }
+    .program-footer-link:hover { opacity: 0.72; }
+    .program-footer-logo {
+      height: 30px; width: auto; display: block;
+      border-radius: 6px;
+      border: 1px solid var(--md-sys-color-outline-variant);
+      background: white;
+    }
     .newsletter-box { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--md-sys-color-outline-variant); }
     .newsletter-label { color: var(--md-sys-color-on-surface); margin-bottom: 10px; }
     .newsletter-form { display: flex; gap: 0; }
