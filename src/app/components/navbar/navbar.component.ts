@@ -330,6 +330,9 @@ import { ThemeService } from '../../services/theme.service';
       .hamburger { display: flex; align-items: center; justify-content: center; }
       .brand-logo-wide { display: none; }
       .brand-logo-icon { display: block; }
+      .navbar-actions { gap: 4px; }
+      .icon-toggle { width: 36px; height: 36px; }
+      .navbar-login-btn { display: none; }
       .navbar-links {
         position: absolute; top: 100%; left: 0; right: 0;
         height: calc(100dvh - var(--navbar-height));

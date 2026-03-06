@@ -42,3 +42,8 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# Manually managed partner/program logos
+src/assets/microsoft-for-startups.png
+src/assets/nvidia-inception.png
+public/partners/programs/innoland.svg
