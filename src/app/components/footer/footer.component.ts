@@ -188,7 +188,7 @@ import { ToastService } from '../../services/toast.service';
     .office .material-symbols-outlined { color: var(--md-sys-color-on-surface-variant); }
     .footer-bottom { border-top: 1px solid var(--md-sys-color-outline-variant); padding: 20px 24px; }
     .footer-bottom-inner { display: flex; flex-direction: column; gap: 16px; }
-    .footer-bottom-top { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+    .footer-bottom-top { display: flex; align-items: flex-start; gap: 24px; flex-wrap: wrap; }
     .footer-bottom-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; border-top: 1px solid var(--md-sys-color-outline-variant); padding-top: 16px; }
     .copyright { font: var(--md-sys-typescale-body-small); color: var(--md-sys-color-on-surface-variant); }
     .footer-legal { display: flex; align-items: center; gap: 8px; }
@@ -196,11 +196,11 @@ import { ToastService } from '../../services/toast.service';
     .footer-legal a:hover { color: var(--md-sys-color-primary); }
     .footer-legal .divider { color: var(--md-sys-color-outline); }
     .footer-badges { display: flex; gap: 8px; flex-wrap: wrap; }
-    .incubated-by { display: flex; align-items: flex-start; gap: 10px; }
+    .incubated-by { display: flex; align-items: center; gap: 10px; }
     .innoland-footer-link { display: flex; align-items: center; text-decoration: none; transition: opacity 0.2s; }
     .innoland-footer-link:hover { opacity: 0.7; }
     .innoland-footer-logo { height: 28px; width: auto; }
-    .programs-by { display: flex; align-items: flex-start; gap: 10px; flex-wrap: wrap; }
+    .programs-by { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
     .program-links { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .program-footer-link {
       display: flex; align-items: center; text-decoration: none; transition: opacity 0.2s;
