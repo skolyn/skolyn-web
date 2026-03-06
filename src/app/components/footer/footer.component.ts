@@ -199,7 +199,7 @@ import { ToastService } from '../../services/toast.service';
     .incubated-by { display: flex; align-items: center; gap: 10px; }
     .innoland-footer-link { display: flex; align-items: center; text-decoration: none; transition: opacity 0.2s; }
     .innoland-footer-link:hover { opacity: 0.7; }
-    .innoland-footer-logo { height: 36px; width: auto; }
+    .innoland-footer-logo { height: 28px; width: auto; }
     .programs-by { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
     .program-links { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
     .program-footer-link {
