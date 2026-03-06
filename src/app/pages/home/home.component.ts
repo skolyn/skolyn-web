@@ -1163,6 +1163,10 @@ export class HomeComponent {
     this.trackRef.nativeElement.style.transform = `translate3d(${delta}px, 0, 0)`;
   }
   partners = [
+    // Global Programs
+    { name: 'Innoland Incubation Center', logo: 'partners/programs/innoland.svg', country: 'Azerbaijan', url: 'https://innoland.az' },
+    { name: 'Microsoft for Startups Founders Hub', logo: 'partners/programs/microsoft-for-startups.svg', country: 'Global', url: 'https://www.microsoft.com/en-us/startups' },
+    { name: 'NVIDIA Inception Program', logo: 'partners/programs/nvidia-inception.svg', country: 'Global', url: 'https://www.nvidia.com/en-us/startups/' },
     // Azerbaijan
     { name: 'TƏBİB', logo: 'partners/azerbaijan/tabib.png', country: 'Azerbaijan', url: 'https://www.tabib.gov.az/' },
     { name: 'Azərbaycan Respublikası Səhiyyə Nazirliyi', logo: 'partners/azerbaijan/ministry-of-health-az.png', country: 'Azerbaijan', url: 'https://www.sehiyye.gov.az/' },
