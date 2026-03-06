@@ -106,6 +106,29 @@ import { ToastService } from '../../services/toast.service';
               <img src="assets/innoland-logo.svg" alt="Innoland Incubation Center" class="innoland-footer-logo" />
             </a>
           </div>
+          <div class="programs-by">
+            <span class="body-small text-secondary">Accelerated by</span>
+            <div class="program-links">
+              <a
+                href="https://www.microsoft.com/en-us/startups"
+                target="_blank"
+                rel="noopener"
+                class="program-footer-link"
+                aria-label="Microsoft for Startups Founders Hub"
+              >
+                <img src="partners/programs/microsoft-for-startups.svg" alt="Microsoft for Startups Founders Hub" class="program-footer-logo" />
+              </a>
+              <a
+                href="https://www.nvidia.com/en-us/startups/"
+                target="_blank"
+                rel="noopener"
+                class="program-footer-link"
+                aria-label="NVIDIA Inception Program"
+              >
+                <img src="partners/programs/nvidia-inception.svg" alt="NVIDIA Inception Program" class="program-footer-logo" />
+              </a>
+            </div>
+          </div>
           <p class="copyright">&copy; 2026 Skolyn. All rights reserved.</p>
           <div class="footer-legal">
             <a routerLink="/privacy">Privacy Policy</a>
@@ -117,8 +140,6 @@ import { ToastService } from '../../services/toast.service';
             <a routerLink="/accessibility">Accessibility</a>
           </div>
           <div class="footer-badges">
-            <span class="md-chip">ISO 13485</span>
-            <span class="md-chip">ISO 27001</span>
             <span class="md-chip">HIPAA</span>
             <span class="md-chip">GDPR</span>
             <span class="md-chip">CE Mark</span>
@@ -173,6 +194,11 @@ import { ToastService } from '../../services/toast.service';
     .innoland-footer-link { display: flex; align-items: center; text-decoration: none; transition: opacity 0.2s; }
     .innoland-footer-link:hover { opacity: 0.7; }
     .innoland-footer-logo { height: 28px; width: auto; }
+    .programs-by { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .program-links { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .program-footer-link { display: flex; align-items: center; text-decoration: none; transition: opacity 0.2s; }
+    .program-footer-link:hover { opacity: 0.72; }
+    .program-footer-logo { height: 28px; width: auto; display: block; }
     .newsletter-box { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--md-sys-color-outline-variant); }
     .newsletter-label { color: var(--md-sys-color-on-surface); margin-bottom: 10px; }
     .newsletter-form { display: flex; gap: 0; }
@@ -198,6 +224,7 @@ import { ToastService } from '../../services/toast.service';
       .footer-grid { grid-template-columns: 1fr; gap: 32px; }
       .footer-main { padding: 40px 16px 32px; }
       .footer-bottom-inner { flex-direction: column; align-items: flex-start; }
+      .programs-by, .program-links { align-items: flex-start; }
     }
   `],
 })
