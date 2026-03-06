@@ -1,8 +1,0 @@
-<svg width="420" height="140" viewBox="0 0 420 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="420" height="140" rx="14" fill="#FFFFFF"/>
-  <rect x="1.5" y="1.5" width="417" height="137" rx="12.5" stroke="#D8DCE3" stroke-width="3"/>
-  <circle cx="56" cy="70" r="30" fill="#E8EEF9"/>
-  <text x="56" y="77" text-anchor="middle" fill="#2C4A7A" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700">MOS</text>
-  <text x="100" y="62" fill="#202124" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="600">Ministry of Social Affairs (</text>
-  <text x="100" y="88" fill="#5F6368" font-family="Inter, Arial, sans-serif" font-size="14">Partner Institution</text>
-</svg>

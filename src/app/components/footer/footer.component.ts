@@ -116,7 +116,7 @@ import { ToastService } from '../../services/toast.service';
                 class="program-footer-link"
                 aria-label="Microsoft for Startups Founders Hub"
               >
-                <img src="partners/programs/microsoft-for-startups.svg" alt="Microsoft for Startups Founders Hub" class="program-footer-logo" />
+                <img src="assets/microsoft-for-startups.png" alt="Microsoft for Startups Founders Hub" class="program-footer-logo" />
               </a>
               <a
                 href="https://www.nvidia.com/en-us/startups/"
@@ -125,7 +125,7 @@ import { ToastService } from '../../services/toast.service';
                 class="program-footer-link"
                 aria-label="NVIDIA Inception Program"
               >
-                <img src="partners/programs/nvidia-inception.svg" alt="NVIDIA Inception Program" class="program-footer-logo" />
+                <img src="assets/nvidia-inception.png" alt="NVIDIA Inception Program" class="program-footer-logo" />
               </a>
             </div>
           </div>
