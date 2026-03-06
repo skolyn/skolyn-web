@@ -89,24 +89,17 @@ import { ToastService } from '../../services/toast.service';
           <span class="partners-label">Trusted by leading institutions</span>
         </div>
       </div>
-      <div class="partners-marquee"
-           (mousedown)="onDragStart($event)"
-           (mousemove)="onDragMove($event)"
-           (mouseup)="onDragEnd()"
-           (mouseleave)="onDragEnd()"
-           (touchstart)="onTouchStart($event)"
-           (touchmove)="onTouchMove($event)"
-           (touchend)="onDragEnd()">
+      <div class="partners-marquee">
         <div class="partners-scroll-wrapper">
           <div class="partners-track" #track>
             <a class="partner-item" *ngFor="let partner of partners"
                [href]="partner.url" target="_blank" rel="noopener noreferrer"
-               (click)="onPartnerClick($event)">
+               >
               <img [src]="partner.logo" [alt]="partner.name" [title]="partner.name" loading="lazy" draggable="false" />
             </a>
             <a class="partner-item" *ngFor="let partner of partners"
                [href]="partner.url" target="_blank" rel="noopener noreferrer"
-               (click)="onPartnerClick($event)">
+               >
               <img [src]="partner.logo" [alt]="partner.name" [title]="partner.name" loading="lazy" draggable="false" />
             </a>
           </div>
@@ -968,10 +961,11 @@ import { ToastService } from '../../services/toast.service';
     .partners-scroll-wrapper {
       display: flex;
       width: max-content;
-      animation: partnersScroll 90s linear infinite;
+      animation: partnersScroll 120s linear infinite;
       will-change: transform;
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
+      transform: translate3d(0, 0, 0);
     }
 
     .partners-track {
@@ -983,6 +977,7 @@ import { ToastService } from '../../services/toast.service';
       will-change: transform;
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
+      transform: translate3d(0, 0, 0);
     }
 
     @keyframes partnersScroll {
@@ -1098,70 +1093,7 @@ import { ToastService } from '../../services/toast.service';
   `],
 })
 export class HomeComponent {
-  @ViewChild('track') trackRef!: ElementRef<HTMLDivElement>;
 
-  private isDragging = false;
-  private hasDragged = false;
-  private startX = 0;
-  private dragOffset = 0;
-
-  onPartnerClick(e: Event) {
-    if (this.hasDragged) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-  }
-
-  onDragStart(e: MouseEvent) {
-    this.isDragging = true;
-    this.hasDragged = false;
-    this.startX = e.clientX;
-    this.dragOffset = 0;
-    const track = this.trackRef.nativeElement;
-    track.style.transition = 'none';
-    track.style.transform = 'translate3d(0, 0, 0)';
-  }
-
-  onDragMove(e: MouseEvent) {
-    if (!this.isDragging) return;
-    e.preventDefault();
-    const delta = e.clientX - this.startX;
-    if (Math.abs(delta) > 3) this.hasDragged = true;
-    this.dragOffset = delta;
-    this.trackRef.nativeElement.style.transform = `translate3d(${delta}px, 0, 0)`;
-  }
-
-  onDragEnd() {
-    if (!this.isDragging) return;
-    this.isDragging = false;
-    const track = this.trackRef.nativeElement;
-    // Smoothly animate back to 0 offset
-    track.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-    track.style.transform = 'translate3d(0, 0, 0)';
-    // Clean up transition after it completes
-    setTimeout(() => {
-      track.style.transition = '';
-      track.style.transform = '';
-    }, 450);
-  }
-
-  onTouchStart(e: TouchEvent) {
-    this.isDragging = true;
-    this.hasDragged = false;
-    this.startX = e.touches[0].clientX;
-    this.dragOffset = 0;
-    const track = this.trackRef.nativeElement;
-    track.style.transition = 'none';
-    track.style.transform = 'translate3d(0, 0, 0)';
-  }
-
-  onTouchMove(e: TouchEvent) {
-    if (!this.isDragging) return;
-    const delta = e.touches[0].clientX - this.startX;
-    if (Math.abs(delta) > 3) this.hasDragged = true;
-    this.dragOffset = delta;
-    this.trackRef.nativeElement.style.transform = `translate3d(${delta}px, 0, 0)`;
-  }
   partners = [
     // Global Programs
     { name: 'Innoland Incubation Center', logo: 'partners/programs/innoland.svg', country: 'Azerbaijan', url: 'https://innoland.az' },
@@ -1176,7 +1108,7 @@ export class HomeComponent {
     { name: 'Azərbaycan Tibb Universiteti', logo: 'partners/azerbaijan/azerbaijan-medical-university.png', country: 'Azerbaijan', url: 'https://www.amu.edu.az/' },
     { name: 'Elmi-Tədqiqat Ağ Ciyər Xəstəlikləri İnstitutu', logo: 'partners/azerbaijan/lung-diseases-institute.png', country: 'Azerbaijan', url: 'https://www.etacxi.az/' },
     { name: 'C4IR Azerbaijan / 4SİM', logo: 'partners/azerbaijan/c4ir-azerbaijan.png', country: 'Azerbaijan', url: 'https://www.c4irazerbaijan.org/' },
-    { name: 'Mərkəzi Gömrük Hospitalı', logo: 'partners/azerbaijan/customs-hospital.png', country: 'Azerbaijan', url: 'https://www.customshospital.az/' },
+    { name: 'Mərkəzi Gömrük Hospitalı', logo: 'partners/azerbaijan/custom-hospital.png', country: 'Azerbaijan', url: 'https://www.customshospital.az/' },
     // Sweden
     { name: 'Region Stockholm', logo: 'partners/sweden/region-stockholm.png', country: 'Sweden', url: 'https://www.regionstockholm.se/' },
     { name: 'Karolinska University Hospital', logo: 'partners/sweden/karolinska.png', country: 'Sweden', url: 'https://www.karolinska.se/' },
@@ -1189,12 +1121,12 @@ export class HomeComponent {
     { name: 'Socialstyrelsen', logo: 'partners/sweden/socialstyrelsen.png', country: 'Sweden', url: 'https://www.socialstyrelsen.se/en/' },
     { name: 'SciLifeLab', logo: 'partners/sweden/scilifelab.png', country: 'Sweden', url: 'https://www.scilifelab.se/' },
     // Finland
-    { name: 'HUS Helsinki University Hospital', logo: 'partners/finland/hus-helsinki.png', country: 'Finland', url: 'https://www.hus.fi/en' },
-    { name: 'Business Finland', logo: 'partners/finland/business-finland.png', country: 'Finland', url: 'https://www.businessfinland.fi/en' },
-    { name: 'Findata', logo: 'partners/finland/findata.png', country: 'Finland', url: 'https://www.findata.fi/en/' },
-    { name: 'VTT', logo: 'partners/finland/vtt.png', country: 'Finland', url: 'https://www.vttresearch.com/en' },
-    { name: 'TAYS Tampere University Hospital', logo: 'partners/finland/tays.png', country: 'Finland', url: 'https://www.pirha.fi/web/english/services/hospital-care' },
-    { name: 'Health Capital Helsinki', logo: 'partners/finland/health-capital-helsinki.png', country: 'Finland', url: 'https://www.healthcapitalhelsinki.fi/' },
+    { name: 'HUS Helsinki University Hospital', logo: 'partners/finland/hus-helsinki.svg', country: 'Finland', url: 'https://www.hus.fi/en' },
+    { name: 'Business Finland', logo: 'partners/finland/business-finland.svg', country: 'Finland', url: 'https://www.businessfinland.fi/en' },
+    { name: 'Findata', logo: 'partners/finland/findata.svg', country: 'Finland', url: 'https://www.findata.fi/en/' },
+    { name: 'VTT', logo: 'partners/finland/vtt.svg', country: 'Finland', url: 'https://www.vttresearch.com/en' },
+    { name: 'TAYS Tampere University Hospital', logo: 'partners/finland/tays.svg', country: 'Finland', url: 'https://www.pirha.fi/web/english/services/hospital-care' },
+    { name: 'Health Capital Helsinki', logo: 'partners/finland/health-capital-helsinki.svg', country: 'Finland', url: 'https://www.healthcapitalhelsinki.fi/' },
     // Denmark
     { name: 'Rigshospitalet', logo: 'partners/denmark/rigshospitalet.png', country: 'Denmark', url: 'https://www.rigshospitalet.dk/english/Pages/default.aspx' },
     { name: 'Danish Health Data Authority', logo: 'partners/denmark/danish-health-data-authority.png', country: 'Denmark', url: 'https://english.sundhedsdatastyrelsen.dk/' },
@@ -1203,19 +1135,19 @@ export class HomeComponent {
     { name: 'Odense University Hospital', logo: 'partners/denmark/odense-university-hospital.png', country: 'Denmark', url: 'https://en.ouh.dk/' },
     { name: 'MedCom', logo: 'partners/denmark/medcom.png', country: 'Denmark', url: 'https://www.medcom.dk/medcom-in-english/' },
     // Estonia
-    { name: 'North Estonia Medical Centre', logo: 'partners/estonia/north-estonia-medical-centre.png', country: 'Estonia', url: 'https://www.regionaalhaigla.ee/' },
-    { name: 'Tartu University Hospital', logo: 'partners/estonia/tartu-university-hospital.png', country: 'Estonia', url: 'https://www.kliinikum.ee/' },
-    { name: 'Estonian Health Insurance Fund', logo: 'partners/estonia/estonian-health-insurance-fund.png', country: 'Estonia', url: 'https://www.tervisekassa.ee/' },
-    { name: 'TEHIK', logo: 'partners/estonia/tehik.png', country: 'Estonia', url: 'https://www.tehik.ee/' },
-    { name: 'Tehnopol', logo: 'partners/estonia/tehnopol.png', country: 'Estonia', url: 'https://www.tehnopol.ee/' },
-    { name: 'Ministry of Social Affairs (Estonia)', logo: 'partners/estonia/ministry-of-social-affairs-ee.png', country: 'Estonia', url: 'https://www.sm.ee/' },
+    { name: 'North Estonia Medical Centre', logo: 'partners/estonia/north-estonia-medical-centre.svg', country: 'Estonia', url: 'https://www.regionaalhaigla.ee/' },
+    { name: 'Tartu University Hospital', logo: 'partners/estonia/tartu-university-hospital.svg', country: 'Estonia', url: 'https://www.kliinikum.ee/' },
+    { name: 'Estonian Health Insurance Fund', logo: 'partners/estonia/estonian-health-insurance-fund.svg', country: 'Estonia', url: 'https://www.tervisekassa.ee/' },
+    { name: 'TEHIK', logo: 'partners/estonia/tehik.svg', country: 'Estonia', url: 'https://www.tehik.ee/' },
+    { name: 'Tehnopol', logo: 'partners/estonia/tehnopol.svg', country: 'Estonia', url: 'https://www.tehnopol.ee/' },
+    { name: 'Ministry of Social Affairs (Estonia)', logo: 'partners/estonia/ministry-of-social-affairs-ee.svg', country: 'Estonia', url: 'https://www.sm.ee/' },
     // Latvia
-    { name: 'Riga East Clinical University Hospital', logo: 'partners/latvia/riga-east-hospital.png', country: 'Latvia', url: 'https://www.aslimnica.lv/' },
-    { name: 'Pauls Stradiņš Clinical University Hospital', logo: 'partners/latvia/pauls-stradins-hospital.png', country: 'Latvia', url: 'https://www.stradini.lv/' },
-    { name: 'National Health Service Latvia', logo: 'partners/latvia/national-health-service-lv.png', country: 'Latvia', url: 'https://www.vmnvd.gov.lv/' },
-    { name: 'LIAA', logo: 'partners/latvia/liaa.png', country: 'Latvia', url: 'https://www.liaa.gov.lv/' },
-    { name: 'Children\'s Clinical University Hospital', logo: 'partners/latvia/childrens-hospital-lv.png', country: 'Latvia', url: 'https://www.bkus.lv/' },
-    { name: 'Riga Stradiņš University', logo: 'partners/latvia/riga-stradins-university.png', country: 'Latvia', url: 'https://www.rsu.lv/' },
+    { name: 'Riga East Clinical University Hospital', logo: 'partners/latvia/riga-east-hospital.svg', country: 'Latvia', url: 'https://www.aslimnica.lv/' },
+    { name: 'Pauls Stradiņš Clinical University Hospital', logo: 'partners/latvia/pauls-stradins-hospital.svg', country: 'Latvia', url: 'https://www.stradini.lv/' },
+    { name: 'National Health Service Latvia', logo: 'partners/latvia/national-health-service-lv.svg', country: 'Latvia', url: 'https://www.vmnvd.gov.lv/' },
+    { name: 'LIAA', logo: 'partners/latvia/liaa.svg', country: 'Latvia', url: 'https://www.liaa.gov.lv/' },
+    { name: 'Children\'s Clinical University Hospital', logo: 'partners/latvia/childrens-hospital-lv.svg', country: 'Latvia', url: 'https://www.bkus.lv/' },
+    { name: 'Riga Stradiņš University', logo: 'partners/latvia/riga-stradins-university.svg', country: 'Latvia', url: 'https://www.rsu.lv/' },
     // Lithuania
     { name: 'Santaros Klinikos', logo: 'partners/lithuania/vilnius-university-hospital.png', country: 'Lithuania', url: 'https://www.santa.lt/' },
     { name: 'Kauno Klinikos', logo: 'partners/lithuania/kauno-klinikos.png', country: 'Lithuania', url: 'https://www.kaunoklinikos.lt/' },
