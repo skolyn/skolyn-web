@@ -219,7 +219,6 @@ import { LanguageService, LANGUAGES, LangCode } from '../../services/language.se
             <div class="dropdown-menu dropdown-menu-right">
               @for (lang of languages; track lang.code) {
                 <a (click)="setLanguage(lang.code); $event.preventDefault()" [class.active-lang]="currentLang() === lang.code" href="#">
-                  <span class="lang-flag">{{ lang.flag }}</span>
                   {{ lang.label }}
                 </a>
               }

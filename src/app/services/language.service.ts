@@ -1,18 +1,17 @@
-import { Injectable, effect, signal } from '@angular/core';
+import { Injectable, effect, signal, computed } from '@angular/core';
 
 export type LangCode = 'en' | 'de' | 'sv' | 'tr';
 
 export interface Language {
   code: LangCode;
   label: string;
-  flag: string;
 }
 
 export const LANGUAGES: Language[] = [
-  { code: 'en', label: 'English (US)', flag: '🇺🇸' },
-  { code: 'de', label: 'Deutsch', flag: '🇩🇪' },
-  { code: 'sv', label: 'Svenska', flag: '🇸🇪' },
-  { code: 'tr', label: 'Türkçe', flag: '🇹🇷' },
+  { code: 'en', label: 'English' },
+  { code: 'de', label: 'Deutsch' },
+  { code: 'sv', label: 'Svenska' },
+  { code: 'tr', label: 'Türkçe' },
 ];
 
 @Injectable({
@@ -20,6 +19,7 @@ export const LANGUAGES: Language[] = [
 })
 export class LanguageService {
   languageSignal = signal<LangCode>('en');
+  private translations: Record<string, Record<string, string>> = {};
 
   constructor() {
     this.initLanguage();
@@ -39,7 +39,6 @@ export class LanguageService {
       if (stored && LANGUAGES.some(l => l.code === stored)) {
         this.languageSignal.set(stored);
       } else {
-        // Detect browser language
         const browserLang = navigator.language?.substring(0, 2) as LangCode;
         if (LANGUAGES.some(l => l.code === browserLang)) {
           this.languageSignal.set(browserLang);
@@ -50,6 +49,24 @@ export class LanguageService {
 
   setLanguage(code: LangCode) {
     this.languageSignal.set(code);
+  }
+
+  registerTranslations(lang: LangCode, translations: Record<string, string>) {
+    if (!this.translations[lang]) {
+      this.translations[lang] = {};
+    }
+    Object.assign(this.translations[lang], translations);
+  }
+
+  t(key: string, params?: Record<string, string>): string {
+    const lang = this.languageSignal();
+    let value = this.translations[lang]?.[key] || this.translations['en']?.[key] || key;
+    if (params) {
+      Object.entries(params).forEach(([k, v]) => {
+        value = value.replace(new RegExp(`{{${k}}}`, 'g'), v);
+      });
+    }
+    return value;
   }
 
   getCurrentLanguage(): Language {
