@@ -64,66 +64,66 @@
   --color-terbium-light: #e9d5f5;
 }
 
-/* --- MD3 Dark Color Tokens --- */
+/* --- MD3 Dark Color Tokens (Premium Midnight Theme) --- */
 [data-theme="dark"] {
-  /* Primary */
-  --md-sys-color-primary: #a8c7fa;
-  --md-sys-color-on-primary: #062e6f;
-  --md-sys-color-primary-container: #0842a0;
+  /* Primary - More vibrant blue for better contrast */
+  --md-sys-color-primary: #8ab4f8;
+  --md-sys-color-on-primary: #002d6d;
+  --md-sys-color-primary-container: #1a428a;
   --md-sys-color-on-primary-container: #d3e3fd;
 
   /* Secondary */
   --md-sys-color-secondary: #c4c7c5;
   --md-sys-color-on-secondary: #131314;
-  --md-sys-color-secondary-container: #444746;
+  --md-sys-color-secondary-container: #3d4043;
   --md-sys-color-on-secondary-container: #e3e3e3;
 
   /* Tertiary */
-  --md-sys-color-tertiary: #6dd58c;
+  --md-sys-color-tertiary: #81c995;
   --md-sys-color-on-tertiary: #003912;
-  --md-sys-color-tertiary-container: #0f5223;
+  --md-sys-color-tertiary-container: #1e5231;
   --md-sys-color-on-tertiary-container: #c4eed0;
 
   /* Error */
-  --md-sys-color-error: #f2b8b5;
+  --md-sys-color-error: #f28b82;
   --md-sys-color-on-error: #601410;
   --md-sys-color-error-container: #8c1d18;
   --md-sys-color-on-error-container: #f9dedc;
 
-  /* Surface */
-  --md-sys-color-surface: #131314;
-  --md-sys-color-on-surface: #e3e3e3;
-  --md-sys-color-surface-variant: #444746;
-  --md-sys-color-on-surface-variant: #c4c7c5;
-  --md-sys-color-surface-container-lowest: #0e0e0f;
-  --md-sys-color-surface-container-low: #1d1d1f;
-  --md-sys-color-surface-container: #1e1f20;
-  --md-sys-color-surface-container-high: #282a2c;
-  --md-sys-color-surface-container-highest: #333537;
-  --md-sys-color-surface-transparent: rgba(31, 31, 31, 0.85);
+  /* Surface - Deep midnight blues instead of flat greys */
+  --md-sys-color-surface: #0b0f19;
+  --md-sys-color-on-surface: #e8eaed;
+  --md-sys-color-surface-variant: #1a2333;
+  --md-sys-color-on-surface-variant: #9aa0a6;
+  --md-sys-color-surface-container-lowest: #06090e;
+  --md-sys-color-surface-container-low: #0f1522;
+  --md-sys-color-surface-container: #131a2b;
+  --md-sys-color-surface-container-high: #192236;
+  --md-sys-color-surface-container-highest: #202b42;
+  --md-sys-color-surface-transparent: rgba(11, 15, 25, 0.85);
 
-  /* Outline */
-  --md-sys-color-outline: #8e918f;
-  --md-sys-color-outline-variant: #444746;
+  /* Outline - Subtle blue-tinted borders */
+  --md-sys-color-outline: #3c4043;
+  --md-sys-color-outline-variant: #202b42;
 
-  /* Background */
-  --md-sys-color-background: #131314;
-  --md-sys-color-on-background: #e3e3e3;
+  /* Background - Deep midnight base */
+  --md-sys-color-background: #0b0f19;
+  --md-sys-color-on-background: #e8eaed;
 
   /* Inverse */
-  --md-sys-color-inverse-surface: #e3e3e3;
-  --md-sys-color-inverse-on-surface: #131314;
+  --md-sys-color-inverse-surface: #e8eaed;
+  --md-sys-color-inverse-on-surface: #0b0f19;
   --md-sys-color-inverse-primary: #1a73e8;
 
-  /* Module-specific accent colors (darker shades for legibility on dark backgrounds) */
-  --color-rhenium: #a8c7fa;
-  --color-rhenium-light: rgba(168, 199, 250, 0.12);
-  --color-seaborgium: #fcdab7;
-  --color-seaborgium-light: rgba(252, 218, 183, 0.12);
-  --color-scandium: #6dd58c;
-  --color-scandium-light: rgba(109, 213, 140, 0.12);
-  --color-terbium: #d3b0fa;
-  --color-terbium-light: rgba(211, 176, 250, 0.12);
+  /* Module-specific accent colors (Vibrant shades for OLED popping) */
+  --color-rhenium: #8ab4f8;
+  --color-rhenium-light: rgba(138, 180, 248, 0.12);
+  --color-seaborgium: #fcad70;
+  --color-seaborgium-light: rgba(252, 173, 112, 0.12);
+  --color-scandium: #81c995;
+  --color-scandium-light: rgba(129, 201, 149, 0.12);
+  --color-terbium: #c58af9;
+  --color-terbium-light: rgba(197, 138, 249, 0.12);
 }
 
 :root {

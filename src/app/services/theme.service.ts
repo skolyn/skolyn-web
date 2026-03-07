@@ -15,6 +15,14 @@ export class ThemeService {
       if (typeof window !== 'undefined') {
         document.documentElement.setAttribute('data-theme', currentTheme);
         localStorage.setItem('theme', currentTheme);
+        
+        // Update favicon for dark/light mode
+        const favicon = document.querySelector('link[rel="icon"]') as HTMLLinkElement;
+        if (favicon) {
+          favicon.href = currentTheme === 'dark' 
+            ? 'assets/skolyn-logo-icon-white.svg' 
+            : 'assets/skolyn-logo-icon.svg';
+        }
       }
     });
   }

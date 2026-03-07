@@ -1,9 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, computed } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { ToastService } from '../../services/toast.service';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ import { ToastService } from '../../services/toast.service';
     <div class="login-page animate-in">
       <div class="login-card">
         <div class="login-header">
-          <img src="assets/skolyn-logo-icon.svg" alt="Skolyn Dashboard" class="login-logo" onerror="this.src='https://placehold.co/48x48?text=S'" />
+          <img [src]="isDarkTheme() ? 'assets/skolyn-logo-icon-white.svg' : 'assets/skolyn-logo-icon.svg'" alt="Skolyn Dashboard" class="login-logo" onerror="this.src='https://placehold.co/48x48?text=S'" />
           <h1 class="headline-small">Sign in to Platform</h1>
           <p class="body-medium text-secondary">Skolyn AI Diagnostic Dashboard</p>
         </div>
@@ -264,6 +265,8 @@ export class LoginComponent {
   loginForm: FormGroup;
   isLoading = false;
   
+  private themeService = inject(ThemeService);
+  isDarkTheme = computed(() => this.themeService.themeSignal() === 'dark');
   private toastService = inject(ToastService);
 
   private readonly API_URL = `${environment.apiUrl}/api/login`;
