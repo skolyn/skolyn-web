@@ -10,8 +10,8 @@ import { LanguageService, LANGUAGES, LangCode } from '../../services/language.se
     <nav class="navbar" [class.scrolled]="isScrolled">
       <div class="navbar-inner container-wide">
         <a routerLink="/" class="navbar-brand">
-          <img src="assets/skolyn-logo-wide.svg" alt="Skolyn" class="brand-logo-wide" />
-          <img src="assets/skolyn-logo-icon.svg" alt="Skolyn" class="brand-logo-icon" />
+          <img [src]="isDarkTheme() ? 'assets/skolyn-logo-wide-white.svg' : 'assets/skolyn-logo-wide.svg'" alt="Skolyn" class="brand-logo-wide" />
+          <img [src]="isDarkTheme() ? 'assets/skolyn-logo-icon-white.svg' : 'assets/skolyn-logo-icon.svg'" alt="Skolyn" class="brand-logo-icon" />
         </a>
 
         <div class="navbar-links" [class.open]="menuOpen">

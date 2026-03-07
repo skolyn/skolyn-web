@@ -1,7 +1,8 @@
-import { Component, ElementRef, ViewChild, inject } from '@angular/core';
+import { Component, ElementRef, ViewChild, inject, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { ToastService } from '../../services/toast.service';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-footer',
@@ -12,7 +13,7 @@ import { ToastService } from '../../services/toast.service';
         <div class="footer-grid">
           <div class="footer-col brand-col">
             <a routerLink="/" class="footer-brand">
-              <img src="assets/skolyn-logo-wide.svg" alt="Skolyn" class="footer-logo" />
+              <img [src]="isDarkTheme() ? 'assets/skolyn-logo-wide-white.svg' : 'assets/skolyn-logo-wide.svg'" alt="Skolyn" class="footer-logo" />
             </a>
             <p class="tagline">Early. Accurate. Trusted.</p>
             <p class="description">Redefining Medical Imaging Through Explainable Artificial Intelligence</p>
@@ -243,6 +244,8 @@ export class FooterComponent {
   @ViewChild('newsletterEmail') newsletterEmailRef!: ElementRef<HTMLInputElement>;
 
   private toastService = inject(ToastService);
+  private themeService = inject(ThemeService);
+  isDarkTheme = computed(() => this.themeService.themeSignal() === 'dark');
   isSubscribing = false;
 
   async subscribeNewsletter() {

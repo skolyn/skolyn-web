@@ -1,7 +1,8 @@
-import { Component, ViewChild, ElementRef, OnInit, inject } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, inject, computed } from '@angular/core';
 import { NgFor } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ToastService } from '../../services/toast.service';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-home',
@@ -36,7 +37,7 @@ import { ToastService } from '../../services/toast.service';
         <div class="hero-visual animate-in animate-in-delay-2">
           <div class="hero-diagram">
             <div class="diagram-center">
-              <img src="assets/skolyn-logo-icon.svg" alt="Skolyn" class="brand-logo-center" />
+              <img [src]="isDarkTheme() ? 'assets/skolyn-logo-icon-white.svg' : 'assets/skolyn-logo-icon.svg'" alt="Skolyn" class="brand-logo-center" />
             </div>
             <div class="diagram-orbit orbit-1">
               <div class="orbit-node rhenium" title="Rhenium OS - MRI">
@@ -1106,6 +1107,8 @@ export class HomeComponent {
   @ViewChild('marquee') marqueeRef!: ElementRef<HTMLDivElement>;
   @ViewChild('scrollWrapper') scrollWrapperRef!: ElementRef<HTMLDivElement>;
 
+  private themeService = inject(ThemeService);
+  isDarkTheme = computed(() => this.themeService.themeSignal() === 'dark');
   isMarqueePaused = false;
 
   // Drag state

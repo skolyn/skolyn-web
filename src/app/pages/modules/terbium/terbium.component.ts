@@ -175,7 +175,7 @@ export class TerbiumComponent {
     { name: 'Dental OPG', icon: 'dentistry', desc: 'Caries, periapical lesions, TMJ, tooth numbering' },
     { name: 'Pediatric X-Ray', icon: 'child_care', desc: 'Bone age, growth plate, foreign body' },
     { name: 'DXA', icon: 'grid_on', desc: 'Bone density, T-score, fracture risk' },
-    { name: 'Mammography', icon: 'ecg_heart', desc: 'BI-RADS, mass, calcification, asymmetry' },
+    { name: 'Mammography', icon: 'female', desc: 'BI-RADS, mass, calcification, asymmetry' },
     { name: 'Fluoroscopy', icon: 'movie', desc: 'Barium swallow, voiding, dynamic studies' },
     { name: 'Trauma Series', icon: 'emergency', desc: 'Multi-view trauma assessment, fracture detection' },
     { name: 'Hand/Wrist', icon: 'pan_tool', desc: 'Bone age, fractures, arthritis assessment' },

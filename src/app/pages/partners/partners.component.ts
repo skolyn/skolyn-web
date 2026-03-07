@@ -33,9 +33,15 @@ import { RouterLink } from '@angular/router';
           <div class="partner-grid">
             @for (p of country.partners; track p.name) {
               <a [href]="p.url" target="_blank" rel="noopener noreferrer" class="partner-card">
-                <div class="partner-logo-wrap">
-                  <img [src]="p.logo" [alt]="p.name" loading="lazy" />
-                </div>
+                @if (p.logo) {
+                  <div class="partner-logo-wrap">
+                    <img [src]="p.logo" [alt]="p.name" loading="lazy" />
+                  </div>
+                } @else {
+                  <div class="partner-logo-wrap partner-logo-placeholder">
+                    <span class="material-symbols-outlined">apartment</span>
+                  </div>
+                }
                 <h3 class="title-medium">{{ p.name }}</h3>
                 <span class="body-small partner-type">{{ p.type }}</span>
                 <span class="body-small partner-link">Visit website →</span>
@@ -117,6 +123,19 @@ import { RouterLink } from '@angular/router';
       border-radius: 4px;
     }
 
+    .partner-logo-placeholder {
+      color: var(--md-sys-color-on-surface-variant);
+    }
+    .partner-logo-placeholder .material-symbols-outlined {
+      font-size: 36px;
+      opacity: 0.5;
+      transition: opacity 0.3s ease;
+    }
+    .partner-card:hover .partner-logo-placeholder .material-symbols-outlined {
+      opacity: 0.8;
+      color: var(--md-sys-color-primary);
+    }
+
     .partner-card h3 { margin-bottom: 4px; font-size: 14px; }
     .partner-type { color: var(--md-sys-color-on-surface-variant); display: block; margin-bottom: 8px; }
     .partner-link { color: var(--md-sys-color-primary); font-weight: 500; opacity: 0; transition: opacity 0.3s; }
@@ -150,7 +169,7 @@ export class PartnersComponent {
         { name: 'Azərbaycan Tibb Universiteti', logo: 'partners/azerbaijan/azerbaijan-medical-university.png', type: 'University', url: 'https://www.amu.edu.az/' },
         { name: 'Ağ Ciyər Xəstəlikləri İnstitutu', logo: 'partners/azerbaijan/lung-diseases-institute.png', type: 'Research Institute', url: 'https://www.etacxi.az/' },
         { name: 'C4IR Azerbaijan / 4SİM', logo: 'partners/azerbaijan/c4ir-azerbaijan.png', type: 'Innovation Hub', url: 'https://www.c4irazerbaijan.org/' },
-        { name: 'Mərkəzi Gömrük Hospitalı', logo: 'partners/azerbaijan/customs-hospital.png', type: 'Hospital', url: 'https://www.customshospital.az/' },
+        { name: 'Mərkəzi Gömrük Hospitalı', logo: 'partners/azerbaijan/custom-hospital.png', type: 'Hospital', url: 'https://www.customshospital.az/' },
       ]
     },
     {
@@ -177,12 +196,11 @@ export class PartnersComponent {
       flag: '🇫🇮',
       subtitle: '5 partnerships in hospital systems, health data, and innovation',
       partners: [
-        { name: 'HUS Helsinki University Hospital', logo: 'partners/finland/hus-helsinki.png', type: 'University Hospital', url: 'https://www.hus.fi/en' },
-        { name: 'Business Finland', logo: 'partners/finland/business-finland.png', type: 'Innovation Agency', url: 'https://www.businessfinland.fi/en' },
-        { name: 'Findata', logo: 'partners/finland/findata.png', type: 'Health Data Authority', url: 'https://www.findata.fi/en/' },
-
-        { name: 'TAYS Tampere University Hospital', logo: 'partners/finland/tays.png', type: 'University Hospital', url: 'https://www.pirha.fi/web/english/services/hospital-care' },
-        { name: 'Health Capital Helsinki', logo: 'partners/finland/health-capital-helsinki.png', type: 'Innovation Cluster', url: 'https://www.healthcapitalhelsinki.fi/' },
+        { name: 'HUS Helsinki University Hospital', logo: 'partners/finland/hus-helsinki.svg', type: 'University Hospital', url: 'https://www.hus.fi/en' },
+        { name: 'Business Finland', logo: 'partners/finland/business-finland.svg', type: 'Innovation Agency', url: 'https://www.businessfinland.fi/en' },
+        { name: 'Findata', logo: 'partners/finland/findata.svg', type: 'Health Data Authority', url: 'https://www.findata.fi/en/' },
+        { name: 'TAYS Tampere University Hospital', logo: 'partners/finland/tays.svg', type: 'University Hospital', url: 'https://www.pirha.fi/web/english/services/hospital-care' },
+        { name: 'Health Capital Helsinki', logo: 'partners/finland/health-capital-helsinki.svg', type: 'Innovation Cluster', url: 'https://www.healthcapitalhelsinki.fi/' },
       ]
     },
     {
@@ -205,12 +223,12 @@ export class PartnersComponent {
       flag: '🇪🇪',
       subtitle: '6 partnerships across digital health, hospitals, and government',
       partners: [
-        { name: 'North Estonia Medical Centre', logo: 'partners/estonia/north-estonia-medical-centre.png', type: 'Hospital', url: 'https://www.regionaalhaigla.ee/' },
-        { name: 'Tartu University Hospital', logo: 'partners/estonia/tartu-university-hospital.png', type: 'University Hospital', url: 'https://www.kliinikum.ee/' },
-        { name: 'Tervisekassa', logo: 'partners/estonia/estonian-health-insurance-fund.png', type: 'Health Insurance', url: 'https://www.tervisekassa.ee/' },
-        { name: 'TEHIK', logo: 'partners/estonia/tehik.png', type: 'Health IT', url: 'https://www.tehik.ee/' },
+        { name: 'North Estonia Medical Centre', logo: 'partners/estonia/north-estonia-medical-centre.svg', type: 'Hospital', url: 'https://www.regionaalhaigla.ee/' },
+        { name: 'Tartu University Hospital', logo: 'partners/estonia/tartu-university-hospital.svg', type: 'University Hospital', url: 'https://www.kliinikum.ee/' },
+        { name: 'Tervisekassa', logo: 'partners/estonia/estonian-health-insurance-fund.svg', type: 'Health Insurance', url: 'https://www.tervisekassa.ee/' },
+        { name: 'TEHIK', logo: 'partners/estonia/tehik.svg', type: 'Health IT', url: 'https://www.tehik.ee/' },
         { name: 'Tehnopol', logo: 'partners/estonia/tehnopol.svg', type: 'Innovation Hub', url: 'https://www.tehnopol.ee/' },
-        { name: 'Ministry of Social Affairs', logo: 'partners/estonia/ministry-of-social-affairs-ee.png', type: 'Government', url: 'https://www.sm.ee/' },
+        { name: 'Ministry of Social Affairs', logo: 'partners/estonia/ministry-of-social-affairs-ee.svg', type: 'Government', url: 'https://www.sm.ee/' },
       ]
     },
     {
@@ -219,12 +237,12 @@ export class PartnersComponent {
       flag: '🇱🇻',
       subtitle: '6 partnerships including university hospitals, government, and academia',
       partners: [
-        { name: 'Riga East Clinical University Hospital', logo: 'partners/latvia/riga-east-hospital.png', type: 'University Hospital', url: 'https://www.aslimnica.lv/' },
-        { name: 'Pauls Stradiņš Hospital', logo: 'partners/latvia/pauls-stradins-hospital.png', type: 'University Hospital', url: 'https://www.stradini.lv/' },
-        { name: 'National Health Service', logo: 'partners/latvia/national-health-service-lv.png', type: 'Government', url: 'https://www.vmnvd.gov.lv/' },
-        { name: 'LIAA', logo: 'partners/latvia/liaa.png', type: 'Investment Agency', url: 'https://www.liaa.gov.lv/' },
-        { name: "Children's Clinical University Hospital", logo: 'partners/latvia/childrens-hospital-lv.png', type: 'Hospital', url: 'https://www.bkus.lv/' },
-        { name: 'Riga Stradiņš University', logo: 'partners/latvia/riga-stradins-university.png', type: 'University', url: 'https://www.rsu.lv/' },
+        { name: 'Riga East Clinical University Hospital', logo: '', type: 'University Hospital', url: 'https://www.aslimnica.lv/' },
+        { name: 'Pauls Stradiņš Hospital', logo: '', type: 'University Hospital', url: 'https://www.stradini.lv/' },
+        { name: 'National Health Service', logo: '', type: 'Government', url: 'https://www.vmnvd.gov.lv/' },
+        { name: 'LIAA', logo: '', type: 'Investment Agency', url: 'https://www.liaa.gov.lv/' },
+        { name: "Children's Clinical University Hospital", logo: '', type: 'Hospital', url: 'https://www.bkus.lv/' },
+        { name: 'Riga Stradiņš University', logo: '', type: 'University', url: 'https://www.rsu.lv/' },
       ]
     },
     {
