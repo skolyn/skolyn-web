@@ -170,19 +170,19 @@ import { RouterLink } from '@angular/router';
             <thead>
               <tr>
                 <th>Metric</th>
-                <th>2025</th>
                 <th>2026</th>
                 <th>2027</th>
                 <th>2028</th>
                 <th>2029</th>
+                <th>2030</th>
               </tr>
             </thead>
             <tbody>
               <tr><td>Partner Institutions</td><td>5</td><td>15</td><td>35</td><td>60</td><td>100+</td></tr>
               <tr><td>Studies Processed (K/yr)</td><td>10</td><td>80</td><td>350</td><td>1,200</td><td>3,500</td></tr>
-              <tr><td>ARR (€K)</td><td>-</td><td>250</td><td>1,800</td><td>6,500</td><td>18,000</td></tr>
-              <tr><td>Gross Margin</td><td>-</td><td>65%</td><td>72%</td><td>78%</td><td>82%</td></tr>
-              <tr><td>Team Size</td><td>8</td><td>18</td><td>35</td><td>55</td><td>80</td></tr>
+              <tr><td>ARR ($K)</td><td>250</td><td>1,800</td><td>6,500</td><td>18,000</td><td>35,000</td></tr>
+              <tr><td>Gross Margin</td><td>75%</td><td>80%</td><td>83%</td><td>85%</td><td>85%</td></tr>
+              <tr><td>Team Size</td><td>12</td><td>20</td><td>35</td><td>60</td><td>85</td></tr>
               <tr><td>Countries Active</td><td>2</td><td>4</td><td>7</td><td>10</td><td>15+</td></tr>
             </tbody>
           </table>
@@ -324,7 +324,7 @@ import { RouterLink } from '@angular/router';
         </p>
         <div class="ask-grid">
           <div class="ask-card ask-main">
-            <span class="ask-amount">€2M</span>
+            <span class="ask-amount">$2M</span>
             <span class="title-medium">Seed Round</span>
             <span class="body-medium text-secondary">Target close: Q2-Q3 2026</span>
           </div>
@@ -531,17 +531,17 @@ export class InvestorsComponent {
   ];
 
   revenueStreams = [
-    { name: 'Per-Study SaaS', icon: 'receipt_long', color: 'linear-gradient(135deg, var(--color-rhenium), var(--color-rhenium-light))', pricing: '€3–12 / study', desc: 'Usage-based pricing per AI-analyzed study. Volume tiers for high-throughput departments.' },
-    { name: 'Enterprise License', icon: 'apartment', color: 'linear-gradient(135deg, var(--color-scandium), var(--color-scandium-light))', pricing: '€50K–250K / yr', desc: 'Unlimited annual license for institutions. Includes on-premise deployment and priority SLAs.' },
+    { name: 'Per-Study SaaS', icon: 'receipt_long', color: 'linear-gradient(135deg, var(--color-rhenium), var(--color-rhenium-light))', pricing: '$3–12 / study', desc: 'Usage-based pricing per AI-analyzed study. Volume tiers for high-throughput departments.' },
+    { name: 'Enterprise License', icon: 'apartment', color: 'linear-gradient(135deg, var(--color-scandium), var(--color-scandium-light))', pricing: '$50K–250K / yr', desc: 'Unlimited annual license for institutions. Includes on-premise deployment and priority SLAs.' },
     { name: 'Data & Insights', icon: 'analytics', color: 'linear-gradient(135deg, var(--color-seaborgium), var(--color-seaborgium-light))', pricing: 'Custom', desc: 'Anonymized population-health insights, benchmarking dashboards, and research data services.' },
   ];
 
   roadmap = [
-    { year: '2025', title: 'Foundation', desc: 'Core platform launch, Innoland incubation, advisory board formation, seed fundraising. First 5 clinical partners onboarded.', color: 'var(--color-rhenium)' },
-    { year: '2026', title: 'Clinical Validation', desc: 'Multi-site clinical trials across 15 institutions, regulatory submissions (CE Mark), Series A fundraising.', color: 'var(--color-scandium)' },
-    { year: '2027', title: 'Market Entry', desc: 'Commercial launch in Nordic-Baltic region, 35 institutional partners, €1.8M ARR, PACS vendor integrations.', color: 'var(--color-seaborgium)' },
-    { year: '2028', title: 'Scale', desc: 'Expand to 10+ countries, 60 institutions, €6.5M ARR, federated learning network, FDA submission.', color: 'var(--color-terbium)' },
-    { year: '2029+', title: 'Global', desc: 'US market entry, 100+ institutions, €18M ARR, Series B, expansion to Asia-Pacific.', color: 'var(--md-sys-color-error)' },
+    { year: '2025', title: 'Foundation (Completed)', desc: 'Core platform launch, Innoland incubation, advisory board formation, initial $10K grant funding. First 5 clinical partners pipeline created.', color: 'var(--color-rhenium)' },
+    { year: '2026', title: 'Clinical Validation', desc: 'Multi-site clinical trials across 15 institutions, regulatory submissions (CE Mark), $2M Seed round closing.', color: 'var(--color-scandium)' },
+    { year: '2027', title: 'Market Entry', desc: 'Commercial launch in Nordic-Baltic region, 35 institutional partners, $1.5M+ ARR, PACS vendor integrations.', color: 'var(--color-seaborgium)' },
+    { year: '2028', title: 'Scale', desc: 'Expand to 10+ countries, 60 institutions, $6.5M ARR, federated learning network, FDA submission.', color: 'var(--color-terbium)' },
+    { year: '2029+', title: 'Global', desc: 'US market entry, 100+ institutions, $18M ARR, Series A/B, expansion to Asia-Pacific.', color: 'var(--md-sys-color-error)' },
   ];
 
   compRows = [
@@ -590,18 +590,18 @@ export class InvestorsComponent {
   ];
 
   askDetails = [
-    { icon: 'paid', label: 'Round Size', value: '\u20ac2.5M Seed' },
-    { icon: 'calendar_month', label: 'Timeline', value: 'Q2-Q3 2025' },
+    { icon: 'paid', label: 'Round Size', value: '$2M Seed' },
+    { icon: 'calendar_month', label: 'Timeline', value: 'Q2-Q3 2026' },
     { icon: 'rocket_launch', label: 'Use', value: 'Product, Clinical Trials, Expansion' },
-    { icon: 'flag', label: 'Milestones to Next Round', value: 'CE Mark submission, 15 institutional partners, \u20ac250K ARR' },
+    { icon: 'flag', label: 'Milestones to Next Round', value: 'CE Mark / FDA prep, 15 institutional partners, $1.5M ARR' },
     { icon: 'handshake', label: 'Lead Investor', value: 'In discussions, co-lead welcome' },
   ];
 
   fundAllocation = [
-    { icon: 'code', category: 'R&D / Engineering', amount: '\u20ac875K', pct: 35, color: 'var(--color-rhenium)', desc: 'Core platform development, AI model training, and infrastructure scaling.' },
-    { icon: 'clinical_notes', category: 'Clinical Trials', amount: '\u20ac625K', pct: 25, color: 'var(--color-scandium)', desc: 'Multi-site validation studies, regulatory documentation, and CE Mark preparation.' },
-    { icon: 'storefront', category: 'Sales & Go-to-Market', amount: '\u20ac500K', pct: 20, color: 'var(--color-seaborgium)', desc: 'Business development, partnership management, and market entry in 4 target countries.' },
-    { icon: 'groups', category: 'Team Growth', amount: '\u20ac375K', pct: 15, color: 'var(--color-terbium)', desc: 'Key hires in AI research, clinical affairs, and regulatory compliance.' },
-    { icon: 'account_balance', category: 'Operations & Legal', amount: '\u20ac125K', pct: 5, color: 'var(--md-sys-color-secondary)', desc: 'Corporate operations, legal, IP filings, and working capital.' },
+    { icon: 'code', category: 'R&D / Engineering', amount: '$700K', pct: 35, color: 'var(--color-rhenium)', desc: 'Core platform development, AI model training, CT/MRI modalities, and API layer.' },
+    { icon: 'clinical_notes', category: 'Clinical Trials & Reg', amount: '$500K', pct: 25, color: 'var(--color-scandium)', desc: '5 paid pilot programs, validation studies, and CE Mark certification.' },
+    { icon: 'storefront', category: 'Sales & Go-to-Market', amount: '$400K', pct: 20, color: 'var(--color-seaborgium)', desc: 'Initial sales team (AEs + SE), partnership management, and market entry.' },
+    { icon: 'groups', category: 'Team Growth', amount: '$300K', pct: 15, color: 'var(--color-terbium)', desc: 'Key hires in AI research, clinical affairs, and senior engineers.' },
+    { icon: 'account_balance', category: 'Operations & Legal', amount: '$100K', pct: 5, color: 'var(--md-sys-color-secondary)', desc: 'Corporate operations, legal, IP filings, and working capital.' },
   ];
 }
