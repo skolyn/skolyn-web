@@ -324,7 +324,7 @@ import { RouterLink } from '@angular/router';
         </p>
         <div class="ask-grid">
           <div class="ask-card ask-main">
-            <span class="ask-amount">€2.5M</span>
+            <span class="ask-amount">€2M</span>
             <span class="title-medium">Seed Round</span>
             <span class="body-medium text-secondary">Target close: Q2-Q3 2026</span>
           </div>
