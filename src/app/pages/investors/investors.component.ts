@@ -326,7 +326,7 @@ import { RouterLink } from '@angular/router';
           <div class="ask-card ask-main">
             <span class="ask-amount">€2.5M</span>
             <span class="title-medium">Seed Round</span>
-            <span class="body-medium text-secondary">Target close: Q3 2025</span>
+            <span class="body-medium text-secondary">Target close: Q3 2026</span>
           </div>
           <div class="ask-details">
             @for (d of askDetails; track d.label) {
@@ -591,7 +591,7 @@ export class InvestorsComponent {
 
   askDetails = [
     { icon: 'paid', label: 'Round Size', value: '\u20ac2.5M Seed' },
-    { icon: 'calendar_month', label: 'Timeline', value: 'Q2-Q3 2025' },
+    { icon: 'calendar_month', label: 'Timeline', value: 'Q2-Q3 2026' },
     { icon: 'rocket_launch', label: 'Use', value: 'Product, Clinical Trials, Expansion' },
     { icon: 'flag', label: 'Milestones to Next Round', value: 'CE Mark submission, 15 institutional partners, \u20ac250K ARR' },
     { icon: 'handshake', label: 'Lead Investor', value: 'In discussions, co-lead welcome' },
