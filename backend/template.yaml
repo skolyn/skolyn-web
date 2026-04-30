@@ -28,6 +28,34 @@ Parameters:
     NoEcho: true
 
 Resources:
+  # ─── HTTP API with CORS ───────────────────────────────────────────
+  ServerlessHttpApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      CorsPolicy:
+        AllowMethods:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+          - OPTIONS
+        AllowHeaders:
+          - Content-Type
+          - Authorization
+          - X-Amz-Date
+          - X-Api-Key
+          - X-Amz-Security-Token
+          - Accept
+        AllowOrigins:
+          - "https://skolyn.se"
+          - "https://www.skolyn.se"
+          - "http://localhost:4200"
+          - "http://localhost:3000"
+        ExposeHeaders:
+          - x-amzn-RequestId
+        MaxAge: 600
+        AllowCredentials: true
+
   # ─── DynamoDB Tables ──────────────────────────────────────────────
   ContactTable:
     Type: AWS::DynamoDB::Table
@@ -123,11 +151,13 @@ Resources:
           Properties:
             Path: /api/{proxy+}
             Method: ANY
+            ApiId: !Ref ServerlessHttpApi
         ApiOptions:
           Type: HttpApi
           Properties:
             Path: /api/{proxy+}
             Method: OPTIONS
+            ApiId: !Ref ServerlessHttpApi
     Metadata:
       BuildMethod: makefile
 

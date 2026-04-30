@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { environment } from '../../../environments/environment';
 import { ToastService } from '../../services/toast.service';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-contact',
@@ -281,8 +281,7 @@ export class ContactComponent {
   submitStatus: 'idle' | 'success' | 'error' = 'idle';
 
   private toastService = inject(ToastService);
-
-  private readonly contactApiUrl = `${environment.apiUrl}/api/contact`;
+  private apiService = inject(ApiService);
 
   async onSubmit(event: Event) {
     event.preventDefault();
@@ -307,29 +306,19 @@ export class ContactComponent {
     this.isSubmitting = true;
     this.submitStatus = 'idle'; // Reset status on new submission
 
-    try {
-      const res = await fetch(this.contactApiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (!res.ok) {
-        const errorData = await res.json().catch(() => ({}));
-        throw new Error(errorData.error || 'Failed to send message');
+    this.apiService.submitContact(payload).subscribe({
+      next: (res) => {
+        this.isSubmitting = false;
+        this.submitStatus = 'success';
+        this.toastService.show('Message sent successfully. We will get back to you soon!', 'success', 5000);
+        form.reset(); // Reset the native form
+      },
+      error: (error: any) => {
+        this.isSubmitting = false;
+        console.error('Submission error:', error);
+        this.submitStatus = 'error';
+        this.toastService.show(error?.message || 'An error occurred while sending your message. Please try again later.', 'error', 6000);
       }
-
-      this.submitStatus = 'success';
-      this.toastService.show('Message sent successfully. We will get back to you soon!', 'success', 5000);
-      form.reset(); // Reset the native form
-    } catch (error: any) {
-      console.error('Submission error:', error);
-      this.submitStatus = 'error';
-      this.toastService.show(error?.message || 'An error occurred while sending your message. Please try again later.', 'error', 6000);
-    } finally {
-      this.isSubmitting = false;
-    }
+    });
   }
 }

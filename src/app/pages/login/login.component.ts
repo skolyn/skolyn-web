@@ -1,10 +1,9 @@
 import { Component, inject, computed } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
 import { ToastService } from '../../services/toast.service';
 import { ThemeService } from '../../services/theme.service';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-login',
@@ -264,16 +263,14 @@ import { ThemeService } from '../../services/theme.service';
 export class LoginComponent {
   loginForm: FormGroup;
   isLoading = false;
-  
+
   private themeService = inject(ThemeService);
   isDarkTheme = computed(() => this.themeService.themeSignal() === 'dark');
   private toastService = inject(ToastService);
-
-  private readonly API_URL = `${environment.apiUrl}/api/login`;
+  private apiService = inject(ApiService);
 
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient,
     private router: Router
   ) {
     this.loginForm = this.fb.group({
@@ -292,11 +289,11 @@ export class LoginComponent {
 
     const payload = this.loginForm.value;
 
-    this.http.post<any>(this.API_URL, payload).subscribe({
+    this.apiService.login(payload).subscribe({
       next: (res) => {
         this.isLoading = false;
         this.toastService.show('Authentication successful! Redirecting...', 'success', 2000);
-        
+
         // Mock redirect
         setTimeout(() => {
           this.router.navigate(['/']);

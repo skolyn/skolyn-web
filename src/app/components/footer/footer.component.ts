@@ -1,8 +1,8 @@
 import { Component, ElementRef, ViewChild, inject, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { environment } from '../../../environments/environment';
 import { ToastService } from '../../services/toast.service';
 import { ThemeService } from '../../services/theme.service';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-footer',
@@ -245,35 +245,31 @@ export class FooterComponent {
 
   private toastService = inject(ToastService);
   private themeService = inject(ThemeService);
+  private apiService = inject(ApiService);
+
   isDarkTheme = computed(() => this.themeService.themeSignal() === 'dark');
   isSubscribing = false;
 
-  async subscribeNewsletter() {
+  subscribeNewsletter() {
     if (this.isSubscribing) return;
     const email = this.newsletterEmailRef?.nativeElement?.value?.trim();
     if (!email) return;
 
     this.isSubscribing = true;
 
-    try {
-      const res = await fetch(`${environment.apiUrl}/api/newsletter`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      });
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({ error: 'Subscription failed' }));
-        throw new Error(err.error || 'Subscription failed');
+    this.apiService.subscribeNewsletter({ email }).subscribe({
+      next: () => {
+        this.isSubscribing = false;
+        this.toastService.show('Successfully subscribed to the newsletter!', 'success', 4000);
+        if (this.newsletterEmailRef?.nativeElement) {
+          this.newsletterEmailRef.nativeElement.value = '';
+        }
+      },
+      error: (err: any) => {
+        this.isSubscribing = false;
+        this.toastService.show(err?.message || 'Could not subscribe. Please try again.', 'error', 5000);
       }
-      this.toastService.show('Successfully subscribed to the newsletter!', 'success', 4000);
-      if (this.newsletterEmailRef?.nativeElement) {
-        this.newsletterEmailRef.nativeElement.value = '';
-      }
-    } catch (e: any) {
-      this.toastService.show(e?.message || 'Could not subscribe. Please try again.', 'error', 5000);
-    } finally {
-      this.isSubscribing = false;
-    }
+    });
   }
 
   copyEmail() {

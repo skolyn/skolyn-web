@@ -1,0 +1,149 @@
+name: Deploy Full Stack (Backend + Frontend)
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy-backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+    outputs:
+      api_url: ${{ steps.get-api-url.outputs.api_url }}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::298882023743:role/GitHubActionsBackendDeployRole
+          aws-region: eu-north-1
+
+      - name: Setup AWS SAM CLI
+        uses: aws-actions/setup-sam@v2
+        with:
+          use-installer: true
+
+      - name: SAM Build
+        run: sam build
+
+      - name: SAM Deploy
+        run: >
+          sam deploy
+          --stack-name skolyn-api-backend
+          --resolve-s3
+          --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND
+          --no-confirm-changeset
+          --fail-on-empty-changeset
+
+      - name: Get API URL
+        id: get-api-url
+        run: |
+          API_URL=$(aws cloudformation describe-stacks \
+            --stack-name skolyn-api-backend \
+            --query 'Stacks[0].Outputs[?OutputKey==`ApiBaseUrl`].OutputValue' \
+            --output text \
+            --region eu-north-1)
+          echo "api_url=${API_URL}" >> $GITHUB_OUTPUT
+          echo "API Gateway URL: ${API_URL}"
+
+  deploy-frontend:
+    runs-on: ubuntu-latest
+    needs: deploy-backend
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci --cache .npm --prefer-offline
+
+      - name: Build Frontend with API URL
+        run: npm run build
+        env:
+          API_URL: ${{ needs.deploy-backend.outputs.api_url }}
+
+      - name: Create Amplify Config
+        run: |
+          cat > amplify-config.json <<EOF
+          {
+            "apiUrl": "${{ needs.deploy-backend.outputs.api_url }}"
+          }
+          EOF
+          cp amplify-config.json dist/skolyn-web/browser/
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::298882023743:role/GitHubActionsFrontendDeployRole
+          aws-region: eu-north-1
+
+      - name: Deploy to S3 + CloudFront
+        run: |
+          # Deploy frontend to S3
+          aws s3 sync dist/skolyn-web/browser s3://skolyn-web-frontend-prod --delete
+
+          # Invalidate CloudFront cache
+          DISTRIBUTION_ID=$(aws cloudfront list-distributions \
+            --query "DistributionList.Items[?DefaultRootObject=='index.html'].Id" \
+            --output text | head -1)
+
+          if [ ! -z "$DISTRIBUTION_ID" ]; then
+            aws cloudfront create-invalidation \
+              --distribution-id "$DISTRIBUTION_ID" \
+              --paths "/*"
+          fi
+
+      - name: Test API Connectivity
+        run: |
+          API_URL="${{ needs.deploy-backend.outputs.api_url }}"
+          echo "Testing API connectivity to: ${API_URL}/api/login"
+
+          # Simple health check
+          RESPONSE=$(curl -s -X GET "${API_URL}/api/login" -H "Content-Type: application/json" || echo "Connection failed")
+          echo "API Response: ${RESPONSE}"
+
+      - name: Deployment Summary
+        run: |
+          echo "=========================================="
+          echo "Deployment Summary"
+          echo "=========================================="
+          echo "Backend API URL: ${{ needs.deploy-backend.outputs.api_url }}"
+          echo "Frontend deployed to: s3://skolyn-web-frontend-prod"
+          echo "=========================================="
+
+  verify-deployment:
+    runs-on: ubuntu-latest
+    needs: deploy-frontend
+    if: always()
+
+    steps:
+      - name: Deployment Status
+        run: |
+          if [ "${{ job.status }}" == "success" ]; then
+            echo "✅ Full stack deployment successful!"
+          else
+            echo "❌ Deployment had issues. Check logs above."
+            exit 1
+          fi

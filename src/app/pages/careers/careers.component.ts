@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { environment } from '../../../environments/environment';
 import { ToastService } from '../../services/toast.service';
 import { DialogService } from '../../services/dialog.service';
+import { ApiService } from '../../services/api.service';
 
 interface JobListing {
   id: string;
@@ -1126,11 +1126,11 @@ export class CareersComponent {
     this.expandedJob = this.expandedJob === id ? null : id;
   }
 
-  private readonly applyApiUrl = `${environment.apiUrl}/api/apply`;
   isSubmittingApplication = false;
-  
+
   private toastService = inject(ToastService);
   private dialogService = inject(DialogService);
+  private apiService = inject(ApiService);
 
   async submitApplication(jobId: string) {
     if (this.isSubmittingApplication) return;
@@ -1158,50 +1158,45 @@ export class CareersComponent {
 
     this.isSubmittingApplication = true;
 
-    try {
-      const res = await fetch(this.applyApiUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
+    this.apiService.submitApplication(payload).subscribe({
+      next: async (data: any) => {
+        try {
+          // Upload resume to S3 via presigned URL.
+          if (data.resumeUploadUrl) {
+            const uploadRes = await fetch(data.resumeUploadUrl, {
+              method: 'PUT',
+              body: file,
+            });
+            if (!uploadRes.ok) {
+              throw new Error('Resume upload failed. Please try again.');
+            }
+          }
 
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({ error: 'Submission failed' }));
-        throw new Error(err.error || 'Submission failed');
-      }
+          // Reset the form and close the accordion
+          const formElement = document.getElementById('form-' + jobId) as HTMLFormElement;
+          if (formElement) formElement.reset();
+          this.expandedJob = null;
 
-      const data = await res.json();
-
-      // Upload resume to S3 via presigned URL.
-      if (data.resumeUploadUrl) {
-        const uploadRes = await fetch(data.resumeUploadUrl, {
-          method: 'PUT',
-          body: file,
-        });
-        if (!uploadRes.ok) {
-          throw new Error('Resume upload failed. Please try again.');
+          // Trigger the global Dialog success message
+          this.dialogService.open({
+            title: 'Application Received',
+            message: 'Thank you! Your application has been submitted successfully to the Skolyn Talent team. We will review your profile and get back to you within 2 weeks.',
+            confirmText: 'Got it',
+            icon: 'check_circle',
+            iconColor: '#1e8e3e'
+          });
+        } catch (error: any) {
+          console.error('Resume upload failed:', error);
+          this.toastService.show(error?.message || 'Application submitted but resume upload failed. Please try again.', 'error', 6000);
+        } finally {
+          this.isSubmittingApplication = false;
         }
+      },
+      error: (error: any) => {
+        this.isSubmittingApplication = false;
+        console.error('Application submission failed:', error);
+        this.toastService.show(error?.message || 'We could not submit your application right now. Please try again shortly.', 'error', 6000);
       }
-
-      // Reset the form and close the accordion
-      const formElement = document.getElementById('form-' + jobId) as HTMLFormElement;
-      if (formElement) formElement.reset();
-      this.expandedJob = null;
-
-      // Trigger the global Dialog success message
-      this.dialogService.open({
-        title: 'Application Received',
-        message: 'Thank you! Your application has been submitted successfully to the Skolyn Talent team. We will review your profile and get back to you within 2 weeks.',
-        confirmText: 'Got it',
-        icon: 'check_circle',
-        iconColor: '#1e8e3e'
-      });
-      
-    } catch (error: any) {
-      console.error('Application submission failed:', error);
-      this.toastService.show(error?.message || 'We could not submit your application right now. Please try again shortly.', 'error', 6000);
-    } finally {
-      this.isSubmittingApplication = false;
-    }
+    });
   }
 }

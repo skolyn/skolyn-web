@@ -1,4 +1,6 @@
 export const environment = {
   production: false,
-  apiUrl: 'https://o9bsy5k3wl.execute-api.eu-north-1.amazonaws.com'
+  apiUrl: typeof window !== 'undefined' && (window as any).API_URL
+    ? (window as any).API_URL
+    : 'http://localhost:3000'
 };
