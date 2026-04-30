@@ -31,7 +31,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::298882023743:role/GitHubActionsBackendDeployRole
+          role-to-assume: arn:aws:iam::338427534869:role/GitHubActionsBackendDeployRole
           aws-region: eu-north-1
 
       - name: Setup AWS SAM CLI
@@ -44,7 +44,7 @@ jobs:
 
       - name: SAM Deploy
         run: >
-          sam deploy
+          sam deploy 
           --stack-name skolyn-api-backend
           --resolve-s3
           --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND
@@ -84,45 +84,31 @@ jobs:
         env:
           API_URL: ${{ needs.deploy-backend.outputs.api_url }}
 
-      - name: Create Amplify Config
-        run: |
-          cat > amplify-config.json <<EOF
-          {
-            "apiUrl": "${{ needs.deploy-backend.outputs.api_url }}"
-          }
-          EOF
-          cp amplify-config.json dist/skolyn-web/browser/
-
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::298882023743:role/GitHubActionsFrontendDeployRole
+          role-to-assume: arn:aws:iam::338427534869:role/GitHubActionsFrontendDeployRole
           aws-region: eu-north-1
 
-      - name: Deploy to S3 + CloudFront
+      - name: Deploy to S3
         run: |
-          # Deploy frontend to S3
-          aws s3 sync dist/skolyn-web/browser s3://skolyn-web-frontend-prod --delete
+          aws s3 sync dist/skolyn-web/browser s3://skolyn-web-frontend-prod --delete --region eu-north-1
 
-          # Invalidate CloudFront cache
-          DISTRIBUTION_ID=$(aws cloudfront list-distributions \
-            --query "DistributionList.Items[?DefaultRootObject=='index.html'].Id" \
-            --output text | head -1)
-
-          if [ ! -z "$DISTRIBUTION_ID" ]; then
-            aws cloudfront create-invalidation \
-              --distribution-id "$DISTRIBUTION_ID" \
-              --paths "/*"
-          fi
+      - name: Invalidate CloudFront Cache
+        run: |
+          DISTRIBUTION_ID="E3D90FQ44PFI25"
+          aws cloudfront create-invalidation \
+            --distribution-id "$DISTRIBUTION_ID" \
+            --paths "/*" \
+            --region eu-north-1
 
       - name: Test API Connectivity
         run: |
           API_URL="${{ needs.deploy-backend.outputs.api_url }}"
-          echo "Testing API connectivity to: ${API_URL}/api/login"
-
-          # Simple health check
-          RESPONSE=$(curl -s -X GET "${API_URL}/api/login" -H "Content-Type: application/json" || echo "Connection failed")
-          echo "API Response: ${RESPONSE}"
+          echo "Testing API connectivity to: ${API_URL}/api/newsletter"
+          curl -s -X POST "${API_URL}/api/newsletter" \
+            -H "Content-Type: application/json" \
+            -d '{"email":"test@github-actions.com"}' || echo "API test request sent"
 
       - name: Deployment Summary
         run: |
@@ -130,7 +116,7 @@ jobs:
           echo "Deployment Summary"
           echo "=========================================="
           echo "Backend API URL: ${{ needs.deploy-backend.outputs.api_url }}"
-          echo "Frontend deployed to: s3://skolyn-web-frontend-prod"
+          echo "Frontend URL: https://d9985nvn93elk.cloudfront.net"
           echo "=========================================="
 
   verify-deployment:
