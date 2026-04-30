@@ -50,22 +50,22 @@ export class ApiService {
 
   // ─── Generic HTTP Methods ────────────────────────────────────────
 
-  private get<T = any>(endpoint: string, options?: any): Observable<T> {
+  private get<T = any>(endpoint: string, options?: any): Observable<any> {
     return this.http.get<T>(`${this.apiUrl}${endpoint}`, options)
       .pipe(catchError(this.handleError));
   }
 
-  private post<T = any>(endpoint: string, body?: any, options?: any): Observable<T> {
+  private post<T = any>(endpoint: string, body?: any, options?: any): Observable<any> {
     return this.http.post<T>(`${this.apiUrl}${endpoint}`, body, options)
       .pipe(catchError(this.handleError));
   }
 
-  private put<T = any>(endpoint: string, body?: any, options?: any): Observable<T> {
+  private put<T = any>(endpoint: string, body?: any, options?: any): Observable<any> {
     return this.http.put<T>(`${this.apiUrl}${endpoint}`, body, options)
       .pipe(catchError(this.handleError));
   }
 
-  private delete<T = any>(endpoint: string, options?: any): Observable<T> {
+  private delete<T = any>(endpoint: string, options?: any): Observable<any> {
     return this.http.delete<T>(`${this.apiUrl}${endpoint}`, options)
       .pipe(catchError(this.handleError));
   }
