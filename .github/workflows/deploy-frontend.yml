@@ -1,4 +1,4 @@
-name: Deploy Frontend to Amplify
+name: Deploy Frontend to S3 + CloudFront
 
 on:
   push:
@@ -10,9 +10,7 @@ on:
       - 'package-lock.json'
       - 'angular.json'
       - '.github/workflows/deploy-frontend.yml'
-  pull_request:
-    branches:
-      - main
+  workflow_dispatch:
 
 permissions:
   id-token: write
@@ -37,39 +35,24 @@ jobs:
 
       - name: Build Frontend
         run: npm run build
-        env:
-          # API URL can be passed as environment variable during build if needed
-          # This will be injected at runtime via Amplify env variables
-          API_URL: ${{ secrets.AMPLIFY_API_URL || 'https://o9bsy5k3wl.execute-api.eu-north-1.amazonaws.com' }}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::298882023743:role/GitHubActionsFrontendDeployRole
+          role-to-assume: arn:aws:iam::338427534869:role/GitHubActionsFrontendDeployRole
           aws-region: eu-north-1
 
-      - name: Deploy to Amplify
+      - name: Deploy to S3
         run: |
-          # Install Amplify CLI
-          npm install -g @aws-amplify/cli
+          aws s3 sync dist/skolyn-web/browser s3://skolyn-web-frontend-prod --delete --region eu-north-1
 
-          # Deploy frontend
-          amplify deploy \
-            --dir dist/skolyn-web/browser \
-            --platform web \
-            --no-confirm || true
-        continue-on-error: true
-
-      - name: Manual S3 Deploy (Fallback)
+      - name: Invalidate CloudFront Cache
         run: |
-          # If Amplify deployment doesn't work, deploy directly to S3
-          aws s3 sync dist/skolyn-web/browser s3://skolyn-web-frontend-prod --delete
-
-          # Invalidate CloudFront cache if applicable
+          DISTRIBUTION_ID="E3D90FQ44PFI25"
           aws cloudfront create-invalidation \
-            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
-            --paths "/*" || true
-        continue-on-error: true
+            --distribution-id "$DISTRIBUTION_ID" \
+            --paths "/*" \
+            --region eu-north-1
 
       - name: Deployment Status
-        run: echo "Frontend deployment completed"
+        run: echo "✅ Frontend deployment to S3 + CloudFront completed!"
