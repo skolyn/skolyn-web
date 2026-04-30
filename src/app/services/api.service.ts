@@ -29,22 +29,22 @@ export class ApiService {
   }
 
   // ─── Authentication ──────────────────────────────────────────────
-  login(payload: any): Observable<ApiResponse<any>> {
+  login(payload: any): Observable<any> {
     return this.post('/api/login', payload);
   }
 
   // ─── Contact Form ────────────────────────────────────────────────
-  submitContact(payload: any): Observable<ApiResponse<any>> {
+  submitContact(payload: any): Observable<any> {
     return this.post('/api/contact', payload);
   }
 
   // ─── Applications/Careers ────────────────────────────────────────
-  submitApplication(payload: any): Observable<ApiResponse<any>> {
+  submitApplication(payload: any): Observable<any> {
     return this.post('/api/apply', payload);
   }
 
   // ─── Newsletter ───────────────────────────────────────────────────
-  subscribeNewsletter(payload: { email: string }): Observable<ApiResponse<any>> {
+  subscribeNewsletter(payload: { email: string }): Observable<any> {
     return this.post('/api/newsletter', payload);
   }
 
