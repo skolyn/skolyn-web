@@ -1,11 +1,11 @@
 {
-    "ETag": "E23ZP02F085DFQ",
+    "ETag": "E1VC38T7YXB528",
     "DistributionConfig": {
         "CallerReference": "1777562711",
         "Aliases": {
             "Quantity": 0
         },
-        "DefaultRootObject": "",
+        "DefaultRootObject": "index.html",
         "Origins": {
             "Quantity": 1,
             "Items": [
@@ -25,7 +25,7 @@
                     "OriginShield": {
                         "Enabled": false
                     },
-                    "OriginAccessControlId": ""
+                    "OriginAccessControlId": "E2CWY8IHAZ7N76"
                 }
             ]
         },
@@ -115,10 +115,12 @@
         "PriceClass": "PriceClass_All",
         "Enabled": true,
         "ViewerCertificate": {
-            "CloudFrontDefaultCertificate": true,
-            "SSLSupportMethod": "vip",
-            "MinimumProtocolVersion": "TLSv1",
-            "CertificateSource": "cloudfront"
+            "CloudFrontDefaultCertificate": false,
+            "ACMCertificateArn": "arn:aws:acm:us-east-1:338427534869:certificate/06f8f4e5-b84a-491f-9301-0ad1077e2b0c",
+            "SSLSupportMethod": "sni-only",
+            "MinimumProtocolVersion": "TLSv1.2_2021",
+            "Certificate": "arn:aws:acm:us-east-1:338427534869:certificate/06f8f4e5-b84a-491f-9301-0ad1077e2b0c",
+            "CertificateSource": "acm"
         },
         "Restrictions": {
             "GeoRestriction": {
