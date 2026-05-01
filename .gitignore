@@ -46,4 +46,13 @@ Thumbs.db
 # Manually managed partner/program logos
 src/assets/microsoft-for-startups.png
 src/assets/nvidia-inception.png
-public/partners/programs/innoland.svg
+
+# AWS/CloudFront temporary files
+cf-config*.json
+dist-config*.json
+cf-etag.txt
+
+# Environment and build artifacts
+.env
+.env.local
+.aws-sam
